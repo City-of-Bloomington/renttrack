@@ -1,0 +1,128 @@
+RentPro updates suggestions
+===========================
+
+
+
+Jo Stong meeting notes on 12/20/2017
+=====================================
+
+Doris, Rick, Charles, Walid, Daniel and I met 12.20.17 about RentPro.  City is moving to a new GIS and changes will be made to RentPro so it is a good time to talk about what changes HAND would like to see. 
+
+    Update complaint inspection cover letter to eliminate the fourteen (14) day deadline and put a blank in there that the inspector will have to fill out.  This can be done.
+    Change all instances of "smooke" to "smoke
+    HAND will be getting ipads soon for inspections.  We may be able to generate reports in the field, offline, and sync when we come back to the office; or we may have to have a cellular data plan to complete a report in the field.  But the ability to write on the ipad in the field will be a likely change to RentPro
+    Discussion of using the Tyler product at some time.  Need for Planning and HAND to show strong interest in moving to this expensive system in order to get approval for capital to make it happen.  Could be in the works for 2019.  Would take several months to completely implement.
+    Improved ability to pull statistics from reports in RentPro is a change that can be made easily.
+    Ability to schedule from RentPro would be difficult.  Either we would be syncing multiple calendars, or RentPro could create an appointment in (Google?) calendar but then it would be managed by calendar after that:  RentPro wouldn't know about it any more. Will continue to look at this.
+    Multiple pull-dates can be added, on a separate page from the main one so that we can have as many as we need.
+    Pictures implanted in reports or sent as attachments are possible
+    Paperless files are definitely possible.
+    We will be moving away from Word as the end-product for our reports.  The software would generate a different type (RTF?) that would be fillable and work with our ipads and our reporting.
+    ITS wanted to be able to readily tell how many units were in each structure in a multi-structure property
+    And ITS wanted addresses for multiple-structure properties to match and be identifiable.  Would assist fire and BPD.
+    HAND wanted ability to see what neighborhood zone (visible on GIS from HAND enforcement zones) a property is in.  Currently we have to open GIS to find out  who to assign the inspection or complaint to.
+    Front line staff would like for the receipting process to be fewer clicks (many screents to click through to print a receipt).
+
+These were discussed changes and ITS indicated most could be made very soon. Paperless filing would be an exception.
+
+
+Eric Sader suggestions:
+=========================
+
+John requested inputs at cycle inspection such as attic access, foundation type, etc. be maintained as defaults for subsequent inspection reports.
+* Eddie requested search functionality to capture same and similar names to improve.  My take:  Is there any current "merge" function in the system we can use to consolidate some of the multiple entries that exist?
+* In regard to neighborhood zones, this functionality additionally being added to uReport would be fantastic.
+
+* Found another suggestion today.  I was reading a permit that below BHQA Variance Conditions of Approval reads an informational note.  The location on the page made me initially think of it as a variance.  If we can change the formatting in some fashion for NOTE(from Add Notes) to appear as a larger bold heading or otherwise more visibly differentiate it from where variance text goes, that would help clarify.
+
+Doris Sims email
+=================
+Good Point!  We no longer grant variances.  The only notations on the permit are variances from the State.
+
+Eric 2/1/2018
+=================
+Had another idea today.  I know a full-out user interface would be difficult and not likely at this time to make all sorts of automatic form changes and such, but thought of a simpler feature that maybe we can make happen.
+
+Are we able to have a publicly accessible feature for our webpage that allows a person to enter a permit address and a permit expiration date appears?  I'd say it would be great to add to MyBloomington but I don't think that would work as permit addresses cover multiple physical property addresses/units at times.
+
+Alternatively, and maybe this would be cleaner and avoid errors, we could add a File Number field to the permits that are generated/printed and then have the web interface have an Enter File Number to Retrieve Permit Expiration date option instead.  The plus of this approach is it'll be much cleaner and error-free and work well for landlords.  The negative is if a member of the general public wants to look up an expiration date, they would be unable in that manner.
+
+
+adding certs to keystore
+========================
+keytool -import -storepass changeit -noprompt -alias bloomington2 -keystore cacerts -trustcacerts -file geotrust-intermediate.crt
+
+
+inspection report template
+==========================
+
+before Interior
+
+
+INTERIOR
+========
+<p> some notes 
+</p>
+
+Unit xxx
+--------
+
+Main Level (for multi level)
+----------
+
+Basement
+---------
+
+2nd Level
+---------
+
+Living Room
+-----------
+
+Hallway
+-------
+
+Furnace Closet/Mechanic Closet
+-----------------------------
+
+Balcony (if any)
+----------------
+
+Kitchen
+-------
+
+xxx Bedroom (xxx:East, West, South, North, etc)
+------------
+
+xxx Bath (xxx: East (hall))
+------------
+
+(next unit)
+Unit xxx
+=========
+
+
+
+
+(end of next unit)
+
+
+EXTERIOR
+========
+
+OTHER REQUIREMENTS
+==================
+
+Required Documentation
+
+
+Required Documentation
+
+
+Required Documentation
+
+
+
+
+
+

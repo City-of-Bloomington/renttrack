@@ -1,0 +1,27 @@
+#
+# application env variables
+#
+addressCheckUrl=http://address checking server/master_address
+#
+# bill rate parameters
+# these are inspection rates in our city, change according to your city
+#
+building_rate=50
+unit_rate=12
+bath_rate=12
+reinsp_rate=50
+noshow_rate=35
+appeal_fee=20
+summary_rate=25
+idl_rate=25
+#
+# group name is department name, needed for files access setting
+# housing department is called 'hand' change it according to your city
+# needed when new file are created and assign the right privilege
+#
+group_name=hand
+file_path=file folder location/files/
+inspection_file_path=inspection file location/files/inspections/
+image_url=images folder/images/citylogo200.png
+#to connect to legaltrack to get violation types
+legal_url=legalIt server url/legaltrack/
