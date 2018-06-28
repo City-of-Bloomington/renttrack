@@ -109,7 +109,6 @@ public class Address  implements java.io.Serializable {
         this.streetAddress = streetAddress;
     }
     
-    
     @Column(name="city", length=30)
     public String getCity() {
         return this.city;

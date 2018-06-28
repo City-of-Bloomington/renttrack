@@ -14,7 +14,7 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 			<ul>
 				<li>Year built and egress info are needed for inspection reports</li>
 				<li>Egress Requirment Year Range, such as for certain year egress enter the year such as 1990  and for year range such as 1994-1998 enter the range</li>
-				<li>Egress info can be found in egress cans</li>
+				<li>Egress info will be populated automatically when start entering the 'Year Built type' field and pick from the list</li>
 			</ul>
 		</details>
       <table class="vertaTable">
@@ -67,39 +67,52 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
           </td>
 				</tr>
 				<tr>
+					<th>Year built - type</th>
+          <td>
+            <form:input path="yearBuiltType" size="10" id="built_year_type" />
+							(start typing the year and then pick from list to populate the egress info below)
+          </td>
+				</tr>				
+				<tr>
 					<th>Year Built</th>
           <td>
-            <form:input path="yearBuilt" size="4" />
-          </td>
+            <form:input path="yearBuilt" size="4" id="built_year" />
+	          </td>
 				</tr>
 				<tr>
 					<th>Egress Requirment Year Range</th>
           <td>
-            <form:input path="egressDecreeYears" size="10" /> (BMC egress rule such as 1994-1998)
+            <form:input path="egressDecreeYears" size="10" id="start_end_year" /> (BMC egress rule such as 1994-1998)
           </td>
 				</tr>				
 				<tr>
 					<th>Egress Height</th>
           <td>
-            <form:input path="egressHeight" size="3" /> (inches)
+            <form:input path="egressHeight" size="3" id="height_id" /> (inches)
           </td>
 				</tr>
 				<tr>
 					<th>Egress Width</th>
           <td>
-            <form:input path="egressWidth" size="3" /> (inches)
+            <form:input path="egressWidth" size="3" id="width_id" /> (inches)
           </td>
 				</tr>
 				<tr>
 					<th>Egress Sill Height</th>
           <td>
-            <form:input path="egressSillHeight" size="3" /> (inches) max above finished floor.
+            <form:input path="egressSillHeight" size="3" id="sill_height_id" /> (inches) max above finished floor.
           </td>
 				</tr>
 				<tr>
 					<th>Egress Openable Area</th>
           <td>
-            <form:input path="egressArea" size="6" />(sq. ft)
+            <form:input path="egressArea" size="6" id="area_id" />(sq. ft) first floor
+          </td>
+				</tr>
+				<tr>
+					<th>Egress Openable Area 2</th>
+          <td>
+            <form:input path="egressArea2" size="6" id="area2_id" />(sq. ft) other floors (if any)
           </td>
 				</tr>				
 			</table>
@@ -113,5 +126,5 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
   </fieldset>		
   </form:form>
 
-</body>
-</html>
+	<jsp:include page="footer.jsp" />
+

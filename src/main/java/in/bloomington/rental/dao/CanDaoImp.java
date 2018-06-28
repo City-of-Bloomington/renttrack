@@ -44,7 +44,7 @@ public class CanDaoImp implements CanDao{
 		public List<Can> getAll(){
 				Session session = sessionFactory.getCurrentSession();
 				Criteria criteria = session.createCriteria(Can.class);
-				criteria.setMaxResults(limit);
+				// criteria.setMaxResults(limit); we list all for now
         criteria.addOrder(Order.desc("id"));				
 				return criteria.list();
 		}

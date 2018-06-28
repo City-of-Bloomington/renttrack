@@ -21,7 +21,6 @@ import org.json.JSONArray;
 import in.bloomington.rental.model.Can;
 import in.bloomington.rental.service.CanService;
 
-
 @Controller
 public class CanController {
 
@@ -72,7 +71,7 @@ public class CanController {
       if (result.hasErrors()) {
          return "redirect:/settings/canNew";
       }
-			message = "Rental Status saved successfully";
+			message = "Can saved successfully";
       canService.save(can);
       return "redirect:/settings/cans";
    }

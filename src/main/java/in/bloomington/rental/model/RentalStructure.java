@@ -33,7 +33,7 @@ public class RentalStructure  implements java.io.Serializable {
 		private Short yearBuilt;
 		private String heatSource;
 		private Integer egressHeight, egressWidth,egressSillHeight;
-		private Double egressArea;
+		private Double egressArea, egressArea2;
 		private String egressDecreeYears;
 		private List<RentalUnit> rentalUnits = new ArrayList<>(0);
 		
@@ -56,6 +56,7 @@ public class RentalStructure  implements java.io.Serializable {
 													 Integer egressWidth,
 													 Integer egressSillHeight,
 													 Double egressArea,
+													 Double egressArea2,
 													 String egressDecreeYears,
 													 List<RentalUnit> rentalUnits) {
 				this.id = id;
@@ -72,6 +73,7 @@ public class RentalStructure  implements java.io.Serializable {
 				this.egressWidth = egressWidth;
 				this.egressSillHeight = egressSillHeight;
 				this.egressArea = egressArea;
+				this.egressArea2 = egressArea2;				
 				this.egressDecreeYears = egressDecreeYears;
     }
    
@@ -189,7 +191,15 @@ public class RentalStructure  implements java.io.Serializable {
     
     public void setEgressDecreeYears(String val) {
         this.egressDecreeYears = val;
-    }		
+    }
+		@Transient
+		public void setYearBuiltType(String val){
+				// needed for auto_complete 
+		}
+		@Transient
+		public String getYearBuiltType(){
+				return "";
+		}
     
     @Column(name="story_cnt")
     public Short getStoryCnt() {
@@ -248,6 +258,14 @@ public class RentalStructure  implements java.io.Serializable {
     public void setEgressArea(Double val) {
         this.egressArea = val;
     }
+    @Column(name="egress_area2")
+    public Double getEgressArea2() {
+        return this.egressArea2;
+    }
+    
+    public void setEgressArea2(Double val) {
+        this.egressArea2 = val;
+    }		
 		// all these measures must be available
 		@Transient
 		public boolean hasEgressInfo(){
@@ -262,7 +280,9 @@ public class RentalStructure  implements java.io.Serializable {
 				if(egressDecreeYears != null && !egressDecreeYears.equals("")){
 						ret += "Related egress years "+egressDecreeYears;
 				}
-				ret += " height:"+egressHeight+", width:"+egressWidth+", sill height: "+egressSillHeight+", area :"+egressArea; 
+				ret += " height:"+egressHeight+", width:"+egressWidth+", sill height: "+egressSillHeight+", area :"+egressArea;
+				if(egressArea2 != null)
+						ret += " area (other floors) :"+egressArea2;
 				return ret;
 		}
 		@Transient

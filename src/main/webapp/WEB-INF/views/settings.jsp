@@ -11,7 +11,9 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 			<li><a href="${uri}users/">Users</a></li>
 			<li><a href="${uri}settings/buildingTypes">Building Types</a></li>
 			<li><a href="${uri}settings/inspectionTypes">Inspection Types</a></li>
-			<li><a href="${uri}settings/cans">Inspection Cans</a></li>			
+			<li><a href="${uri}settings/cans">Inspection Cans</a></li>
+			<li><a href="${uri}settings/egresses">BMC Egresses</a></li>
+			<li><a href="${uri}settings/standardFeeses">Billing Standard Fees</a></li>			
 			<li><a href="${uri}settings/propertyTypes">Property Types</a></li>
 			<li><a href="${uri}settings/pullReasons">Pull Reasons</a></li>			
 			<li><a href="${uri}settings/rentalStatuses">Rental Statuses</a></li>
@@ -22,7 +24,7 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 					<li>Slab</li>
 					<li>Crawl Space</li>
 					<li>Basement</li>
-					<li>Celat</li>
+					<li>Cellar</li>
 					<li>Other</li>
 				</ul>
 			</li>

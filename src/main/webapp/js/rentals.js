@@ -66,6 +66,25 @@ $("#can_title").autocomplete({
         }
     }
 		})
+$("#built_year_type").autocomplete({
+    source: APPLICATION_URL + "egressService?format=json",
+    minLength: 3,
+		dataType:"json",
+    delay: 100,
+    select: function( event, ui ) {
+        if(ui.item){
+						$("#built_year_type").val(ui.item.year+" "+ui.item.type);
+						$("#built_year").val(ui.item.year);						
+            $("#start_end_year").val(ui.item.startEndYear);						
+            $("#height_id").val(ui.item.height);
+						$("#width_id").val(ui.item.width);
+						$("#sill_height_id").val(ui.item.sillHeight);
+						$("#area_id").val(ui.item.area);
+						if(ui.item.area2)
+								$("#area2_id").val(ui.item.area2);
+        }
+    }
+		})
 //
 // accept digits only
 //

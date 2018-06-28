@@ -39,6 +39,7 @@ import in.bloomington.rental.model.Receipt;
 import in.bloomington.rental.model.Inspection;
 import in.bloomington.rental.model.InspectionCan;
 import in.bloomington.rental.model.Can;
+import in.bloomington.rental.model.Egress;
 import in.bloomington.rental.model.InspectionTemplate;
 import in.bloomington.rental.model.TemplateComponent;
 import in.bloomington.rental.model.EmailLog;
@@ -49,6 +50,7 @@ import in.bloomington.rental.model.AttachementSeq;
 import in.bloomington.rental.model.LegalItEmailLog;
 import in.bloomington.rental.model.InspectionFileLog;
 import in.bloomington.rental.model.UnitRoom;
+import in.bloomington.rental.model.StandardFees;
 
 @Configuration
 // @PropertySource({"classpath:db.properties","classpath:application.properties"})
@@ -146,6 +148,7 @@ public class AppConfig {
 																			RentalLog.class,
 																			Inspection.class,
 																			Can.class,
+																			Egress.class,
 																			InspectionCan.class,
 																			EmailLog.class,
 																			RentalLegal.class,
@@ -153,6 +156,7 @@ public class AppConfig {
 																			InspectionFileLog.class,
 																			InspectionTemplate.class,
 																			TemplateComponent.class,
+																			StandardFees.class,
 																			UnitRoom.class);			
       return factoryBean;
    }
