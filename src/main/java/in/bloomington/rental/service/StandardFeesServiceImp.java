@@ -39,5 +39,11 @@ public class StandardFeesServiceImp implements StandardFeesService{
         return standardFeesDao.getAll();
     }
 
+		@Transactional(readOnly = true)		
+		public StandardFees getLatest(){
+        return standardFeesDao.getLatest();
+    }		
+		
+
 
 }

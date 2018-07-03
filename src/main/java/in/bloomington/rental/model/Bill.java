@@ -24,7 +24,7 @@ import javax.persistence.GenerationType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name="bills")
+@Table(name="bills") // old name bills
 public class Bill implements java.io.Serializable {
 
 		SimpleDateFormat dtf = new SimpleDateFormat("MM/dd/yyyy");
@@ -33,15 +33,21 @@ public class Bill implements java.io.Serializable {
 		
 		private Date issueDate;
 		private Date dueDate;
-		private BigDecimal buildingRate = new BigDecimal("0");
+		private BigDecimal singleBuildingRate = new BigDecimal("0");
+		private BigDecimal multiBuildingRate = new BigDecimal("0");
+		private BigDecimal condoBuildingRate = new BigDecimal("0");
+		private BigDecimal roomingBuildingRate = new BigDecimal("0");
 		private BigDecimal unitRate = new BigDecimal("0");
 		private BigDecimal bathRate = new BigDecimal("0");
 		private BigDecimal reinspRate = new BigDecimal("0");
 		private BigDecimal noshowRate = new BigDecimal("0");
 		private BigDecimal bhqaFine = new BigDecimal("0");
-		private Short buildingCnt = new Short("0");
+		private Short singleBuildingCnt = new Short("0");
+		private Short multiBuildingCnt = new Short("0");
+		private Short condoBuildingCnt = new Short("0");
+		private Short roomingBuildingCnt = new Short("0");
 		private Short unitCnt = new Short("0");
-		private Short bathCnt = new Short("0");
+		private Short bathCnt = new Short("0"); // for rooming houses
 		private Short noshowCnt=new Short("0");
 		private Short reinspCnt= new Short("0");
 		private String reinspDates;
@@ -70,18 +76,40 @@ public class Bill implements java.io.Serializable {
     public Bill(int id) {
         this.id = id;
     }
-    public Bill(int id, Rental rental, Date issueDate, Date dueDate, BigDecimal buildingRate, BigDecimal unitRate, BigDecimal bathRate, BigDecimal reinspRate, BigDecimal noshowRate, BigDecimal bhqaFine, Short buildingCnt, Short unitCnt, Short bathCnt, Short noshowCnt, Short reinspCnt, String reinspDates, String noshowDates, String status, Character appeal, BigDecimal appealFee, BigDecimal credit, BigDecimal summaryRate, BigDecimal idlRate, Character summaryFlag, Character idlFlag, Short summaryCnt, Short idlCnt, List<Receipt> receipts) {
+    public Bill(int id, Rental rental, Date issueDate, Date dueDate,
+								BigDecimal singleBuildingRate,
+								BigDecimal multiBuildingRate,
+								BigDecimal condoBuildingRate,
+								BigDecimal roomingBuildingRate,
+								BigDecimal unitRate,
+								BigDecimal bathRate,
+								BigDecimal reinspRate,
+								BigDecimal noshowRate,
+								BigDecimal bhqaFine,
+								Short singleBuildingCnt,
+								Short multiBuildingCnt,
+								Short condoBuildingCnt,
+								Short roomingBuildingCnt,
+								Short unitCnt,
+								Short bathCnt,
+								Short noshowCnt, Short reinspCnt, String reinspDates, String noshowDates, String status, Character appeal, BigDecimal appealFee, BigDecimal credit, BigDecimal summaryRate, BigDecimal idlRate, Character summaryFlag, Character idlFlag, Short summaryCnt, Short idlCnt, List<Receipt> receipts) {
 				this.id = id;
 				this.rental = rental;
 				this.issueDate = issueDate;
 				this.dueDate = dueDate;
-				this.buildingRate = buildingRate;
+				this.singleBuildingRate = singleBuildingRate;
+				this.multiBuildingRate = multiBuildingRate;
+				this.condoBuildingRate = condoBuildingRate;
+				this.roomingBuildingRate = roomingBuildingRate;
 				this.unitRate = unitRate;
 				this.bathRate = bathRate;
 				this.reinspRate = reinspRate;
 				this.noshowRate = noshowRate;
 				this.bhqaFine = bhqaFine;
-				this.buildingCnt = buildingCnt;
+				this.singleBuildingCnt = singleBuildingCnt;
+				this.multiBuildingCnt = multiBuildingCnt;
+				this.condoBuildingCnt = condoBuildingCnt;
+				this.roomingBuildingCnt = roomingBuildingCnt;
 				this.unitCnt = unitCnt;
 				this.bathCnt = bathCnt;
 				this.noshowCnt = noshowCnt;
@@ -187,14 +215,40 @@ public class Bill implements java.io.Serializable {
 				}
 		}
     
-    @Column(name="building_rate", precision=6)
-    public BigDecimal getBuildingRate() {
-        return this.buildingRate;
+    @Column(name="single_building_rate", precision=6)
+    public BigDecimal getSingleBuildingRate() {
+        return this.singleBuildingRate;
     }
     
-    public void setBuildingRate(BigDecimal buildingRate) {
-        this.buildingRate = buildingRate;
+    public void setSingleBuildingRate(BigDecimal val) {
+        this.singleBuildingRate = val;
     }
+		
+    @Column(name="multi_building_rate", precision=6)
+    public BigDecimal getMultiBuildingRate() {
+        return this.multiBuildingRate;
+    }
+    
+    public void setMultiBuildingRate(BigDecimal val) {
+        this.multiBuildingRate = val;
+    }
+
+    @Column(name="condo_building_rate", precision=6)
+    public BigDecimal getCondoBuildingRate() {
+        return this.condoBuildingRate;
+    }
+    
+    public void setCondoBuildingRate(BigDecimal val) {
+        this.condoBuildingRate = val;
+    }
+		
+    @Column(name="rooming_building_rate", precision=6)
+    public BigDecimal getRoomingBuildingRate() {
+        return this.roomingBuildingRate;
+    }
+    public void setRoomingBuildingRate(BigDecimal val) {
+        this.roomingBuildingRate = val;
+    }		
     
     @Column(name="unit_rate", precision=6)
     public BigDecimal getUnitRate() {
@@ -246,15 +300,37 @@ public class Bill implements java.io.Serializable {
     }
 
     
-    @Column(name="building_cnt")
-    public Short getBuildingCnt() {
-        return this.buildingCnt;
+    @Column(name="single_building_cnt")
+    public Short getSingleBuildingCnt() {
+        return this.singleBuildingCnt;
     }
-    
-    public void setBuildingCnt(Short buildingCnt) {
-        this.buildingCnt = buildingCnt;
+    public void setSingleBuildingCnt(Short val) {
+        this.singleBuildingCnt = val;
     }
 
+		@Column(name="multi_building_cnt")
+    public Short getMultiBuildingCnt() {
+        return this.multiBuildingCnt;
+    }
+    public void setMultiBuildingCnt(Short val) {
+        this.multiBuildingCnt = val;
+    }
+
+    @Column(name="condo_building_cnt")
+    public Short getCondoBuildingCnt() {
+        return this.condoBuildingCnt;
+    }
+    public void setCondoBuildingCnt(Short val) {
+        this.condoBuildingCnt = val;
+    }		
+
+		@Column(name="rooming_building_cnt")
+    public Short getRoomingBuildingCnt() {
+        return this.roomingBuildingCnt;
+    }
+    public void setRoomingBuildingCnt(Short val) {
+        this.roomingBuildingCnt = val;
+    }
     
     @Column(name="unit_cnt")
     public Short getUnitCnt() {
@@ -278,7 +354,18 @@ public class Bill implements java.io.Serializable {
 		public boolean hasBathCount(){
 				return bathCnt != null && bathCnt > 0;
 		}
-
+		@Transient
+		public boolean hasSingleCount(){
+				return singleBuildingCnt != null && singleBuildingCnt > 0;
+		}
+		@Transient
+		public boolean hasMultiCount(){
+				return multiBuildingCnt != null && multiBuildingCnt > 0;
+		}
+		@Transient
+		public boolean hasCondoCount(){
+				return condoBuildingCnt != null && condoBuildingCnt > 0;
+		}		
     
     @Column(name="noshow_cnt")
     public Short getNoshowCnt() {
@@ -482,17 +569,27 @@ public class Bill implements java.io.Serializable {
 		@Transient
 		public double getInspectionFee(){
 				// find total inspection only fee
-				// includes buiding rate * cnt + units * cnt + bath*cnt
+				// includes buiding rate * cnt + units * cnt + (bath*cnt for rooming)
 				// exlude noshow, summary etc
 				//
 				// Need calculations
-				if(buildingCnt != null && buildingRate != null){
-						inspectionFee = buildingCnt*(buildingRate.doubleValue());
+				if(singleBuildingCnt != null && singleBuildingRate != null){
+						inspectionFee = singleBuildingCnt*(singleBuildingRate.doubleValue());
 				}
+				if(multiBuildingCnt != null && multiBuildingRate != null){
+						inspectionFee += multiBuildingCnt*(multiBuildingRate.doubleValue());
+				}
+				if(condoBuildingCnt != null && condoBuildingRate != null){
+						inspectionFee += condoBuildingCnt*(condoBuildingRate.doubleValue());
+				}
+				if(roomingBuildingCnt != null && roomingBuildingRate != null){
+						inspectionFee += roomingBuildingCnt*(roomingBuildingRate.doubleValue());
+				}				
 				// this is for rooming house
 				if(hasBathCount()){
 						inspectionFee += bathRate.doubleValue()*bathCnt;
-				}				
+				}
+				// condo multi or single
 				if(unitRate != null && unitRate != null){
 						inspectionFee += unitRate.doubleValue()*unitCnt;
 				}
@@ -604,7 +701,6 @@ public class Bill implements java.io.Serializable {
 								System.err.println(" buildings is null");
 						}						
 						if(buildings != null){
-								System.err.println(" building size "+buildings.size());
 								for(RentalStructure one:buildings){
 										type = one.getPropertyType();
 										if(type == null){
@@ -617,7 +713,6 @@ public class Bill implements java.io.Serializable {
 								}
 						}
 				}
-				System.err.println("Types "+propertyTypes);
 		}
 		@Transient
 		public void setRentalInfo(){
@@ -627,34 +722,64 @@ public class Bill implements java.io.Serializable {
 				if(rental != null){
 						List<RentalStructure> buildings = rental.getRentalStructures();
 						if(buildings != null){
-								short size=0;
-								size = (short)buildings.size();
-								buildingCnt = new Short(size);
+								short short_one = 1;
+								short single_cnt = 0, multi_cnt=0, condo_cnt=0, rooming_cnt=0;
+								short unit_cnt = 0, bath_cnt=0;
+								// size = (short)buildings.size();
+								// buildingCnt = new Short(size);
 								// we use the first one
-								size = 0;
-								short size2=0;
+								String type_name = "";
 								for(RentalStructure one:buildings){
 										type = one.getPropertyType();
 										if(type != null){
 												if(!propertyTypes.equals("")) propertyTypes +=", ";
-												propertyTypes += type.getName();												
-												if(type.getName().startsWith("Rooming")){
+												type_name = type.getName();
+												propertyTypes += type_name;
+												if(type_name.equals("House")){
+														single_cnt += 1;
+														// unit_cnt += 1; // normally one unit
+												}
+												else if(type_name.startsWith("Rooming")){
+														rooming_cnt += 1;
 														if(one.hasUnits()){
 																List<RentalUnit> units = one.getRentalUnits();
 																for(RentalUnit one2:units){
-																		size += one2.getBedrooms(); // baths
+																		bath_cnt += (short)one2.getBedrooms(); // baths
 																}
 														}
 												}
-												else{
+												else if(type_name.equals("Condo")){
+														condo_cnt += 1;
 														if(one.hasUnits()){
-																size2 += (short)(one.getRentalUnits().size());
+																unit_cnt += (short)(one.getRentalUnits().size());
+														}
+												}
+												else if(type_name.equals("Apartment")){
+														multi_cnt += 1;
+														if(one.hasUnits()){
+																unit_cnt += (short)(one.getRentalUnits().size());
 														}
 												}
 										}
 								}
-								bathCnt = new Short(size);
-								unitCnt = new Short(size2);										
+								if(unit_cnt > 0){
+										unitCnt = new Short(unit_cnt);
+								}
+								if(bath_cnt > 0){
+										bathCnt = new Short(bath_cnt);
+								}								
+								if(single_cnt > 0){
+										singleBuildingCnt = new Short(single_cnt);
+								}
+								if(multi_cnt > 0){
+										multiBuildingCnt = new Short(multi_cnt);
+								}
+								if(rooming_cnt > 0){
+										roomingBuildingCnt = new Short(rooming_cnt);
+								}
+								if(condo_cnt > 0){
+										condoBuildingCnt = new Short(condo_cnt);
+								}								
 						}
 				}
 		}
@@ -676,7 +801,22 @@ public class Bill implements java.io.Serializable {
 				}
 				return amount_due;
 		}
-
+		@Transient
+		public void setStandardFees(StandardFees fees){
+				if(fees != null){
+						singleBuildingRate = fees.getSingleUnitBuildingRate();
+						multiBuildingRate = fees.getMultiUnitBuildingRate();
+						condoBuildingRate = fees.getCondoUnitBuildingRate();
+						roomingBuildingRate = fees.getRoomingBuildingRate();
+						unitRate = fees.getUnitRate();
+						bathRate = fees.getRoomingBathRate();
+						reinspRate = fees.getReinspectionRate();
+						noshowRate = fees.getNoShowRate();
+						summaryRate = fees.getSummaryRate();
+						idlRate = fees.getIdlRate();
+						appealFee = fees.getAppealFee();
+				}
+		}
 }
 
 

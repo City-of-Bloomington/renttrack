@@ -11,5 +11,6 @@ public interface StandardFeesService {
 		public void delete(int id);
 
 		public List<StandardFees> getAll();
-
+		public StandardFees getLatest();
+		
 }

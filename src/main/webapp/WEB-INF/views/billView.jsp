@@ -10,45 +10,61 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
       <table border="1">
 				<caption>Standard Fees</caption>
 				<tr>
-					<th>Related Rental</th>
+					<td>Related Rental</td>
 					<td>${bill.rental.id}</td>
 				</tr>
 				<tr>
-          <th>Building Rate:</th>
+          <td>Single Family House Rate:</td>
           <td>
-            $${bill.buildingRate}  
+            $${bill.singleBuildingRate}  
           </td>
-          <th>Unit Rate:</th>
+          <td>Multi Building Rate:</td>
+          <td>
+            $${bill.multiBuildingRate}  
+          </td>
+				</tr>
+				<tr>
+          <td>Condo Building Rate:</td>
+          <td>
+            $${bill.condoBuildingRate}  
+          </td>
+          <td>Rooming Building Rate:</td>
+          <td>
+            $${bill.roomingBuildingRate}  
+          </td>
+				</tr>
+				<tr>					
+          <td>Unit Rate:</td>
           <td>
             $${bill.unitRate} 
           </td>					
-				</tr>
-				<tr>
-          <th>Room/bath Rate:</th>
+          <td>Rooming House per bathroom Rate:</td>
           <td>
             $${bill.bathRate}
           </td>
-          <th>Reinspection Fee:</th>
+				</tr>
+				<tr>
+          <td>Reinspection Fee:</td>
           <td>
             $${bill.reinspRate} 
           </td>					
-				</tr>
-				<tr>
-          <th>No Show Fee:</th>
+          <td>No Show Fee:</td>
           <td>
             $${bill.noshowRate} 
           </td>
-          <th>Appeal Fee:</th>
+				</tr>
+				<tr>
+          <td>Appeal Fee:</td>
           <td>
             $${bill.appealFee} 
           </td>
 				</tr>
 				<tr>
-          <th>Summary Failure Rate:</th>
+          <td>Summary Failure Rate:</td>
           <td>
             $${bill.summaryRate} 
           </td>
-          <th>IDL Rate:</th>
+          <td>IDL Rate:</td>
           <td>
             $${bill.idlRate} 
           </td>					
@@ -65,87 +81,103 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 					</tr>
 				</c:if>
 				<tr>
-          <th>Buildings:</th>
+          <td>Single Family House #:</td>
           <td>
-            ${bill.buildingCnt} 
+            ${bill.singleBuildingCnt} 
           </td>
-          <th>Units:</th>
+          <td>Multi Building #:</td>
+          <td>
+            ${bill.multiBuildingCnt} 
+          </td>
+				</tr>				
+				<tr>					
+          <td>Condo Building #:</td>
+          <td>
+            ${bill.condoBuildingCnt} 
+          </td>
+          <td>Rooming House #:</td>
+          <td>
+            ${bill.roomingBuildingCnt} 
+          </td>
+				</tr>				
+				<tr>							
+          <td>Units:</td>
           <td>
             ${bill.unitCnt}
           </td>
 				</tr>				
 				<tr>
-          <th>Rooms/bath:</th>
+          <td>Rooming baths:</td>
           <td>
             ${bill.bathCnt} 
           </td>
-          <th>B.H.Q.A Fee:</th>
+          <td>B.H.Q.A Fee:</td>
           <td>
             $${bill.bhqaFine}
           </td>					
 				</tr>
 				<tr>
-					<th>Credits:</th>
+					<td>Credits:</td>
 					<td>
             $${bill.credit}
           </td>					
-          <th>Number of Reinspection:</th>
+          <td>Number of Reinspection:</td>
           <td>
             ${bill.reinspCnt}
           </td>
 				</tr>
 				<tr>
-          <th>Number of no show</th>
+          <td>Number of no show</td>
           <td>
             ${bill.noshowCnt} 
           </td>
-          <th>IDL Count:</th>
+          <td>IDL Count:</td>
           <td>
             ${bill.idlCnt}
           </td>					
 				</tr>
 				<tr>
-          <th>Summary Failure Count:</th>
+          <td>Summary Failure Count:</td>
           <td>
             ${bill.summaryCnt} 
           </td>
-					<th>Status</th>
+					<td>Status</td>
 					<td>${bill.status}</td>
 				</tr>
 				<tr>
-          <th>Dates of Noshow:</th>
+          <td>Dates of Noshow:</td>
           <td colspan="3">
             ${bill.noshowDates} 
           </td>
 				</tr>
 				<tr>
-					<th>Dates of Reinspection:</th>
+					<td>Dates of Reinspection:</td>
           <td colspan="3">
             ${bill.reinspDates}
           </td>
 				</tr>
 				<tr>
-          <th>Bill Issue Date:</th>
+          <td>Bill Issue Date:</td>
           <td>
             ${bill.issueDateFr}
           </td>
-          <th>Bill Due Date:</th>
+          <td>Bill Due Date:</td>
           <td>
             ${bill.dueDateFr}
           </td>
 				</tr>
 				<tr>
-          <th>Inspection Fee:</th>
+          <td>Inspection Fee:</td>
           <td>
             $${bill.inspectionFee} 
           </td>
-					<th>Total</th>
+					<td>Total</td>
 					<td>$${bill.total}</td>
 				</tr>
 				<c:if test="${bill.isUnpaid()}">				
 					<tr>
 						<td colspan="2"></td>
-						<th>Balance</th>
+						<td>Balance</td>
 						<td>
 							$${bill.balance} 
 						</td>

@@ -41,7 +41,10 @@ public class ReceiptDaoImp implements ReceiptDao{
 				c.addOrder(Order.desc("receiptNo"));
 				c.setMaxResults(1);
 				Receipt one = (Receipt)c.uniqueResult();
-				int ret = one.getReceiptNo()+1;
+				int ret = 1;
+				if(one != null){
+						ret = one.getReceiptNo()+1;
+				}
 				return ret;
 		}
  		

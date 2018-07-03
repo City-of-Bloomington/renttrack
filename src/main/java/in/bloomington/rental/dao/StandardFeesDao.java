@@ -10,5 +10,6 @@ public interface StandardFeesDao {
 		void update(int id, StandardFees standardFees);
 		void delete(int id);
 		List<StandardFees> getAll();
-						
+		StandardFees getLatest();
+		
 }

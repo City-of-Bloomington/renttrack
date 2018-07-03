@@ -27,7 +27,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import org.json.*;
-import in.bloomington.rental.model.Bill;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
@@ -39,7 +38,6 @@ public class GeneralHelper{
 		@Autowired
 		private Environment env;
 
-		Bill bill = null;
 		String file_path="", inspection_file_path="";
 		String legal_type_service = "";
 		String ldap_host = ""; 
@@ -47,10 +45,7 @@ public class GeneralHelper{
 		public GeneralHelper(){
 				populatePaths();
 		}
-		public void setBill(Bill val){
-				if(val != null)
-						bill = val;
-		}
+		
 		public void populatePaths(){
 				if(env != null){				
 						String str = env.getProperty("file_path");
@@ -79,43 +74,10 @@ public class GeneralHelper{
 						}						
 				}
 		}
+		/*
 		public String populateRates(){
 				String str = null, back="";
 				System.err.println(" reading env ");
-				if(env != null && bill != null){
-						str = env.getProperty("building_rate");						
-						if(str != null){
-								bill.setBuildingRate(new BigDecimal(str));
-						}
-						str = env.getProperty("unit_rate");						
-						if(str != null){
-								bill.setUnitRate(new BigDecimal(str));
-						}
-						str = env.getProperty("bath_rate");						
-						if(str != null){
-								bill.setBathRate(new BigDecimal(str));
-						}
-						str = env.getProperty("reinsp_rate");						
-						if(str != null){
-								bill.setReinspRate(new BigDecimal(str));
-						}
-						str = env.getProperty("noshow_rate");						
-						if(str != null){
-								bill.setNoshowRate(new BigDecimal(str));
-						}
-						str = env.getProperty("appeal_fee");						
-						if(str != null){
-								bill.setAppealFee(new BigDecimal(str));
-						}
-						str = env.getProperty("summary_rate");						
-						if(str != null){
-								bill.setSummaryRate(new BigDecimal(str));
-						}
-						str = env.getProperty("idl_rate");						
-						if(str != null){
-								bill.setIdlRate(new BigDecimal(str));
-						}
-				}
 				if(env != null){
 						str = env.getProperty("file_path");
 						if(str != null){
@@ -132,6 +94,7 @@ public class GeneralHelper{
 				}
 				return back;
 		}
+		*/
 		public String getFilePath(){
 				return file_path;
 		}

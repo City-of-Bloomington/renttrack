@@ -48,6 +48,17 @@ public class StandardFeesDaoImp implements StandardFeesDao{
         criteria.addOrder(Order.desc("id"));				
 				return criteria.list();
 		}
+		@Override		
+		public StandardFees getLatest(){
+				Session session = sessionFactory.getCurrentSession();
+				Criteria criteria = session.createCriteria(StandardFees.class);
+				criteria.setMaxResults(3);				
+        criteria.addOrder(Order.desc("id"));				
+				List<StandardFees> list = criteria.list();
+				return list.get(0); // the top
+		}		
+
+		
 
 		
 }

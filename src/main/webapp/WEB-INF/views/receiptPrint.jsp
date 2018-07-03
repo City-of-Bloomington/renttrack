@@ -95,13 +95,35 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 						<td>${receipt.checkNo}</td>
 					</tr>
 				</c:if>
-				<tr>
-					<td align="right"><b>Building/Units: </b></td>
-					<td>
-						${bill.buildingCnt}/${bill.unitCnt}
-					</td>
-				</tr>
+				<c:if test="${bill.hasMultiCount()}">
+					<tr>
+						<td align="right"><b>Number Of Multi Buildings:</b></td>
+						<td>${bill.multiBuildingCnt}</td>
+					</tr>
+				</c:if>
+				<c:if test="${bill.hasSingleCount()}">
+					<tr>
+						<td align="right"><b>Number Of Single Family Houses:</b></td>
+						<td>${bill.singleBuildingCnt}</td>
+					</tr>
+				</c:if>
+				<c:if test="${bill.hasCondoCount()}">
+					<tr>
+						<td align="right"><b>Number Of Condo Buildings:</b></td>
+						<td>${bill.condoBuildingCnt}</td>
+					</tr>
+				</c:if>
+				<c:if test="${bill.hasMultiCount() || bill.hasCondoCount()}">				
+					<tr>
+						<td align="right"><b>Number of Units:</b></td>
+						<td>${bill.unitCnt}</td>
+					</tr>
+				</c:if>				
 				<c:if test="${bill.hasBathCount()}">
+					<tr>
+						<td align="right"><b>Number Of Rooming Houses:</b></td>
+						<td>${bill.roomingBuildingCnt}</td>
+					</tr>					
 					<tr>
 						<td align="right"><b>Rooming House Baths: </b></td>
 						<td>							

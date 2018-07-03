@@ -129,19 +129,23 @@ public class ReceiptController {
 						return "redirect:/receiptNew";
 				}
 				int rec_no = receiptService.getNextReceiptNo();
-				receipt.setReceiptNo(rec_no);
-				receiptService.save(receipt);
-			  int bill_id = receipt.getBill().getId();
-				Bill bill = billService.get(bill_id);				
-				if(bill.getAmountDue() <= 0.01){
-						System.err.println(" updateing bill "+bill.getId());
-						bill.setStatus("Paid");
-						billService.update(bill_id, bill);
+				try{
+						receipt.setReceiptNo(rec_no);
+						receiptService.save(receipt);
+						int bill_id = receipt.getBill().getId();
+						Bill bill = billService.get(bill_id);				
+						if(bill.getAmountDue() <= 0.01){
+								System.err.println(" updateing bill "+bill.getId());
+								bill.setStatus("Paid");
+								billService.update(bill_id, bill);
+						}
+						receipt.setBill(bill);				
+						model.addAttribute("receipt", receipt);
+						model.addAttribute("payMethods", payMethods);
+						message = "Receipt saved successfully";
+				}catch(Exception ex){
+						System.err.println(" receipt error "+ex);
 				}
-				receipt.setBill(bill);				
-				model.addAttribute("receipt", receipt);
-				model.addAttribute("payMethods", payMethods);
-				message = "Receipt saved successfully";
 				return "receiptEdit";
 		}
 

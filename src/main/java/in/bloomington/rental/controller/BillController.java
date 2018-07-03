@@ -17,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 
 import in.bloomington.rental.model.Bill;
 import in.bloomington.rental.service.BillService;
+import in.bloomington.rental.model.StandardFees;
+import in.bloomington.rental.service.StandardFeesService;
 import in.bloomington.rental.model.Rental;
 import in.bloomington.rental.service.RentalService;
 import in.bloomington.rental.util.GeneralHelper;
@@ -30,6 +32,8 @@ public class BillController {
 		
 		@Autowired
 		private BillService billService;
+		@Autowired
+		private StandardFeesService feesService;		
 		@Autowired
 		private GeneralHelper ghelper;
 		@Autowired
@@ -97,15 +101,10 @@ public class BillController {
 		@GetMapping("/billNew/{rental_id}")
 		public String billForm(@PathVariable("rental_id") int rental_id, Locale locale, Model model) {
 				Rental rental = rentalService.get(rental_id);
+				StandardFees fees = feesService.getLatest();
 				Bill bill = new Bill();
+				bill.setStandardFees(fees);
 				bill.setRental(rental);
-				if(ghelper != null){
-						ghelper.setBill(bill);
-						String back = ghelper.populateRates();
-						if(!back.equals("")){
-								message = "Error setting rates ";
-						}
-				}
 				bill.setRentalInfo(); // property type, #buildings, #units etc
 				model.addAttribute("bill", bill);
 				return "billNew";
