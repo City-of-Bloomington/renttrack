@@ -24,7 +24,7 @@ import javax.persistence.GenerationType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name="bills") // old name bills
+@Table(name="rental_bills") // old name bills
 public class Bill implements java.io.Serializable {
 
 		SimpleDateFormat dtf = new SimpleDateFormat("MM/dd/yyyy");

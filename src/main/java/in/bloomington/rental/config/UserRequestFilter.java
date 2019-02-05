@@ -36,6 +36,7 @@ public class UserRequestFilter implements Filter {
 					if(uri.indexOf("login") > -1 ||
 						 uri.indexOf("showErrors") > -1 ||
 						 uri.indexOf(".js") > -1 ||
+						 uri.indexOf(".jpg") > -1 ||						 
 						 uri.indexOf(".css") > -1){
 							chain.doFilter(request, response);
 					}
@@ -55,7 +56,7 @@ public class UserRequestFilter implements Filter {
 					}
 			} catch (Exception ex) {
 					request.setAttribute("message", ex);
-					System.err.println(" user filter "+ex);
+					// System.err.println(" user filter "+ex);
 					request.getRequestDispatcher("/WEB-INF/views/errors.jsp")
 							.forward(request, response);
 			}

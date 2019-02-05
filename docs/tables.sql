@@ -38,7 +38,7 @@ create table zonings(                                                           
 
 create table rentals(                                                              id SERIAL primary key,                                                          status_id integer,                                                              agent_id    integer,	                                                           registered_date   DATE,                                                         last_cycle_date   DATE,                                                         permit_issued     DATE,                                                         permit_expires    DATE,                                                         permit_length     smallint,                                                     grandfathered     char(1),                                                      annexed           char(1),                                                      cdbg_funding      char(1),                                                      zoning_id         integer,	                                                     n_hood            smallint,                                                     affordable        char(1),                                                      inactive          char(1),                                                      foreign key(status_id) references rental_status(id),                            foreign key(agent_id) references owners(id),                                    foreign key(zoning_id) references zonings(id)                                 );
 			
-create table rental_structures(                                                    id serial primary key,                                                          rental_id integer,                                                              identifier varchar(30),                                                         building_type_id integer,                                                       prop_type_id integer,                                                           foundation varchar(20),                                                         story_cnt smallint,                                                             heat_source varchar(30),                                                        egress_height int,                                                              egress_width int,                                                               egress_sill_height  int,                                                        egress_area  double precision,                                                  year_built   smallint,                                                          egress_decree_years varchar(32),                                                foreign key(rental_id) references rentals(id),                                  foreign key(building_type_id) references building_types(id),                    foreign key(prop_type_id) references property_types(id)       		                );
+create table rental_structures(                                                    id serial primary key,                                                          rental_id integer,                                                              identifier varchar(30),                                                         building_type_id integer,                                                       prop_type_id integer,                                                           foundation varchar(20),                                                         story_cnt smallint,                                                             heat_source varchar(30),                                                        egress_height int,                                                              egress_width int,                                                               egress_sill_height  int,                                                        egress_area  double precision,                                                  year_built   smallint,                                                          egress_decree_years varchar(32),                                                egress_area2 double precision,                                                  foreign key(rental_id) references rentals(id),                                  foreign key(building_type_id) references building_types(id),                    foreign key(prop_type_id) references property_types(id)       		                );
 
 ;;
 ;; units need to be split into multiple units with identifier or address
@@ -133,7 +133,7 @@ create table rental_bills(                                                      
  paid_by_types ('Cash','Check','Money Order','Credit Card');
 
 // id = receipt_no
-create table receipts(                                                              id serial primary key,                                                          receipt_no int,                                                                 bill_id int,                                                                    received_sum decimal(7,2),                                                      received_date date,                                                             received_from varchar(70),                                                      paid_by varchar(30),                                                           check_no  varchar(50),                                                          foreign key(bill_id) references bills(id)                                );
+create table receipts(                                                              id serial primary key,                                                          receipt_no int,                                                                 bill_id int,                                                                    received_sum decimal(7,2),                                                      received_date date,                                                             received_from varchar(70),                                                      paid_by varchar(30),                                                           check_no  varchar(50),                                                          foreign key(bill_id) references rental_bills(id)                                );
 
 //
 // old rental_images
@@ -161,8 +161,13 @@ create type action_type as enum('Save','Update');
 ;;
 ;; old name: rental_updates
 ;;
+;; DoDo (changed)
+create table rental_logs(                                                         id serial primary key,                                                          date date,                                                                      action_taken  varchar(10),                                                      user_id int,                                                                    rental_id int,                                                                  status_id integer,                                                              agent_id    integer,	                                                          registered_date   DATE,                                                         permit_issued     DATE,                                                         permit_expires    DATE,                                                         permit_length     smallint,                                                     grandfathered     char(1),                                                      annexed           char(1),                                                      cdbg_funding      char(1),                                                      zoning_id         integer,	                                                    n_hood            smallint,                                                     affordable        char(1),                                                      inactive          char(1),                                                      foreign key(rental_id) references rentals(id),                                  foreign key(user_id) references users(id)                                       );
 
-create table rental_logs(                                                        id serial primary key,                                                          rental_id int,                                                                  date date,                                                                      action_taken  varchar(10),                                                      user_id int,                                                                    foreign key(rental_id) references rentals(id),                                  foreign key(user_id) references users(id)                                       );
+;;
+;; ToDo (Eric Request to have audit to owners records
+;; no foreign key as we may delete the record but we keep the log
+create table owner_logs(                                                          id serial primary key,                                                          date date,                                                                      action_taken  varchar(10),                                                      user_id int,                                                                    owner_id int,                                                                   name varchar(70) not null,                                                      address varchar(70),                                                            city  varchar(70),                                                              state varchar(2),                                                               zip   varchar(12),                                                              notes varchar(500),                                                             email varchar(70),                                                              foreign key(user_id) references users(id)                                       );
 
 ;; id = vid
 ;; rental_id = id
@@ -200,7 +205,7 @@ create table legalit_email_logs(                                                
 	//
 	create table rental_legals(                                                        id int unique,             	                                                   rental_id int,                                                                  date date,                                                                      start_by int,                                                                   foreign key(rental_id) references rentals(id),                                  foreign key(start_by) references users(id)                                      );
 
-		create table egresses(                                                          id serial primary key,      	                                                  start_year int,                                                                 end_year int,                                                                   height int,                                                                     width int,                                                                      sill_height  int,                                                               area  double precision,                                                         type varchar(10)                                                                );
+		create table egresses(                                                          id serial primary key,      	                                                  start_year int,                                                                 end_year int,                                                                   height int,                                                                     width int,                                                                      sill_height  int,                                                               area  double precision,                                                         area2 double precission,                                                        type varchar(10)                                                                );
 
 		create table standard_fees(                                                       id serial primary key,      	                                                  date date,                                                                      user_id int,                                                                    single_unit_building_rate decimal(6,2),                                         multi_unit_building_rate  decimal(6,2),                                         condo_unit_building_rate decimal(6,2),                                          rooming_building_rate  decimal(6,2),                                            rooming_bath_rate      decimal(6,2),                                            unit_rate             decimal(6,2),                                             reinspection_rate  decimal(6,2),                                                no_show_rate       decimal(6,2),                                                summary_rate       decimal(6,2),                                                idl_rate           decimal(6,2),                                                appeal_fee        decimal(6,2),                                                 foreign key(user_id) references users(id)                                       );
 
@@ -283,13 +288,13 @@ alter table inspections alter column time_status type varchar(15);
  alter table addresses add longitude double precision;
  alter table addresses add latitude double precision; 
 
-
  added 5/17/2018
  ===============
  alter table rental_structures add egress_height int;
  alter table rental_structures add egress_width int;
  alter table rental_structures add egress_sill_height int;
  alter table rental_structures add egress_area double precision;
+ alter table rental_structures add egress_area2 double precision;
  alter table rental_structures add year_built smallint;
  alter table rental_structures add egress_decree_years varchar(32);	 
  alter table rental_units add efficiency char(1);
@@ -297,28 +302,17 @@ alter table inspections alter column time_status type varchar(15);
  
  add unit_rooms table see above.
 
+;;	 
+;; for testing pusposes we are adding the following values
+;;
  
- jsp notes
-============
-<c:forEach, var, varStatus
-<c:set var
-then how to use in href
+ insert into egresses values(2,1992,1994,     26,    21,         45,  6.5, 'Single',null),( 1,1991,1992,25,20,44,  6.4,'Single',null),(3,2008,2011,24,20,44,5,'Multi',5.7);
 
-  <c:forEach items="${phones}" var="phone" varStatus="row">
-		<c:if test="${row.first}">
-			<c:set var="owner_id" value="${phone.owner.id}" />
-		</c:if>
-		<tr>				
-			<td>${phone.id}</td>
-			<td>${phone.phoneNum}</td>
-			<td>${phone.type}</td>
-			<td>
-				<a href="/renttrack/phoneDelete/${phone.id}">Delete</a> <br />
-			</td>
-		</tr>
-  </c:forEach>
-	<tr>
-		<td colspan="3"></td>
-		<td>
-			<a href="/renttrack/newPhone/${owner_id}">Add Phone</a>
-		</td>
+insert into inspection_templates values(10,     10884, 1, '2018-06-06', 17);
+ 
+insert into template_components values(180 , 10 , 0 , 0 ,  0 , 'Living Room 5-7,8-2'),( 181 ,  10 ,  0 , 0 ,   0 , 'Bedroom 8-5,8-4'),(182 , 10 , 0 ,  0 ,  0 , 'Bedroom 8-5,10-3'),(184 , 10 , 0 , 1 , 0 , 'Unit 2'),(185 ,  10 ,  0 , 1 , 0 , 'Hallway'),(186, 10 , 0 , 1 ,  0 , 'Mechanic Closet'), (187 , 10 , 0 , 1 , 0 , 'Bathroom'), (188 ,          10 ,            0 ,        1 ,         0 , 'Kitchen'), (189 ,          10 ,            0 ,        1 ,         0 , 'Living Room'), (190 ,          10 ,            0 ,        1 ,         0 , 'Bedroom'), (191 ,          10 ,            0 ,        1 ,         0 , 'Bedroom'), (193 ,          10 ,            0 ,        2 ,         0 , 'Garage'), (194 ,          10 ,            0 ,        2 ,         0 , 'Unit 3'),(195 ,          10 ,            0 ,        2 ,         0 , 'Hallway'), (196 ,          10 ,            0 ,        2 ,         0 , 'Mechanic Closet'), (197 ,          10 ,            0 ,        2 ,         0 , 'Bathroom'), (198 ,          10 ,            0 ,        2 ,         0 , 'Kitchen'), (199 ,          10 ,            0 ,        2 ,         0 , 'Living Room'), (200 ,          10 ,            0 ,        2 ,         0 , 'Bedroom'), (201 ,          10 ,            0 ,        2 ,         0 , 'Bedroom'), (202 ,          10 ,            0 ,        0 ,         0 , 'Porch');
+
+ 
+ 
+ 
+

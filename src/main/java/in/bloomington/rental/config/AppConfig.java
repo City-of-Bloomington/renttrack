@@ -55,11 +55,11 @@ import in.bloomington.rental.model.StandardFees;
 @Configuration
 // @PropertySource({"classpath:db.properties","classpath:application.properties"})
 // on linux server
-// @PropertySource({"file:/srv/data/renttrack/db.properties",
-//						"file:/srv/data/renttrack/application.properties"})
+@PropertySource({"file:/srv/data/renttrack/conf/db.properties",
+						"file:/srv/data/renttrack/conf/application.properties"})
 //
 // local machine
-@PropertySource({"file:c:/tomcat/conf/Catalina/localhost/renttrack/db.properties","file:c:/tomcat/conf/Catalina/localhost/renttrack/application.properties"})
+// @PropertySource({"file:c:/tomcat/conf/Catalina/localhost/renttrack/db.properties","file:c:/tomcat/conf/Catalina/localhost/renttrack/application.properties"})
 
 @EnableTransactionManagement
 @ComponentScans(value = {
@@ -87,7 +87,7 @@ public class AppConfig {
       props.put(DRIVER, env.getProperty("postgres.driver"));
       props.put(URL, env.getProperty("postgres.url"));
       props.put(USER, env.getProperty("postgres.user"));
-      // props.put(PASS, env.getProperty("postgres.password"));
+      props.put(PASS, env.getProperty("postgres.password"));
 			props.put(DIALECT, env.getProperty("postgres.dialect"));						
 			//
       // Setting Hibernate properties
