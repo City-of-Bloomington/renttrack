@@ -5,3 +5,8 @@ web.xml
 target
 ansible/roles
 *.retry
+
+# Eclipse directories
+.settings
+.classpath
+.project
