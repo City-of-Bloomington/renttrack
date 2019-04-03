@@ -35,7 +35,6 @@
         dest: "{{ renttrack_site_home }}/conf/{{ item }}"
       with_items:
         - "application.properties"
-        - "db.properties"
         - "log4j2.xml"
       notify: "tomcat_restart"
 

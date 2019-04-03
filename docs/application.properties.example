@@ -32,6 +32,31 @@ image_url=/srv/webapps/renttrack/js/images/citylogo200.png
 #to connect to legaltrack to get violation types
 legal_url=https://outlaw.bloomington.in.gov/legaltrack/
 #
-# ldap url to authenticate users 
+# ldap url to authenticate users
 #
-ldap_host=ldap://your ldap or AD path 
+ldap_host=ldap://your ldap or AD path
+
+# for msyql db use the following
+# MySQL properties
+# mysql.driver=com.mysql.cj.jdbc.Driver
+# mysql.url=jdbc:mysql://outlaw.bloomington.in.gov:3306/renttrack
+# mysql.user=renttrack
+# mysql.password=your db pass
+#
+# for postgres db
+# assuming db name is renttrack
+postgres.driver=org.postgresql.Driver
+postgres.url=jdbc:postgresql://localhost:5432/renttrack
+postgres.user=postgres
+postgres.password=your db pass
+postgres.dialect=org.hibernate.dialect.PostgreSQLDialect
+# Hibernate properties
+hibernate.show_sql=false
+hibernate.hbm2ddl.auto=validate
+hibernate.enable_lazy_load_no_trans=true
+#C3P0 properties
+hibernate.c3p0.min_size=5
+hibernate.c3p0.max_size=20
+hibernate.c3p0.acquire_increment=1
+hibernate.c3p0.timeout=1800
+hibernate.c3p0.max_statements=150

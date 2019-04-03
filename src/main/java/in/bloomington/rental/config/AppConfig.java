@@ -53,10 +53,7 @@ import in.bloomington.rental.model.UnitRoom;
 import in.bloomington.rental.model.StandardFees;
 
 @Configuration
-@PropertySource({
-    "file:/srv/data/renttrack/conf/db.properties",
-    "file:/srv/data/renttrack/conf/application.properties"
-})
+@PropertySource("file:/srv/data/renttrack/conf/application.properties")
 
 @EnableTransactionManagement
 @ComponentScans(value = {
