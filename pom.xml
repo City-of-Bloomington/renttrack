@@ -4,13 +4,13 @@
 
   <groupId>in.bloomington</groupId>
   <artifactId>renttrack</artifactId>
-	<version>1</version>
+	<version>1.0</version>
   <packaging>war</packaging>
-	
+
   <name>renttrack</name>
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>		
+    <maven.compiler.target>1.8</maven.compiler.target>
     <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
@@ -21,7 +21,7 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>4.3.7.RELEASE</version>
 		</dependency>
-		
+
 		<!-- Spring ORM -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -33,7 +33,7 @@
 			<artifactId>spring-security-web</artifactId>
 			<version>4.2.5.RELEASE</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
@@ -43,7 +43,7 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-cas</artifactId>
 			<version>5.0.5.RELEASE</version>
-		</dependency>		
+		</dependency>
 		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
@@ -64,7 +64,7 @@
 			<artifactId>json</artifactId>
 			<version>20180130</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
@@ -80,7 +80,7 @@
 			<groupId>postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>9.1-901.jdbc4</version>
-		</dependency>						
+		</dependency>
 		-->
 		<!-- Hibernate ORM -->
 		<dependency>
@@ -88,7 +88,7 @@
 			<artifactId>hibernate-core</artifactId>
 			<version>5.2.10.Final</version>
 		</dependency>
-		
+
 		<!-- Hibernate-C3P0 Integration -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -107,7 +107,7 @@
 			<artifactId>c3p0</artifactId>
 			<version>0.9.5.3</version>
 		</dependency>
-		
+
 		<!-- Hibernate Validator -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -133,8 +133,8 @@
 			<groupId>javax.activation</groupId>
 			<artifactId>activation</artifactId>
 			<version>1.1.1</version>
-		</dependency>		
-		
+		</dependency>
+
 		<!-- JSTL Dependency -->
 		<dependency>
 			<groupId>javax.servlet.jsp.jstl</groupId>
@@ -154,7 +154,7 @@
 			<version>3.1.0</version>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<!-- JSP Dependency -->
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
@@ -187,7 +187,7 @@
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-slf4j-impl</artifactId>
 			<version>2.6.2</version>
-		</dependency>		
+		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
@@ -197,7 +197,7 @@
 			<groupId>org.elasticsearch.client</groupId>
 			<artifactId>rest</artifactId>
 			<version>6.0.0-alpha2</version>
-		</dependency>		
+		</dependency>
 	</dependencies>
     <build>
         <plugins>
@@ -247,20 +247,20 @@
                     </execution>
                 </executions>
             </plugin>
-						<plugin>
-							<groupId>org.eclipse.jetty</groupId>
-							<artifactId>jetty-maven-plugin</artifactId>
-							<version>9.4.8.v20171121</version>
-							<configuration>
-								<scanIntervalSeconds>10</scanIntervalSeconds>
-								<webApp>
-									<contextPath>/renttrack</contextPath>
-								</webApp>
-								<httpConnector>
-          				<port>80</port>
-        				</httpConnector>
-							</configuration>
-						</plugin>						
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.4.8.v20171121</version>
+                <configuration>
+                    <scanIntervalSeconds>10</scanIntervalSeconds>
+                    <webApp>
+                        <contextPath>/renttrack</contextPath>
+                    </webApp>
+                    <httpConnector>
+                        <port>80</port>
+                    </httpConnector>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>

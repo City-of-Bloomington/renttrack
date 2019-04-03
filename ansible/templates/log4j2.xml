@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="error">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm} %l [%t] %-5level %logger{36} - %msg%n" />
+        </Console>
+        <File name="renttrack_log" fileName="/var/log/tomcat8/renttrack.log" append="false">
+            <PatternLayout pattern="%d{yyy-MM-dd HH:mm} %l [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Root level="error">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="renttrack_log"/>
+        </Root>
+    </Loggers>
+</Configuration>
