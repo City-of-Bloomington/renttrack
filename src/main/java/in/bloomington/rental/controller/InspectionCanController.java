@@ -23,95 +23,102 @@ import in.bloomington.rental.service.InspectionTemplateService;
 import in.bloomington.rental.service.TemplateComponentService;
 
 @Controller
-public class InspectionCanController {
+public class InspectionCanController
+{
 
-		String message = null;
-		
-		@Autowired
-		private InspectionCanService inspectionCanService;
-		@Autowired
-		private InspectionService inspectionService;		
+    String                            message = null;
 
-		@Autowired
-		private InspectionTemplateService inspectionTemplateService;
-		@Autowired
-		private TemplateComponentService componentService;		
+    @Autowired
+    private InspectionCanService      inspectionCanService;
+    @Autowired
+    private InspectionService         inspectionService;
 
-		// edit by id
-		@GetMapping("/inspectionCan/{id}")
-		public String editInspectionCan(@PathVariable("id") int id,
-											Model model) {
-				InspectionCan inspectionCan = inspectionCanService.get(id);
-				model.addAttribute("inspectionCan", inspectionCan);
-			 return "/inspectionCan";
-		}
-		@GetMapping("/inspectionCanRemove/{id}")
-		public String removeInspectionCan(@PathVariable("id") int id,
-											Model model) {
-				InspectionCan inspectionCan = inspectionCanService.get(id);
-				int inspection_id = inspectionCan.getInspection().getId();
-				inspectionCanService.delete(id);
-			 return "redirect:/inspection/"+inspection_id;
-		}		
-		// update
-		@PostMapping("/inspectionCanUpdate")
-		public String updateInspectionCan(@ModelAttribute("inspectionCan") @Valid InspectionCan inspectionCan,
-														 BindingResult result, Model model) {
-				if (result.hasErrors()) {
-						System.err.println(" errors "+result.toString());
-						return "redirect:/inspectionCan/"+inspectionCan.getId();
-				}
-				inspectionCanService.update(inspectionCan.getId(), inspectionCan);
-				int id = inspectionCan.getInspection().getId();
-				message = "can updated successfully";
-				return "redirect:/inspectionCanNew/"+id;
-		}
-		@GetMapping("/inspectionCanNew/{id}")
-		public String inspectionCanNew(@PathVariable("id") int id,
-																		Model model) {
-				Inspection inspection = inspectionService.get(id);
-				if(inspection.requireTemplate()){
-						int rid = inspection.getRental().getId();
-						List<InspectionTemplate> list = inspectionTemplateService.findByRentalId(rid);
-						if(list != null && list.size() > 0){
-								inspection.setInspectionTemplate(list.get(0));
-						}
-				}
-				model.addAttribute("inspection", inspection);
-				if(message != null){
-						model.addAttribute("message", message);
-						message = null;
-				}
-				return "/componentCans";
-   }
-		// id = inspection id
-		// cid = component id
-		@GetMapping("/inspectionCanAdd/{id}/{cid}")
-		public String inspectionCanAdd(@PathVariable("id") int id,
-																	 @PathVariable("cid") int cid,
-																		Model model) {
-				TemplateComponent component = componentService.get(cid);
-				InspectionCan inspectionCan = new InspectionCan();
-				Inspection inspection = inspectionService.get(id); 
-				inspectionCan.setTemplateComponent(component);
-				inspectionCan.setInspection(inspection);				
-				model.addAttribute("inspectionCan", inspectionCan);
-				return "/inspectionCanNew";
-   }
-		// id = inspection id
+    @Autowired
+    private InspectionTemplateService inspectionTemplateService;
+    @Autowired
+    private TemplateComponentService  componentService;
 
-		// save
-		@PostMapping("/inspectionCanSave")
-		public String saveInspectionCan(@ModelAttribute("inspectionCan") @Valid InspectionCan inspectionCan,
-         BindingResult result, Model model) {
-      if (result.hasErrors()) {
-         return "redirect:/inspectionCanNew";
-      }
-			message = " Saved successfully";
-      inspectionCanService.save(inspectionCan);
-      return "redirect:/inspectionCanNew/"+inspectionCan.getInspection().getId();
-   }
-		// update
+    // edit by id
+    @GetMapping("/inspectionCan/{id}")
+    public String editInspectionCan(@PathVariable("id") int id, Model model)
+    {
+        InspectionCan inspectionCan = inspectionCanService.get(id);
+        model.addAttribute("inspectionCan", inspectionCan);
+        return "/inspectionCan";
+    }
+
+    @GetMapping("/inspectionCanRemove/{id}")
+    public String removeInspectionCan(@PathVariable("id") int id, Model model)
+    {
+        InspectionCan inspectionCan = inspectionCanService.get(id);
+        int           inspection_id = inspectionCan.getInspection().getId();
+        inspectionCanService.delete(id);
+        return "redirect:/inspection/" + inspection_id;
+    }
+
+    // update
+    @PostMapping("/inspectionCanUpdate")
+    public String updateInspectionCan(@ModelAttribute("inspectionCan") @Valid InspectionCan inspectionCan,
+                                      BindingResult result,
+                                      Model         model)
+    {
+        if (result.hasErrors()) {
+            System.err.println(" errors " + result.toString());
+            return "redirect:/inspectionCan/" + inspectionCan.getId();
+        }
+        inspectionCanService.update(inspectionCan.getId(), inspectionCan);
+        int id = inspectionCan.getInspection().getId();
+        message = "can updated successfully";
+        return "redirect:/inspectionCanNew/" + id;
+    }
+
+    @GetMapping("/inspectionCanNew/{id}")
+    public String inspectionCanNew(@PathVariable("id") int id, Model model)
+    {
+        Inspection inspection = inspectionService.get(id);
+        if (inspection.requireTemplate()) {
+            int                      rid  = inspection.getRental().getId();
+            List<InspectionTemplate> list = inspectionTemplateService.findByRentalId(rid);
+            if (list != null && list.size() > 0) {
+                inspection.setInspectionTemplate(list.get(0));
+            }
+        }
+        model.addAttribute("inspection", inspection);
+        if (message != null) {
+            model.addAttribute("message", message);
+            message = null;
+        }
+        return "/componentCans";
+    }
+
+    // id = inspection id
+    // cid = component id
+    @GetMapping("/inspectionCanAdd/{id}/{cid}")
+    public String inspectionCanAdd(@PathVariable("id" ) int   id,
+                                   @PathVariable("cid") int   cid,
+                                                        Model model)
+    {
+        TemplateComponent component     = componentService.get(cid);
+        InspectionCan     inspectionCan = new InspectionCan();
+        Inspection        inspection    = inspectionService.get(id);
+        inspectionCan.setTemplateComponent(component);
+        inspectionCan.setInspection(inspection);
+        model.addAttribute("inspectionCan", inspectionCan);
+        return "/inspectionCanNew";
+    }
+    // id = inspection id
+
+    // save
+    @PostMapping("/inspectionCanSave")
+    public String saveInspectionCan(@ModelAttribute("inspectionCan") @Valid InspectionCan inspectionCan,
+                                    BindingResult result,
+                                    Model         model)
+    {
+        if (result.hasErrors()) {
+            return "redirect:/inspectionCanNew";
+        }
+        message = " Saved successfully";
+        inspectionCanService.save(inspectionCan);
+        return "redirect:/inspectionCanNew/" + inspectionCan.getInspection().getId();
+    }
 }
-
-
