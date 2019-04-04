@@ -1,16 +1,16 @@
 package in.bloomington.rental.dao;
+
 import java.util.List;
 import org.hibernate.SessionFactory;
 import in.bloomington.rental.model.Can;
 
-public interface CanDao {
+public interface CanDao
+{
+    Can       get(int id);
+    void      save(Can can);
+    void      update(int id, Can can);
+    void      delete(int id);
 
-		Can get(int id);
-		void save(Can can);
-		void update(int id, Can can);
-		void delete(int id);
-
-		List<Can> findByName(String str);
-		List<Can> getAll();
-				
+    List<Can> findByName(String str);
+    List<Can> getAll();
 }

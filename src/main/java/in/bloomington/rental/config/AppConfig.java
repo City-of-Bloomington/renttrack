@@ -2,6 +2,7 @@ package in.bloomington.rental.config;
 
 import java.util.Properties;
 
+import org.hibernate.cfg.AvailableSettings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -73,40 +74,23 @@ public class AppConfig
     {
         LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
         Properties              props       = new Properties();
-        // Setting JDBC properties
-        props.put(DRIVER,  env.getProperty("postgres.driver"));
-        props.put(URL,     env.getProperty("postgres.url"));
-        props.put(USER,    env.getProperty("postgres.user"));
-        props.put(PASS,    env.getProperty("postgres.password"));
-        props.put(DIALECT, env.getProperty("postgres.dialect"));
+        props.put(AvailableSettings.DRIVER,         env.getProperty("postgres.driver"));
+        props.put(AvailableSettings.URL,            env.getProperty("postgres.url"));
+        props.put(AvailableSettings.USER,           env.getProperty("postgres.user"));
+        props.put(AvailableSettings.PASS,           env.getProperty("postgres.password"));
+        props.put(AvailableSettings.DIALECT,        env.getProperty("postgres.dialect"));
 
-        // Setting Hibernate properties
-        props.put(SHOW_SQL,     env.getProperty("hibernate.show_sql"));
-        props.put(HBM2DDL_AUTO, env.getProperty("hibernate.hbm2ddl.auto"));
-        // this will initialize lazy fetch
-        props.put("hibernate.enable_lazy_load_no_trans", "true");
+        props.put(AvailableSettings.SHOW_SQL,     env.getProperty("hibernate.show_sql"));
+        props.put(AvailableSettings.HBM2DDL_AUTO, env.getProperty("hibernate.hbm2ddl.auto"));
+        props.put(AvailableSettings.ENABLE_LAZY_LOAD_NO_TRANS, "true");
 
         // Setting C3P0 pooling properties
-        props.put(C3P0_MIN_SIZE,          env.getProperty("hibernate.c3p0.min_size"));
-        props.put(C3P0_MAX_SIZE,          env.getProperty("hibernate.c3p0.max_size"));
-        props.put(C3P0_ACQUIRE_INCREMENT, env.getProperty("hibernate.c3p0.acquire_increment"));
-        props.put(C3P0_TIMEOUT,           env.getProperty("hibernate.c3p0.timeout"));
-        props.put(C3P0_MAX_STATEMENTS,    env.getProperty("hibernate.c3p0.max_statements"));
+        props.put(AvailableSettings.C3P0_MIN_SIZE,          env.getProperty("hibernate.c3p0.min_size"));
+        props.put(AvailableSettings.C3P0_MAX_SIZE,          env.getProperty("hibernate.c3p0.max_size"));
+        props.put(AvailableSettings.C3P0_ACQUIRE_INCREMENT, env.getProperty("hibernate.c3p0.acquire_increment"));
+        props.put(AvailableSettings.C3P0_TIMEOUT,           env.getProperty("hibernate.c3p0.timeout"));
+        props.put(AvailableSettings.C3P0_MAX_STATEMENTS,    env.getProperty("hibernate.c3p0.max_statements"));
 
-        // dbcp pooling
-        /*
-         * <prop key="hibernate.dbcp.initialSize">8</prop> <prop
-         * key="hibernate.dbcp.maxActive">20</prop> <prop
-         * key="hibernate.dbcp.maxIdle">8</prop> <prop
-         * key="hibernate.dbcp.minIdle">0</prop> <prop
-         * key="hibernate.dbcp.maxWait">10000</prop> <prop
-         * key="hibernate.dbcp.minEvictableIdleTimeMillis">180000</prop> <prop
-         * key="hibernate.dbcp.timeBetweenEvictionRunsMillis">180000</prop> <prop
-         * key="hibernate.dbcp.testWhileIdle">true</prop> <prop
-         * key="hibernate.dbcp.testOnReturn">true</prop> <prop
-         * key="hibernate.dbcp.validationQuery">select 1</prop>
-         *
-         */
         factoryBean.setHibernateProperties(props);
         factoryBean.setAnnotatedClasses(Address.class,
                                         RentUser.class,
