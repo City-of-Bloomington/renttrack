@@ -49,13 +49,13 @@ public class Can implements java.io.Serializable
     public Can(int id, String type,
                        String title,
                        String item1,
-                       String tiem2,
+                       String item2,
                        String item3,
-                       String tiem4,
+                       String item4,
                        String item5,
-                       String tiem6,
+                       String item6,
                        String item7,
-                       String tiem8)
+                       String item8)
     {
         this.id    = id;
         this.type  = type;

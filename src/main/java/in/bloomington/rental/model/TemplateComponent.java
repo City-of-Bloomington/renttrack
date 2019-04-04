@@ -51,7 +51,7 @@ public class TemplateComponent implements java.io.Serializable
     public TemplateComponent(int id, InspectionTemplate inspectionTemplate,
                                      int                buildingNum,
                                      int                unitNum,
-                                     int                floorNumt,
+                                     int                floorNum,
                              String component)
     {
         this.id                 = id;
@@ -66,7 +66,7 @@ public class TemplateComponent implements java.io.Serializable
     public TemplateComponent(InspectionTemplate inspectionTemplate,
                              int                buildingNum,
                              int                unitNum,
-                             int                floorNumt,
+                             int                floorNum,
                              String             component)
     {
         this.inspectionTemplate = inspectionTemplate;
