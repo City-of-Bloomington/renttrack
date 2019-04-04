@@ -15,7 +15,10 @@ public class AttachBase
     {
     }
 
-    public AttachBase(int id, MultipartFile file, String fileName, String type, String notes)
+    public AttachBase(int id, MultipartFile file,
+                              String        fileName,
+                              String        type,
+                              String        notes)
     {
         this.id       = id;
         this.file     = file;

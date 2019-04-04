@@ -46,9 +46,15 @@ public class Address implements java.io.Serializable
         this.streetAddress = streetAddress;
     }
 
-    public Address(int id,
-                   Integer rentalId, String streetAddress, String city, Integer maStreetId, Integer maSubunitId,
-                   Integer maLocationId, Character invalid, Double longitude, Double latitude)
+    public Address(int id, Integer   rentalId,
+                           String    streetAddress,
+                           String    city,
+                           Integer   maStreetId,
+                           Integer   maSubunitId,
+                           Integer   maLocationId,
+                           Character invalid,
+                           Double    longitude,
+                           Double    latitude)
     {
         this.id            = id;
         this.rentalId      = rentalId;
