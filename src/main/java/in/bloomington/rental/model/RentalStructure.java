@@ -19,6 +19,7 @@ import javax.persistence.GenerationType;
 @Table(name = "rental_structures")
 public class RentalStructure implements java.io.Serializable
 {
+    private static final long serialVersionUID = 1L;
 
     private int              id;
     private BuildingType     buildingType;

@@ -19,6 +19,7 @@ import javax.persistence.Transient;
 @Table(name = "rental_logs")
 public class RentalLog implements java.io.Serializable
 {
+    private static final long serialVersionUID = 1L;
 
     SimpleDateFormat dtf = new SimpleDateFormat("MM/dd/yyyy");
     private int      id;

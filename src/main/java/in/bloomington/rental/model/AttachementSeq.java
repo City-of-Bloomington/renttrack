@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 @Table(name = "attachement_seq")
 public class AttachementSeq implements java.io.Serializable
 {
+    private static final long serialVersionUID = 1L;
 
     private int id;
 

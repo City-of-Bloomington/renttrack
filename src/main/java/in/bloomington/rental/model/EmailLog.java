@@ -22,6 +22,7 @@ import javax.persistence.GenerationType;
 @Table(name = "email_logs")
 public class EmailLog implements java.io.Serializable
 {
+    private static final long serialVersionUID = 1L;
 
     SimpleDateFormat             dtf             = new SimpleDateFormat("MM/dd/yyyy");
     private int                  id;

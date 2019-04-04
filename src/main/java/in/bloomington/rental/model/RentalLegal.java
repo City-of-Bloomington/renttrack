@@ -18,6 +18,7 @@ import javax.persistence.Transient;
 
 public class RentalLegal implements java.io.Serializable
 {
+    private static final long serialVersionUID = 1L;
 
     SimpleDateFormat dtf = new SimpleDateFormat("MM/dd/yyyy");
     private int      id;

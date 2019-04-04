@@ -20,6 +20,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "rental_notes")
 public class RentalNote implements java.io.Serializable
 {
+    private static final long serialVersionUID = 1L;
 
     SimpleDateFormat dtf = new SimpleDateFormat("MM/dd/yyyy");
     private int      id;

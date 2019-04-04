@@ -31,6 +31,7 @@ import in.bloomington.rental.util.Helper;
 
 public class Inspection implements java.io.Serializable
 {
+    private static final long serialVersionUID = 1L;
 
     SimpleDateFormat            dtf            = new SimpleDateFormat("MM/dd/yyyy");
     private static final Logger logger         = LogManager.getLogger(Inspection.class);

@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 @Table(name = "building_types")
 public class BuildingType implements java.io.Serializable
 {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

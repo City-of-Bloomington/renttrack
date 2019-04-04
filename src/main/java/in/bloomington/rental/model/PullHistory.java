@@ -21,6 +21,7 @@ import org.apache.logging.log4j.LogManager;
 @Table(name = "pull_history")
 public class PullHistory implements java.io.Serializable
 {
+    private static final long serialVersionUID = 1L;
 
     private final static SimpleDateFormat dtf    = new SimpleDateFormat("MM/dd/yyyy");
     private static final Logger           logger = LogManager.getLogger(PullHistory.class);

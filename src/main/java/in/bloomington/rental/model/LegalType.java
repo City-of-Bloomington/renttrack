@@ -6,6 +6,7 @@ package in.bloomington.rental.model;
  */
 public class LegalType implements java.io.Serializable
 {
+    private static final long serialVersionUID = 1L;
 
     String name = "", id = ""; // id is non integer string
 

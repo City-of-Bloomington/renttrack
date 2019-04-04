@@ -22,6 +22,7 @@ import org.apache.logging.log4j.LogManager;
 
 public class InspectionFileLog implements java.io.Serializable
 {
+    private static final long serialVersionUID = 1L;
 
     SimpleDateFormat            dtf    = new SimpleDateFormat("MM/dd/yyyy");
     private static final Logger logger = LogManager.getLogger(InspectionFileLog.class);

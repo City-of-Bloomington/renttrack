@@ -25,6 +25,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "rental_bills") // old name bills
 public class Bill implements java.io.Serializable
 {
+    private static final long serialVersionUID = 1L;
 
     SimpleDateFormat      dtf                 = new SimpleDateFormat("MM/dd/yyyy");
     private int           id;

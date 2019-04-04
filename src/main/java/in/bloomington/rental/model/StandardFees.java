@@ -23,8 +23,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "standard_fees")
 public class StandardFees implements java.io.Serializable
 {
+    private static final long serialVersionUID = 1L;
 
-    SimpleDateFormat   dtf                    = new SimpleDateFormat("MM/dd/yyyy");
+    SimpleDateFormat   dtf = new SimpleDateFormat("MM/dd/yyyy");
+    
     private int        id;
     private RentUser   user;
 

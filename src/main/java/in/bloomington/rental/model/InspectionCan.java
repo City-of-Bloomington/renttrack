@@ -18,6 +18,7 @@ import javax.persistence.GenerationType;
 
 public class InspectionCan implements java.io.Serializable
 {
+    private static final long serialVersionUID = 1L;
 
     private int               id;
     private Inspection        inspection;

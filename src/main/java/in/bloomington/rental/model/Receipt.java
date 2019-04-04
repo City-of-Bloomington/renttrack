@@ -20,6 +20,7 @@ import javax.persistence.Transient;
 @Table(name = "receipts")
 public class Receipt implements java.io.Serializable
 {
+    private static final long serialVersionUID = 1L;
 
     SimpleDateFormat   dtf = new SimpleDateFormat("MM/dd/yyyy");
     private int        id;

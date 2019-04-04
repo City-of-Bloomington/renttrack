@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 @Table(name = "inspection_types")
 public class InspectionType implements java.io.Serializable
 {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

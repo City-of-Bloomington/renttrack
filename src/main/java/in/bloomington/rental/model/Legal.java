@@ -10,6 +10,7 @@ import in.bloomington.rental.util.Helper;
  */
 public class Legal implements java.io.Serializable
 {
+    private static final long serialVersionUID = 1L;
 
     String        reason      = "",
                   startDate   = Helper.getToday(),

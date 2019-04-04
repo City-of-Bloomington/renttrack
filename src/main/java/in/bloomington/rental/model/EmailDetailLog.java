@@ -17,6 +17,7 @@ import in.bloomington.rental.util.Helper;
 
 public class EmailDetailLog implements java.io.Serializable
 {
+    private static final long serialVersionUID = 1L;
 
     private int      id;
     private String   logTo;

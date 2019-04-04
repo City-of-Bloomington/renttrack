@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 
 public class Egress implements java.io.Serializable
 {
+    private static final long serialVersionUID = 1L;
 
     private int     id;
     private Integer start_year;

@@ -15,6 +15,7 @@ import javax.persistence.Transient;
 @Table(name = "rental_owners")
 public class RentalOwner implements java.io.Serializable
 {
+    private static final long serialVersionUID = 1L;
 
     private int    id;
     private Owner  owner;

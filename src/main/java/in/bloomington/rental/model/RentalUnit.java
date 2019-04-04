@@ -20,6 +20,7 @@ import org.apache.logging.log4j.LogManager;
 @Table(name = "rental_units")
 public class RentalUnit implements java.io.Serializable
 {
+    private static final long serialVersionUID = 1L;
 
     private static final Logger logger = LogManager.getLogger(RentalUnit.class);
     private int                 id;

@@ -15,6 +15,7 @@ import javax.validation.constraints.Size;
 @Table(name = "owner_phones")
 public class OwnerPhone implements java.io.Serializable
 {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
