@@ -19,7 +19,7 @@ import in.bloomington.rental.model.Address;
 public class AddressDaoImp implements AddressDao
 {
 
-    int                    limit = 30;
+    private int limit = 30;
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -40,7 +40,7 @@ public class AddressDaoImp implements AddressDao
     {
         Session session = sessionFactory.getCurrentSession();
         Address addr2   = session.byId(Address.class).load(id);
-        addr2 = (Address) session.merge(address);
+                addr2   = (Address) session.merge(address);
         session.update(addr2);
         session.flush();
     }
@@ -57,8 +57,9 @@ public class AddressDaoImp implements AddressDao
     public void delete(Address address)
     {
         Session session = sessionFactory.getCurrentSession();
-        if (address != null)
+        if (address != null) {
             session.delete(address);
+        }
     }
 
     @Override
@@ -77,11 +78,13 @@ public class AddressDaoImp implements AddressDao
         Session session = sessionFactory.getCurrentSession();
         String  qq      = "from Address s ";
         String  qw      = "";
-        if (address != null && !address.equals(""))
+        if (address != null && !address.equals("")) {
             qw += " s.streetAddress like :address ";
+        }
         if (inValid != null && !inValid.equals("")) {
-            if (!qw.equals(""))
+            if (!qw.equals("")) {
                 qw += " and ";
+            }
             qw += " s.invalid is not null ";
         }
         if (!qw.equals("")) {
@@ -109,11 +112,10 @@ public class AddressDaoImp implements AddressDao
     {
         Session    session = sessionFactory.getCurrentSession();
         String     qq      = "select s.id as id,s.street_address as name from addresses s "
-            + " where  s.street_address like '%" + address + "%' ";
+                           + " where  s.street_address like '%" + address + "%' ";
         List<Item> items   = session.createNativeQuery(qq)
-            // List<Item> items = session.createSQLQuery(qq)
-            .setResultTransformer(Transformers.aliasToBean(Item.class)).list();
+                                    .setResultTransformer(Transformers.aliasToBean(Item.class))
+                                    .list();
         return items;
-
     }
 }
