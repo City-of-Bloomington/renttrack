@@ -14,14 +14,12 @@ public class AttachementSeqDaoImp implements AttachementSeqDao
     @Override
     public AttachementSeq get(int id)
     {
-        return sessionFactory.getCurrentSession()
-                             .get(AttachementSeq.class, id);
+        return sessionFactory.getCurrentSession().get(AttachementSeq.class, id);
     }
 
     @Override
     public void save(AttachementSeq attachementSeq)
     {
-        sessionFactory.getCurrentSession()
-                      .save(attachementSeq);
+        sessionFactory.getCurrentSession().save(attachementSeq);
     }
 }

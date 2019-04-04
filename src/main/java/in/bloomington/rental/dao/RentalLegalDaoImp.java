@@ -1,4 +1,5 @@
 package in.bloomington.rental.dao;
+
 import java.util.List;
 import org.hibernate.SessionFactory;
 import org.hibernate.Session;
@@ -10,18 +11,21 @@ import org.hibernate.criterion.Order;
 import in.bloomington.rental.model.RentalLegal;
 
 @Repository
-public class RentalLegalDaoImp implements RentalLegalDao{
-		@Autowired
-		private SessionFactory sessionFactory;
-		int limit = 30;
+public class RentalLegalDaoImp implements RentalLegalDao
+{
+    @Autowired
+    private SessionFactory sessionFactory;
+    private int            limit = 30;
 
-		@Override
-		public RentalLegal get(int id){
-				return sessionFactory.getCurrentSession().get(RentalLegal.class, id);
-		}
-		@Override
-		public void save(RentalLegal val){
-				sessionFactory.getCurrentSession().save(val);
-		}
+    @Override
+    public RentalLegal get(int id)
+    {
+        return sessionFactory.getCurrentSession().get(RentalLegal.class, id);
+    }
 
+    @Override
+    public void save(RentalLegal val)
+    {
+        sessionFactory.getCurrentSession().save(val);
+    }
 }

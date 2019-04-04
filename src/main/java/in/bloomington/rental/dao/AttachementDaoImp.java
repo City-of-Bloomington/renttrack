@@ -16,8 +16,6 @@ import in.bloomington.rental.model.Attachement;
 @Repository
 public class AttachementDaoImp implements AttachementDao
 {
-
-    int                    limit = 30;
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -69,5 +67,4 @@ public class AttachementDaoImp implements AttachementDao
         return query.list();
 
     }
-
 }

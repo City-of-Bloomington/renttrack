@@ -11,41 +11,48 @@ import org.springframework.stereotype.Repository;
 import in.bloomington.rental.model.PullReason;
 
 @Repository
-public class PullReasonDaoImp implements PullReasonDao {
+public class PullReasonDaoImp implements PullReasonDao
+{
 
-   @Autowired
-   private SessionFactory sessionFactory;
+    @Autowired
+    private SessionFactory sessionFactory;
 
-		@Override
-   public PullReason get(int id) {
-      return sessionFactory.getCurrentSession().get(PullReason.class, id);
-   }
-   @Override
-   public void save(PullReason val) {
-      sessionFactory.getCurrentSession().save(val);
-   }
+    @Override
+    public PullReason get(int id)
+    {
+        return sessionFactory.getCurrentSession().get(PullReason.class, id);
+    }
 
-		@Override
-   public void update(int id, PullReason val) {
-      Session session = sessionFactory.getCurrentSession();
-      PullReason val2 = session.byId(PullReason.class).load(id);
-      val2.setReason(val.getReason());
-			val2.setAlias(val.getAlias());			
-      session.flush();
-   }
+    @Override
+    public void save(PullReason val)
+    {
+        sessionFactory.getCurrentSession().save(val);
+    }
 
-		@Override
-   public void delete(int id) {
-      Session session = sessionFactory.getCurrentSession();
-      PullReason val = session.byId(PullReason.class).load(id);
-      session.delete(val);
-   }		
+    @Override
+    public void update(int id, PullReason val)
+    {
+        Session    session = sessionFactory.getCurrentSession();
+        PullReason val2    = session.byId(PullReason.class).load(id);
+        val2.setReason(val.getReason());
+        val2.setAlias (val.getAlias());
+        session.flush();
+    }
 
-   @Override
-   public List<PullReason> list() {
-      @SuppressWarnings("unchecked")
-      TypedQuery<PullReason> query = sessionFactory.getCurrentSession().createQuery("from PullReason");
-      return query.getResultList();
-   }
+    @Override
+    public void delete(int id)
+    {
+        Session    session = sessionFactory.getCurrentSession();
+        PullReason val     = session.byId(PullReason.class).load(id);
+        session.delete(val);
+    }
 
+    @Override
+    public List<PullReason> list()
+    {
+        @SuppressWarnings("unchecked")
+        TypedQuery<PullReason> query = sessionFactory.getCurrentSession()
+                                                     .createQuery("from PullReason");
+        return query.getResultList();
+    }
 }

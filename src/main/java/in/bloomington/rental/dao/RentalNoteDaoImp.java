@@ -13,53 +13,61 @@ import in.bloomington.rental.model.RentalNote;
 import in.bloomington.rental.model.Rental;
 
 @Repository
-public class RentalNoteDaoImp implements RentalNoteDao {
+public class RentalNoteDaoImp implements RentalNoteDao
+{
+    @Autowired
+    private SessionFactory sessionFactory;
 
-   @Autowired
-   private SessionFactory sessionFactory;
+    @Override
+    public RentalNote get(int id)
+    {
+        return sessionFactory.getCurrentSession().get(RentalNote.class, id);
+    }
 
-		@Override
-   public RentalNote get(int id) {
-      return sessionFactory.getCurrentSession().get(RentalNote.class, id);
-   }
-   @Override
-   public void save(RentalNote val) {
-      Session session = sessionFactory.getCurrentSession();			 
-      session.save(val);
-			Rental rental = val.getRental();
-      session.flush();					
-   }
+    @Override
+    public void save(RentalNote val)
+    {
+        Session session = sessionFactory.getCurrentSession();
+        session.save(val);
+        Rental rental = val.getRental();
+        session.flush();
+    }
 
-		@Override
-   public void update(int id, RentalNote val) {
-      Session session = sessionFactory.getCurrentSession();
-      RentalNote val2 = session.byId(RentalNote.class).load(id);
-			val2 = (RentalNote)session.merge(val);
-			session.update(val2); 
-      session.flush();				
-    }		
+    @Override
+    public void update(int id, RentalNote val)
+    {
+        Session    session = sessionFactory.getCurrentSession();
+        RentalNote val2    = session.byId(RentalNote.class).load(id);
+        val2 = (RentalNote) session.merge(val);
+        session.update(val2);
+        session.flush();
+    }
 
-		@Override
-   public void delete(int id) {
-      Session session = sessionFactory.getCurrentSession();
-      RentalNote val = session.byId(RentalNote.class).load(id);
-      session.delete(val);
-   }		
+    @Override
+    public void delete(int id)
+    {
+        Session    session = sessionFactory.getCurrentSession();
+        RentalNote val     = session.byId(RentalNote.class).load(id);
+        session.delete(val);
+    }
 
-   @Override
-   public List<RentalNote> list() {
-      @SuppressWarnings("unchecked")
-      TypedQuery<RentalNote> query = sessionFactory.getCurrentSession().createQuery("from RentalNote");
-      return query.getResultList();
-   }
-		@Override
-		public List<RentalNote> findByRentalId(int rental_id){
-				String qq = "from rental_notes rn where rn.rental_id :rental_id";
-				Session session = sessionFactory.getCurrentSession();
-				Query query = session.createQuery(qq);
-				query.setParameter("rental_id", rental_id);
-				List<RentalNote> notes = query.list();
-				return notes;
-		}		
+    @Override
+    public List<RentalNote> list()
+    {
+        @SuppressWarnings("unchecked")
+        TypedQuery<RentalNote> query = sessionFactory.getCurrentSession()
+                                                     .createQuery("from RentalNote");
+        return query.getResultList();
+    }
 
+    @Override
+    public List<RentalNote> findByRentalId(int rental_id)
+    {
+        String  qq      = "from rental_notes rn where rn.rental_id :rental_id";
+        Session session = sessionFactory.getCurrentSession();
+        Query   query   = session.createQuery(qq);
+        query.setParameter("rental_id", rental_id);
+        List<RentalNote> notes = query.list();
+        return notes;
+    }
 }

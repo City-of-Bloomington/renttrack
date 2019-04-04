@@ -53,7 +53,8 @@ public class OwnerPhoneDaoImp implements OwnerPhoneDao
     @Override
     public List<OwnerPhone> list()
     {
-        TypedQuery<OwnerPhone> query = sessionFactory.getCurrentSession().createQuery("from OwnerPhone", OwnerPhone.class);
+        TypedQuery<OwnerPhone> query = sessionFactory.getCurrentSession()
+                                                     .createQuery("from OwnerPhone", OwnerPhone.class);
         return query.getResultList();
     }
 
@@ -62,10 +63,9 @@ public class OwnerPhoneDaoImp implements OwnerPhoneDao
     {
         String  qq      = "from {h-schema}owner_phones op where op.owner_id :owner_id";
         Session session = sessionFactory.getCurrentSession();
-        Query   query   = session.createQuery(qq);
-        query.setParameter("owner_id", owner_id);
+        Query   query   = session.createQuery(qq)
+                                 .setParameter("owner_id", owner_id);
         List<OwnerPhone> phones = query.list();
         return phones;
     }
-
 }
