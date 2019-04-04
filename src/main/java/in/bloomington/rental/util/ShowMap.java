@@ -1,16 +1,18 @@
 package in.bloomington.rental.util;
 
-import java.util.*;
-import java.sql.*;
-import java.io.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.naming.*;
-import javax.sql.*;
-import javax.naming.directory.*;
-import in.bloomington.rental.model.Address;
-import org.apache.logging.log4j.Logger;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Enumeration;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import in.bloomington.rental.model.Address;
 
 
 public class ShowMap extends HttpServlet{

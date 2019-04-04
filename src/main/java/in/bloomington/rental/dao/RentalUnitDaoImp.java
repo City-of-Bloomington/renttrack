@@ -1,16 +1,17 @@
 package in.bloomington.rental.dao;
 
 import java.util.List;
-import org.hibernate.SessionFactory;
+
+import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.hibernate.Query;
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Order;
-import org.hibernate.transform.*;
-import in.bloomington.rental.model.RentalUnit;
+
 import in.bloomington.rental.model.Address;
+import in.bloomington.rental.model.RentalUnit;
 
 @Repository
 public class RentalUnitDaoImp implements RentalUnitDao

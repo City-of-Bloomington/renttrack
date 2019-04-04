@@ -48,20 +48,20 @@ public class Rental implements java.io.Serializable
     private Short                 NHood;
     private Character             affordable;
     private Character             inactive;
-    private List<RentalOwner>     rentalOwners     = new ArrayList(0);
-    private List<Variance>        variances        = new ArrayList<>(0);
-    private List<Address>         addresses        = new ArrayList<>();
-    private List<RentalStructure> rentalStructures = new ArrayList<>(0);
-    private List<RentalNote>      rentalNotes      = new ArrayList<>(0);
-    private List<PullHistory>     pullHistories    = new ArrayList<>(0);
-    private List<Bill>            bills            = new ArrayList<>(0);
-    private List<Attachement>     attachements     = new ArrayList<>(0);
-    private List<RentalLog>       rentalLogs       = new ArrayList<>(0);
-    private List<LegalItEmailLog> legalItEmailLogs = new ArrayList<>(0);
-    private List<Inspection>      inspections      = new ArrayList<>(0);
-    private List<RentalLegal>     rentalLegals     = new ArrayList<>(0);
+    private List<RentalOwner>     rentalOwners     = new ArrayList<RentalOwner>();
+    private List<Variance>        variances        = new ArrayList<Variance>();
+    private List<Address>         addresses        = new ArrayList<Address>();
+    private List<RentalStructure> rentalStructures = new ArrayList<RentalStructure>();
+    private List<RentalNote>      rentalNotes      = new ArrayList<RentalNote>();
+    private List<PullHistory>     pullHistories    = new ArrayList<PullHistory>();
+    private List<Bill>            bills            = new ArrayList<Bill>();
+    private List<Attachement>     attachements     = new ArrayList<Attachement>();
+    private List<RentalLog>       rentalLogs       = new ArrayList<RentalLog>();
+    private List<LegalItEmailLog> legalItEmailLogs = new ArrayList<LegalItEmailLog>();
+    private List<Inspection>      inspections      = new ArrayList<Inspection>();
+    private List<RentalLegal>     rentalLegals     = new ArrayList<RentalLegal>();
     @Transient
-    private List<Owner>           owners           = new ArrayList<>(0);
+    private List<Owner>           owners           = new ArrayList<Owner>();
 
     public Rental()
     {

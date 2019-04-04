@@ -1,7 +1,6 @@
 package in.bloomington.rental.controller;
 
 import java.util.Locale;
-import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.http.ResponseEntity;
 
 import in.bloomington.rental.model.BuildingType;
 import in.bloomington.rental.service.BuildingTypeService;

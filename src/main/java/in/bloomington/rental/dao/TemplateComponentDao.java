@@ -1,7 +1,5 @@
 package in.bloomington.rental.dao;
 
-import java.util.List;
-import org.hibernate.SessionFactory;
 import in.bloomington.rental.model.TemplateComponent;
 
 public interface TemplateComponentDao

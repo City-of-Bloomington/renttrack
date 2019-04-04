@@ -1,48 +1,50 @@
 package in.bloomington.rental.controller;
 
-import java.util.Locale;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Date;
-import javax.validation.Valid;
-import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.FileInputStream;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.multipart.MultipartFile;
-import javax.servlet.http.HttpServletRequest;
-import org.springframework.context.annotation.Scope;
-import in.bloomington.rental.model.RentalStructure;
-import in.bloomington.rental.service.RentalStructureService;
-import in.bloomington.rental.model.Rental;
-import in.bloomington.rental.model.RentUser;
-import in.bloomington.rental.model.InspectionType;
+
 import in.bloomington.rental.model.Inspection;
 import in.bloomington.rental.model.InspectionFileLog;
-import in.bloomington.rental.util.RtfWriter;
-import in.bloomington.rental.service.RentalService;
-import in.bloomington.rental.service.InspectionTypeService;
-import in.bloomington.rental.service.InspectionService;
-import in.bloomington.rental.service.UserService;
+import in.bloomington.rental.model.InspectionType;
+import in.bloomington.rental.model.RentUser;
+import in.bloomington.rental.model.Rental;
 import in.bloomington.rental.service.InspectionFileLogService;
-import org.springframework.core.io.InputStreamResource;
+import in.bloomington.rental.service.InspectionService;
+import in.bloomington.rental.service.InspectionTypeService;
+import in.bloomington.rental.service.RentalService;
+import in.bloomington.rental.service.UserService;
 import in.bloomington.rental.util.GeneralHelper;
 import in.bloomington.rental.util.Helper;
+import in.bloomington.rental.util.RtfWriter;
 
 @Controller
 @Scope("session")

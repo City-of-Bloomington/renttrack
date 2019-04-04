@@ -6,14 +6,11 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import org.hibernate.Query;
 import javax.validation.constraints.Size;
-import java.util.Set;
-import java.util.HashSet;
 
 @Entity
 @Table(name = "owner_phones")

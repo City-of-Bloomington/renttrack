@@ -62,8 +62,8 @@ public class Inspection implements java.io.Serializable
     private RentUser            approver;
     private Date                approvedDate;
 
-    private List<Attachement>   attachements   = new ArrayList<>(0);
-    private List<InspectionCan> inspectionCans = new ArrayList(0);
+    private List<Attachement>   attachements   = new ArrayList<Attachement>();
+    private List<InspectionCan> inspectionCans = new ArrayList<InspectionCan>();
 
     @Transient
     private InspectionTemplate  template;

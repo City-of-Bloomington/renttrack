@@ -1,9 +1,9 @@
 package in.bloomington.rental.dao;
 
 import java.util.List;
-import org.hibernate.SessionFactory;
-import in.bloomington.rental.model.Owner;
+
 import in.bloomington.rental.model.Item;
+import in.bloomington.rental.model.Owner;
 import in.bloomington.rental.model.RentalOwner;
 
 public interface OwnerDao

@@ -1,32 +1,37 @@
 package in.bloomington.rental.util;
 
-import java.util.*;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.List;
-import java.io.*;
-import java.awt.Color.*;
-import java.awt.Color;
-import com.lowagie.text.*;
-import com.lowagie.text.rtf.*;
-import com.lowagie.text.rtf.table.*;
-import com.lowagie.text.rtf.headerfooter.*;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.lowagie.text.Chunk;
 import com.lowagie.text.Document;
-import com.lowagie.text.Font;
 import com.lowagie.text.Element;
+import com.lowagie.text.Font;
 import com.lowagie.text.FontFactory;
 import com.lowagie.text.Paragraph;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
-import in.bloomington.rental.model.Inspection;
-import in.bloomington.rental.model.InspectionType;
-import in.bloomington.rental.model.InspectionCan;
-import in.bloomington.rental.model.TemplateComponent;
+import com.lowagie.text.Phrase;
+import com.lowagie.text.Rectangle;
+import com.lowagie.text.Table;
+import com.lowagie.text.rtf.RtfWriter2;
+import com.lowagie.text.rtf.headerfooter.RtfHeaderFooter;
+import com.lowagie.text.rtf.table.RtfBorder;
+import com.lowagie.text.rtf.table.RtfBorderGroup;
+import com.lowagie.text.rtf.table.RtfCell;
+
 import in.bloomington.rental.model.Address;
-import in.bloomington.rental.model.RentalOwner;
+import in.bloomington.rental.model.Inspection;
+import in.bloomington.rental.model.InspectionCan;
+import in.bloomington.rental.model.InspectionType;
 import in.bloomington.rental.model.Owner;
 import in.bloomington.rental.model.Rental;
+import in.bloomington.rental.model.RentalOwner;
 import in.bloomington.rental.model.RentalStructure;
 import in.bloomington.rental.model.RentalUnit;
+import in.bloomington.rental.model.TemplateComponent;
 import in.bloomington.rental.model.Variance;
 
 public class RtfWriter{

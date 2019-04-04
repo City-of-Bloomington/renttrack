@@ -1,51 +1,47 @@
 package in.bloomington.rental.controller;
 
-import java.util.Locale;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Set;
-import java.util.Date;
-import java.util.Map;
-import java.util.HashSet;
-import java.util.HashMap;
-import javax.validation.Valid;
-import javax.servlet.http.HttpSession;
 import java.io.File;
-import java.io.FileInputStream;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+
+import javax.servlet.http.HttpSession;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.context.annotation.Scope;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.http.ResponseEntity;
-import org.json.JSONObject;
-import in.bloomington.rental.model.RentUser;
+
 import in.bloomington.rental.model.Address;
+import in.bloomington.rental.model.EmailDetailLog;
+import in.bloomington.rental.model.EmailLog;
 import in.bloomington.rental.model.Owner;
 import in.bloomington.rental.model.Rental;
 import in.bloomington.rental.model.RentalOwner;
-import in.bloomington.rental.model.EmailLog;
-import in.bloomington.rental.model.EmailDetailLog;
-import in.bloomington.rental.util.Emailer;
-import in.bloomington.rental.util.EmailHandle;
-import in.bloomington.rental.util.Helper;
-import in.bloomington.rental.util.GeneralHelper;
 import in.bloomington.rental.service.AddressService;
+import in.bloomington.rental.service.EmailDetailLogService;
+import in.bloomington.rental.service.EmailLogService;
 import in.bloomington.rental.service.OwnerService;
 import in.bloomington.rental.service.RentalService;
-import in.bloomington.rental.service.EmailLogService;
-import in.bloomington.rental.service.EmailDetailLogService;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
+import in.bloomington.rental.util.EmailHandle;
+import in.bloomington.rental.util.Emailer;
+import in.bloomington.rental.util.GeneralHelper;
+import in.bloomington.rental.util.Helper;
 
 @Controller
 @Scope("session")

@@ -14,7 +14,6 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import static org.hibernate.cfg.Environment.*;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import in.bloomington.rental.model.Address;
 import in.bloomington.rental.model.RentUser;
@@ -45,7 +44,6 @@ import in.bloomington.rental.model.InspectionTemplate;
 import in.bloomington.rental.model.TemplateComponent;
 import in.bloomington.rental.model.EmailLog;
 import in.bloomington.rental.model.EmailDetailLog;
-import in.bloomington.rental.model.AttachBase;
 import in.bloomington.rental.model.Attachement;
 import in.bloomington.rental.model.AttachementSeq;
 import in.bloomington.rental.model.LegalItEmailLog;

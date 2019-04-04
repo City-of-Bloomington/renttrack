@@ -1,7 +1,7 @@
 package in.bloomington.rental.controller;
 
-import java.util.Locale;
 import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,20 +10,17 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 
-import in.bloomington.rental.model.InspectionCan;
-import in.bloomington.rental.service.InspectionCanService;
 import in.bloomington.rental.model.Inspection;
-import in.bloomington.rental.service.InspectionService;
-import in.bloomington.rental.model.TemplateComponent;
-import in.bloomington.rental.service.TemplateComponentService;
+import in.bloomington.rental.model.InspectionCan;
 import in.bloomington.rental.model.InspectionTemplate;
+import in.bloomington.rental.model.TemplateComponent;
+import in.bloomington.rental.service.InspectionCanService;
+import in.bloomington.rental.service.InspectionService;
 import in.bloomington.rental.service.InspectionTemplateService;
+import in.bloomington.rental.service.TemplateComponentService;
 
 @Controller
 public class InspectionCanController {

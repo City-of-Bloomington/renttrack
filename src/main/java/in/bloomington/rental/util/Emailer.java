@@ -1,24 +1,11 @@
 package in.bloomington.rental.util;
-import java.util.List;
-import java.util.Map;
-import java.util.Date;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.ArrayList;
-// import java.text.SimpleDateFormat;
-import java.io.File;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.Files;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.stereotype.Component;
-import org.apache.logging.log4j.Logger;
+
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Component;
 
 @Component
 public class Emailer{

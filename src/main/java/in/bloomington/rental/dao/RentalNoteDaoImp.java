@@ -4,13 +4,14 @@ import java.util.List;
 
 import javax.persistence.TypedQuery;
 
-import org.hibernate.SessionFactory;
-import org.hibernate.Session;
 import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import in.bloomington.rental.model.RentalNote;
+
 import in.bloomington.rental.model.Rental;
+import in.bloomington.rental.model.RentalNote;
 
 @Repository
 public class RentalNoteDaoImp implements RentalNoteDao

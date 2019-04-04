@@ -1,10 +1,7 @@
 package in.bloomington.rental.model;
 
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
-import java.text.SimpleDateFormat;
 import in.bloomington.rental.util.Helper;
 
 /*

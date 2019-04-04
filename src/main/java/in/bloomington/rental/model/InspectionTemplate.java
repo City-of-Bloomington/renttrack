@@ -1,15 +1,11 @@
 package in.bloomington.rental.model;
 
 import java.text.SimpleDateFormat;
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.HashMap;
-import java.text.SimpleDateFormat;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;

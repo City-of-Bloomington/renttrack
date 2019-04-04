@@ -1,7 +1,5 @@
 package in.bloomington.rental.model;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.List;
 import java.util.ArrayList;
 import javax.persistence.Column;

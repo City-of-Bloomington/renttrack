@@ -1,23 +1,20 @@
 package in.bloomington.rental.util;
-import java.util.List;
-import java.util.Map;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.regex.*;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+
 import java.io.File;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.Files;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.stereotype.Component;
-import org.apache.logging.log4j.Logger;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Component;
 
 @Component
 public class Helper{

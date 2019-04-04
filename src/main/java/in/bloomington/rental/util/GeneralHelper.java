@@ -1,34 +1,22 @@
 package in.bloomington.rental.util;
-import java.util.List;
-import java.math.BigDecimal;
-import java.util.ArrayList;
+
 import java.util.Hashtable;
-import javax.naming.*;
-import javax.naming.directory.*;
+
+import javax.naming.Context;
+import javax.naming.NamingEnumeration;
+import javax.naming.NamingException;
+import javax.naming.directory.Attribute;
+import javax.naming.directory.Attributes;
+import javax.naming.directory.SearchControls;
+import javax.naming.directory.SearchResult;
 import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.cookie.Cookie;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.HTTP;
-import org.springframework.core.env.Environment;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.stereotype.Component;
-import org.json.*;
-import org.apache.logging.log4j.Logger;
+
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
 
 @Component
 public class GeneralHelper{
@@ -128,7 +116,7 @@ public class GeneralHelper{
 				//Specify the search scope
 				ctls.setSearchScope(SearchControls.SUBTREE_SCOPE);
 				
-				Hashtable env = new Hashtable();
+				Hashtable<String, String> env = new Hashtable<String, String>();
 				env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
 				env.put(Context.PROVIDER_URL, ldap_host);
 				env.put(Context.SECURITY_AUTHENTICATION, "simple");

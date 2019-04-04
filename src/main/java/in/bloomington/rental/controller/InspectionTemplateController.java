@@ -1,34 +1,32 @@
 package in.bloomington.rental.controller;
 
-import java.util.Locale;
-import java.util.List;
-import java.util.Date;
 import java.util.ArrayList;
-import javax.validation.Valid;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.context.annotation.Scope;
-import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+
 import in.bloomington.rental.model.InspectionTemplate;
-import in.bloomington.rental.service.InspectionTemplateService;
+import in.bloomington.rental.model.RentUser;
 import in.bloomington.rental.model.RentalStructure;
 import in.bloomington.rental.model.RentalUnit;
-import in.bloomington.rental.model.UnitRoom;
 import in.bloomington.rental.model.TemplateComponent;
+import in.bloomington.rental.model.UnitRoom;
+import in.bloomington.rental.service.InspectionTemplateService;
 import in.bloomington.rental.service.RentalStructureService;
 import in.bloomington.rental.service.TemplateComponentService;
-import in.bloomington.rental.model.TemplateComponent;
-import in.bloomington.rental.model.RentUser;
 @Controller
 @Scope("session")
 public class InspectionTemplateController {

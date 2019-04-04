@@ -2,13 +2,11 @@ package in.bloomington.rental.dao;
 
 import java.util.List;
 
-import javax.persistence.TypedQuery;
-
 import org.hibernate.SessionFactory;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.hibernate.Query;
+import org.hibernate.query.Query;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.transform.*;
