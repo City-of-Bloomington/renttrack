@@ -44,6 +44,7 @@
         dest: "{{ tomcat_webapps }}/{{ renttrack_app_name }}.war"
         owner: "tomcat8"
         group: "staff"
+        mode:  "0664"
       notify: "tomcat_restart"
 
     - name: "Apache site configuration"
