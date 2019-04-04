@@ -61,7 +61,7 @@ public class OwnerPhoneDaoImp implements OwnerPhoneDao
     @Override
     public List<OwnerPhone> findByOwnerId(int owner_id)
     {
-        String  qq      = "from {h-schema}owner_phones op where op.owner_id :owner_id";
+        String  qq      = "from owner_phones op where op.owner_id :owner_id";
         Session session = sessionFactory.getCurrentSession();
         Query   query   = session.createQuery(qq)
                                  .setParameter("owner_id", owner_id);

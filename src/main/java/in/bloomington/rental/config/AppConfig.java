@@ -73,12 +73,14 @@ public class AppConfig
     public LocalSessionFactoryBean getSessionFactory()
     {
         LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
+
         Properties              props       = new Properties();
         props.put(AvailableSettings.DRIVER,         env.getProperty("postgres.driver"));
         props.put(AvailableSettings.URL,            env.getProperty("postgres.url"));
         props.put(AvailableSettings.USER,           env.getProperty("postgres.user"));
         props.put(AvailableSettings.PASS,           env.getProperty("postgres.password"));
         props.put(AvailableSettings.DIALECT,        env.getProperty("postgres.dialect"));
+        props.put(AvailableSettings.DEFAULT_SCHEMA, env.getProperty("postgres.schema"));
 
         props.put(AvailableSettings.SHOW_SQL,     env.getProperty("hibernate.show_sql"));
         props.put(AvailableSettings.HBM2DDL_AUTO, env.getProperty("hibernate.hbm2ddl.auto"));

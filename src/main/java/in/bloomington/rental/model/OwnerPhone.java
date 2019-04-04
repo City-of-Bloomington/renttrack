@@ -16,7 +16,7 @@ import java.util.Set;
 import java.util.HashSet;
 
 @Entity
-@Table(name = "owner_phones", schema = "public")
+@Table(name = "owner_phones")
 public class OwnerPhone implements java.io.Serializable
 {
 
