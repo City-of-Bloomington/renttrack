@@ -3,15 +3,12 @@ package in.bloomington.rental.util;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 @Component
 public class Search
 {
 
-    private static final Logger logger    = LogManager.getLogger(Search.class);
     SimpleDateFormat dtf       = new SimpleDateFormat("MM/dd/yyyy");
     Integer          statusId, zoningId, NHood, addressId;
     Integer          id;

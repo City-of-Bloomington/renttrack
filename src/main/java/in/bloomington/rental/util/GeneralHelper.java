@@ -12,8 +12,6 @@ import javax.naming.directory.SearchResult;
 import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -22,7 +20,6 @@ import org.springframework.stereotype.Component;
 public class GeneralHelper
 {
 
-    private static final Logger logger = LogManager.getLogger(GeneralHelper.class);
     static String url        = "",
                   image_url  = "",
                   group_name = "";

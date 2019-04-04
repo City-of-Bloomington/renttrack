@@ -480,7 +480,6 @@ public class RtfWriter
     String writeHeader(Document document)
     {
         String    msg = "";
-        Phrase    phrase;
         Paragraph pp;
         try {
             com.lowagie.text.Image image = com.lowagie.text.Image.getInstance(image_url);
@@ -503,7 +502,6 @@ public class RtfWriter
     String writeFooter(Document document)
     {
         String    msg = "";
-        Phrase    phrase;
         Chunk     chunk;
         Paragraph pp;
         try {
@@ -614,7 +612,6 @@ public class RtfWriter
     {
         Chunk     chunk;
         Paragraph pp;
-        Phrase    phrase;
         String    msg = "";
         try {
             if (inspect.hasInspectionCans()) {

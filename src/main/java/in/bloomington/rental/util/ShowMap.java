@@ -34,7 +34,6 @@ public class ShowMap extends HttpServlet
      */
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException
     {
-        boolean connectDbOk = false;
         res.setContentType("text/html");
         Enumeration<String> values  = req.getParameterNames();
 
@@ -46,9 +45,7 @@ public class ShowMap extends HttpServlet
                             address = "";
         String              name,
                             value;
-        String              action  = "",
-                            message = "";
-        boolean             success = true;
+        String              message = "";
         String[]            vals;
 
         while (values.hasMoreElements()) {
@@ -86,12 +83,8 @@ public class ShowMap extends HttpServlet
                     logger.error(message);
                 }
             }
-            else {
-                success = false;
-            }
         }
         catch (Exception ex) {
-            success = false;
             logger.error(ex);
         }
         out.println("<html>");

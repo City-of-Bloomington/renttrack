@@ -3,15 +3,12 @@ package in.bloomington.rental.util;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 @Component
 public class Emailer
 {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/d/yyyy");
-    private static final Logger logger    = LogManager.getLogger(Emailer.class);
     String            dateFrom  = "",
                       dateTo    = "",
                       cc        = "Enter an email address here (optional)",

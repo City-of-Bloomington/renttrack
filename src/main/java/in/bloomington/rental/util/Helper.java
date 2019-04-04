@@ -12,16 +12,12 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 @Component
 public class Helper
 {
-
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/d/yyyy");
-    private static final Logger            logger    = LogManager.getLogger(Helper.class);
     final static Map<String, String>       mimeTypes = new HashMap<>();
     static {
         mimeTypes.put("image/gif",       "gif");

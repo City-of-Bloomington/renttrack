@@ -24,8 +24,8 @@ import in.bloomington.rental.model.LegalType;
 public class LegalHandle
 {
 
-    private static final Logger logger     = LogManager.getLogger(LegalHandle.class);
-    static String               url        = "";
+    private static final Logger logger = LogManager.getLogger(LegalHandle.class);
+    static String               url    = "";
 
     @Autowired
     private Environment         env;
