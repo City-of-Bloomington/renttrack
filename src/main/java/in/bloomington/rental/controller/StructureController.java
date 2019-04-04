@@ -102,7 +102,6 @@ public class StructureController {
 				}
 				structureService.update(structure.getId(), structure);
 				message = "Structure updated successfully";
-				Integer rentalId = structure.getRentalId();
 				return "redirect:/structure/"+structure.getId();
 		}		
 		@GetMapping("/structureNew/{id}")

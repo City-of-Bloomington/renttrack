@@ -65,7 +65,6 @@ public class LegalController
     {
         Legal       legal  = new Legal();
         Rental      rental = rentalService.get(id);
-        List<Owner> owners = null;
         if (rental.hasOwners()) {
             List<RentalOwner> rones = rental.getRentalOwners();
             for (RentalOwner rone : rones) {

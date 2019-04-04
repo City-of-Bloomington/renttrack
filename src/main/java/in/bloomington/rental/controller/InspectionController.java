@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -55,8 +54,6 @@ public class InspectionController
     public final static String[]     foundationTypes = { "Basement", "Slab", "Cellar", "Crawl Space", "Other" };
     public final static String[]     heatSources     = { "Electric", "Gas", "Electric/Gas", "Other" };
     
-    @Autowired
-    private HttpServletRequest       request;
     @Autowired
     private InspectionService        inspectionService;
     @Autowired
@@ -290,7 +287,6 @@ public class InspectionController
     @PostMapping("/inspectionUpload")
     public String inspectUpload(@RequestParam("file") MultipartFile file, @RequestParam("id") int id, Model model)
     {
-        String     fileName   = null;
         Inspection inspection = inspectionService.get(id);
         if (file == null || file.isEmpty()) {
             model.addAttribute("inspection", inspection);

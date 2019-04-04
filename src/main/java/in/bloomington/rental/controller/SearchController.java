@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import in.bloomington.rental.model.RentUser;
 import in.bloomington.rental.model.Rental;
 import in.bloomington.rental.model.RentalStatus;
 import in.bloomington.rental.model.Zoning;
@@ -40,8 +39,6 @@ public class SearchController {
 		@Autowired
 		private ZoningService zoningService;
 		
-		@Autowired
-		private RentUser user;
 		private Search search = null;
 		@GetMapping("/search")
 		public String searchRental(Model model) {

@@ -1,6 +1,5 @@
 package in.bloomington.rental.controller;
 
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -12,8 +11,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-
-import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -63,8 +60,6 @@ public class EmailController
     private AddressService        addressService;
     @Autowired
     private GeneralHelper         ghelper;
-    @Autowired
-    private HttpSession           session;
 
     @GetMapping("/ownerExpireEmail")
     public String ownerExpireEmail(Locale locale, Model model)
@@ -127,7 +122,6 @@ public class EmailController
                 return "messageOnly";
             }
         }
-        File   file2    = null;
         String fileName = null,
                filePath = null;
         if (file != null && !file.isEmpty()) {
@@ -150,15 +144,13 @@ public class EmailController
                 System.err.println(" path " + fullPath);
                 Path path = Paths.get(fullPath);
                 Files.write(path, bytes);
-
-                file2 = new File(fullPath);
             }
             catch (Exception e) {
                 e.printStackTrace();
                 message += e;
             }
         }
-        String str = composeAndSend(dateFrom, dateTo, emailer, fileName, filePath);
+        composeAndSend(dateFrom, dateTo, emailer, fileName, filePath);
         //
         return "redirect:/ownerExpireEmail";
     }
@@ -181,7 +173,6 @@ public class EmailController
     String composeAndSend(String dateFrom, String dateTo, Emailer emailer, String fileName, String filePath)
     {
         String   back     = "";
-        String   log_from = "hand@bloomington.in.gov";
         EmailLog emailLog = new EmailLog(null, new Date(), "Expire", emailer.getEmailFrom());
         emailLogService.save(emailLog);
         Map<Owner, Set<Rental>> map     = new HashMap<>();

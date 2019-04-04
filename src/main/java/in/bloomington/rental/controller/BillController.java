@@ -1,25 +1,25 @@
 package in.bloomington.rental.controller;
 
 import java.util.Locale;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import in.bloomington.rental.model.Bill;
-import in.bloomington.rental.service.BillService;
-import in.bloomington.rental.model.StandardFees;
-import in.bloomington.rental.service.StandardFeesService;
 import in.bloomington.rental.model.Rental;
+import in.bloomington.rental.model.StandardFees;
+import in.bloomington.rental.service.BillService;
 import in.bloomington.rental.service.RentalService;
-import in.bloomington.rental.util.GeneralHelper;
-import org.springframework.context.annotation.Scope;
+import in.bloomington.rental.service.StandardFeesService;
 
 @Controller
 @Scope("session")
@@ -31,8 +31,6 @@ public class BillController
     private BillService         billService;
     @Autowired
     private StandardFeesService feesService;
-    @Autowired
-    private GeneralHelper       ghelper;
     @Autowired
     private RentalService       rentalService;
 

@@ -1,39 +1,41 @@
 package in.bloomington.rental.controller;
 
-import java.util.Date;
 import java.io.File;
 import java.io.FileInputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Date;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.HttpStatus;
+
 import in.bloomington.rental.model.AttachBase;
 import in.bloomington.rental.model.Attachement;
-import in.bloomington.rental.service.AttachementService;
 import in.bloomington.rental.model.AttachementSeq;
-import in.bloomington.rental.service.AttachementSeqService;
-import in.bloomington.rental.model.Rental;
-import in.bloomington.rental.service.RentalService;
 import in.bloomington.rental.model.Inspection;
+import in.bloomington.rental.model.Rental;
+import in.bloomington.rental.service.AttachementSeqService;
+import in.bloomington.rental.service.AttachementService;
 import in.bloomington.rental.service.InspectionService;
-import javax.servlet.http.HttpServletRequest;
-import org.springframework.core.io.InputStreamResource;
+import in.bloomington.rental.service.RentalService;
 import in.bloomington.rental.util.GeneralHelper;
 import in.bloomington.rental.util.Helper;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
-
-import java.nio.file.*;
 
 @Controller
 public class AttachementController
@@ -49,8 +51,6 @@ public class AttachementController
     private RentalService         rentalService;
     @Autowired
     private InspectionService     inspectionService;
-    @Autowired
-    private HttpServletRequest    request;
     @Autowired
     private GeneralHelper         ghelper;
     @Autowired
@@ -127,7 +127,6 @@ public class AttachementController
             return "redirect:attachementNew/" + type + "/" + id;
         }
         String ret_str = "";
-        int    new_id  = 0;
         ghelper.populatePaths();
         String file_path = ghelper.getFilePath();
         String groupName = ghelper.getGroupName();
@@ -165,7 +164,6 @@ public class AttachementController
                 ret_str = "/inspection/" + id;
             }
             attachementService.save(one);
-            new_id   = one.getId();
             message += "Uploaded Successfully";
         }
         catch (Exception e) {
@@ -181,7 +179,6 @@ public class AttachementController
         Attachement one = attachementService.get(id);
         if (one != null) {
             try {
-                String fileName = one.getOldFileName();
                 String year     = one.getYearFromDate();
                 ghelper.populatePaths();
                 String      filePath    = ghelper.getFilePath();
