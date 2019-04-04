@@ -1,20 +1,14 @@
 package in.bloomington.rental.model;
 
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
-import java.text.SimpleDateFormat;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -55,13 +49,13 @@ public class InspectionCan implements java.io.Serializable
                                  String title,
                                  String title2,
                                  String item1,
-                                 String tiem2,
+                                 String item2,
                                  String item3,
-                                 String tiem4,
+                                 String item4,
                                  String item5,
-                                 String tiem6,
+                                 String item6,
                                  String item7,
-                                 String tiem8)
+                                 String item8)
     {
         this.id                = id;
         this.inspection        = inspection;
