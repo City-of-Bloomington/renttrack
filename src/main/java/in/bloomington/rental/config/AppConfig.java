@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import in.bloomington.rental.model.Address;
-import in.bloomington.rental.model.Attachement;
+import in.bloomington.rental.model.Attachment;
 import in.bloomington.rental.model.Bill;
 import in.bloomington.rental.model.BuildingType;
 import in.bloomington.rental.model.Can;
@@ -110,7 +110,7 @@ public class AppConfig
                                         PullHistory.class,
                                         Bill.class,
                                         Receipt.class,
-                                        Attachement.class,
+                                        Attachment.class,
                                         LegalItEmailLog.class,
                                         RentalLog.class,
                                         Inspection.class,

@@ -17,11 +17,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
 @Entity
-@Table(name = "attachements")
-public class Attachement implements java.io.Serializable
+@Table(name = "attachments")
+public class Attachment implements java.io.Serializable
 {
     private static final long serialVersionUID = 1L;
 
+    @Transient
     SimpleDateFormat   dtf = new SimpleDateFormat("MM/dd/yyyy");
     
     @Id
@@ -50,17 +51,21 @@ public class Attachement implements java.io.Serializable
     @Column(name = "notes")
     private String     notes;
 
-    public Attachement()
+    public Attachment()
     {
     }
 
-    public Attachement(int id)
+    public Attachment(int id)
     {
         this.id = id;
     }
 
-    public Attachement(int id, Inspection inspection, Rental rental, Date date, String fileName, String oldFileName,
-                       String notes)
+    public Attachment(int id, Inspection inspection,
+                              Rental     rental,
+                              Date       date,
+                              String     fileName,
+                              String     oldFileName,
+                              String     notes)
     {
         this.id          = id;
         this.inspection  = inspection;

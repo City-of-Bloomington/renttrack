@@ -65,7 +65,7 @@ public class Inspection implements java.io.Serializable
     private RentUser            approver;
     private Date                approvedDate;
 
-    private List<Attachement>   attachements   = new ArrayList<Attachement>();
+    private List<Attachment>    attachments    = new ArrayList<Attachment>();
     private List<InspectionCan> inspectionCans = new ArrayList<InspectionCan>();
 
     @Transient
@@ -101,7 +101,7 @@ public class Inspection implements java.io.Serializable
                               Character      approved,
                               RentUser       approver,
                               Date           approvedDate,
-                      List<Attachement>      attachements,
+                      List<Attachment>       attachments,
                     List<InspectionCan>      inspectionCans)
     {
         this.id             = id;
@@ -130,7 +130,7 @@ public class Inspection implements java.io.Serializable
         this.approver       = approver;
         this.approvedDate   = approvedDate;
 
-        this.attachements   = attachements;
+        this.attachments   = attachments;
         this.inspectionCans = inspectionCans;
 
     }
@@ -604,20 +604,20 @@ public class Inspection implements java.io.Serializable
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "inspection")
-    public List<Attachement> getAttachements()
+    public List<Attachment> getAttachments()
     {
-        return this.attachements;
+        return this.attachments;
     }
 
-    public void setAttachements(List<Attachement> attachements)
+    public void setAttachments(List<Attachment> attachments)
     {
-        this.attachements = attachements;
+        this.attachments = attachments;
     }
 
     @Transient
-    public boolean hasAttachements()
+    public boolean hasAttachments()
     {
-        return attachements != null && attachements.size() > 0;
+        return attachments != null && attachments.size() > 0;
     }
 
     @Transient

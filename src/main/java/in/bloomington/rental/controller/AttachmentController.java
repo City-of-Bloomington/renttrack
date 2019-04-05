@@ -27,23 +27,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import in.bloomington.rental.model.AttachBase;
-import in.bloomington.rental.model.Attachement;
+import in.bloomington.rental.model.Attachment;
 import in.bloomington.rental.model.Inspection;
 import in.bloomington.rental.model.Rental;
-import in.bloomington.rental.service.AttachementService;
+import in.bloomington.rental.service.AttachmentService;
 import in.bloomington.rental.service.InspectionService;
 import in.bloomington.rental.service.RentalService;
 import in.bloomington.rental.util.GeneralHelper;
 import in.bloomington.rental.util.Helper;
 
 @Controller
-public class AttachementController
+public class AttachmentController
 {
 
     String                        message = null;
-    private static final Logger   logger  = LogManager.getLogger(AttachementController.class);
+    private static final Logger   logger  = LogManager.getLogger(AttachmentController.class);
     @Autowired
-    private AttachementService    attachementService;
+    private AttachmentService    attachmentService;
     @Autowired
     private RentalService         rentalService;
     @Autowired
@@ -56,56 +56,57 @@ public class AttachementController
     // @Autowired
     // private RentalService inspectionService;
     //
-    @GetMapping("/attachements/{type}/{id}")
-    public String attachementsView(@PathVariable("type") String type, @PathVariable("id") int id, Model model)
+    @GetMapping("/attachments/{type}/{id}")
+    public String attachmentsView(@PathVariable("type") String type,
+                                  @PathVariable("id"  ) int    id,
+                                                        Model  model)
     {
 
         if (type.equals("rental")) {
-            model.addAttribute("attachements", attachementService.findByRentalId(id));
+            model.addAttribute("attachments", attachmentService.findByRentalId(id));
         }
         else {
-            model.addAttribute("attachements", attachementService.findByInspectionId(id));
+            model.addAttribute("attachments", attachmentService.findByInspectionId(id));
         }
         if (message != null) model.addAttribute("message", message);
-        return "attachements";
+        return "attachments";
     }
 
     // get by id
-    @GetMapping("/attachement/{id}")
-    public String getAttachement(@PathVariable("id") int id, Model model)
+    @GetMapping("/attachment/{id}")
+    public String getAttachment(@PathVariable("id") int id, Model model)
     {
-        Attachement attachement = attachementService.get(id);
-        model.addAttribute("attachement", attachement);
-        return "attachementView";
+        Attachment attachment = attachmentService.get(id);
+        model.addAttribute("attachment", attachment);
+        return "attachmentView";
     }
 
     // delete by id
-    @GetMapping("/attachementDelete/{id}")
-    public String deleteAttachement(@PathVariable("id") int id)
+    @GetMapping("/attachmentDelete/{id}")
+    public String deleteAttachment(@PathVariable("id") int id)
     {
-        System.err.println(" id " + id);
-        int         rentalId    = 0, inspectionId = 0;
-        Attachement attachement = attachementService.get(id);
-        Rental      rental      = attachement.getRental();
+        int        rentalId     = 0,
+                   inspectionId = 0;
+        Attachment attachment   = attachmentService.get(id);
+        Rental     rental       = attachment.getRental();
         if (rental != null) {
             rentalId = rental.getId();
         }
         else {
-            inspectionId = attachement.getInspection().getId();
+            inspectionId = attachment.getInspection().getId();
         }
-        attachementService.delete(attachement);
-        message = "Attachement deleted successfully";
-        if (rentalId > 0) {
-            return "redirect:/view/" + rentalId;
-        }
-        else {
-            return "redirect:/inspectionView/" + inspectionId;
-        }
+        attachmentService.delete(attachment);
+        message = "Attachment deleted successfully";
+        
+        return rentalId > 0
+            ? "redirect:/view/" + rentalId
+            : "redirect:/inspectionView/" + inspectionId;
     }
 
-    //
-    @GetMapping("/attachementNew/{type}/{id}")
-    public String attachementNew(@PathVariable("type") String type, @PathVariable("id") int id, Model model)
+    @GetMapping("/attachmentNew/{type}/{id}")
+    public String attachmentNew(@PathVariable("type") String type,
+                                @PathVariable("id")   int    id,
+                                                      Model  model)
     {
         AttachBase base = new AttachBase();
         base.setType(type);
@@ -123,16 +124,17 @@ public class AttachementController
         String fileName = null;
         if (file == null || file.isEmpty()) {
             message = "Please select a file to upload";
-            return "redirect:attachementNew/" + type + "/" + id;
+            return "redirect:attachmentNew/" + type + "/" + id;
         }
-        String ret_str = "";
         ghelper.populatePaths();
+               fileName  = file.getOriginalFilename();
+        String ret_str   = "";
         String file_path = ghelper.getFilePath();
         String groupName = ghelper.getGroupName();
-        fileName = file.getOriginalFilename();
         int    year      = Helper.getCurrentYear();
         String file_ext  = Helper.getFileExtensionFromName(fileName);
         String newName   = genNewFileName(file_ext, type);
+        
         try {
             byte[] bytes   = file.getBytes();
             String dirPath = file_path + "/" + year + "/";
@@ -147,11 +149,11 @@ public class AttachementController
 
             Path path = Paths.get(dirPath + newName);
             Files.write(path, bytes);
-            Attachement one = new Attachement();
-            one.setFileName(newName);
-            one.setOldFileName(fileName);
-            one.setNotes(notes);
-            one.setDate(new Date());
+            Attachment one = new Attachment();
+            one.setFileName   (newName   );
+            one.setOldFileName(fileName  );
+            one.setNotes      (notes     );
+            one.setDate       (new Date());
             if (type.equals("rental")) {
                 Rental rental = rentalService.get(id);
                 one.setRental(rental);
@@ -162,7 +164,7 @@ public class AttachementController
                 one.setInspection(inspection);
                 ret_str = "/inspection/" + id;
             }
-            attachementService.save(one);
+            attachmentService.save(one);
             message += "Uploaded Successfully";
         }
         catch (Exception e) {
@@ -175,7 +177,7 @@ public class AttachementController
     @RequestMapping(value = "/attachDownload/{id}", method = RequestMethod.GET)
     public ResponseEntity<InputStreamResource> doDownload(@PathVariable int id)
     {
-        Attachement one = attachementService.get(id);
+        Attachment one = attachmentService.get(id);
         if (one != null) {
             try {
                 String year     = one.getYearFromDate();

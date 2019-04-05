@@ -53,7 +53,7 @@ public class Rental implements java.io.Serializable
     private List<RentalNote>      rentalNotes      = new ArrayList<RentalNote>();
     private List<PullHistory>     pullHistories    = new ArrayList<PullHistory>();
     private List<Bill>            bills            = new ArrayList<Bill>();
-    private List<Attachement>     attachements     = new ArrayList<Attachement>();
+    private List<Attachment>      attachments      = new ArrayList<Attachment>();
     private List<RentalLog>       rentalLogs       = new ArrayList<RentalLog>();
     private List<LegalItEmailLog> legalItEmailLogs = new ArrayList<LegalItEmailLog>();
     private List<Inspection>      inspections      = new ArrayList<Inspection>();
@@ -89,7 +89,7 @@ public class Rental implements java.io.Serializable
                   List<RentalNote>      rentalNotes,
                   List<PullHistory>     pullHistories,
                   List<Bill>            bills,
-                  List<Attachement>     attachements,
+                  List<Attachment>      attachments,
                   List<RentalLog>       rentalLogs,
                   List<LegalItEmailLog> legalItEmailLogs,
                   List<RentalLegal>     rentalLegals)
@@ -118,7 +118,7 @@ public class Rental implements java.io.Serializable
         this.rentalNotes      = rentalNotes;
         this.pullHistories    = pullHistories;
         this.bills            = bills;
-        this.attachements     = attachements;
+        this.attachments      = attachments;
         this.rentalLogs       = rentalLogs;
         this.legalItEmailLogs = legalItEmailLogs;
         this.rentalLegals     = rentalLegals;
@@ -498,20 +498,20 @@ public class Rental implements java.io.Serializable
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "rental")
     @OrderBy("id desc")
-    public List<Attachement> getAttachements()
+    public List<Attachment> getAttachments()
     {
-        return this.attachements;
+        return this.attachments;
     }
 
-    public void setAttachements(List<Attachement> attachements)
+    public void setAttachments(List<Attachment> attachments)
     {
-        this.attachements = attachements;
+        this.attachments = attachments;
     }
 
     @Transient
-    public boolean hasAttachements()
+    public boolean hasAttachments()
     {
-        return attachements != null && attachements.size() > 0;
+        return attachments != null && attachments.size() > 0;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "rental")

@@ -8,46 +8,46 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import in.bloomington.rental.model.Attachement;
+import in.bloomington.rental.model.Attachment;
 
 @Repository
-public class AttachementDaoImp implements AttachementDao
+public class AttachmentDaoImp implements AttachmentDao
 {
     @Autowired
     private SessionFactory sessionFactory;
 
     @Override
-    public Attachement get(int id)
+    public Attachment get(int id)
     {
-        return sessionFactory.getCurrentSession().get(Attachement.class, id);
+        return sessionFactory.getCurrentSession().get(Attachment.class, id);
     }
 
     @Override
-    public void save(Attachement attachement)
+    public void save(Attachment attachment)
     {
-        sessionFactory.getCurrentSession().save(attachement);
+        sessionFactory.getCurrentSession().save(attachment);
     }
 
     @Override
     public void delete(int id)
     {
         Session     session     = sessionFactory.getCurrentSession();
-        Attachement attachement = session.byId(Attachement.class).load(id);
-        session.delete(attachement);
+        Attachment attachment = session.byId(Attachment.class).load(id);
+        session.delete(attachment);
     }
 
     @Override
-    public void delete(Attachement attachement)
+    public void delete(Attachment attachment)
     {
         Session session = sessionFactory.getCurrentSession();
-        if (attachement != null)
-            session.delete(attachement);
+        if (attachment != null)
+            session.delete(attachment);
     }
 
     @Override
-    public List<Attachement> findByRentalId(Integer rentalId)
+    public List<Attachment> findByRentalId(Integer rentalId)
     {
-        String  qq      = "from Attachement where rentalId =:rentalId";
+        String  qq      = "from attachments where rentalId =:rentalId";
         Session session = sessionFactory.getCurrentSession();
         Query   query   = session.createQuery(qq);
         query.setParameter("rentalId", rentalId);
@@ -55,9 +55,9 @@ public class AttachementDaoImp implements AttachementDao
     }
 
     @Override
-    public List<Attachement> findByInspectionId(Integer val)
+    public List<Attachment> findByInspectionId(Integer val)
     {
-        String  qq      = "from Attachement where inspection.id=:inspectionId";
+        String  qq      = "from attachments where inspection.id=:inspectionId";
         Session session = sessionFactory.getCurrentSession();
         Query   query   = session.createQuery(qq);
         query.setParameter("inspectionId", val);
