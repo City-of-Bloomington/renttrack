@@ -16,12 +16,12 @@ import javax.persistence.GenerationType;
 public class Address implements java.io.Serializable
 {
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int       id;
     private int       rentalId;
-    
+
     @Column(name = "street_address")
     private String    streetAddress;
     private String    city = "Bloomington"; // default
@@ -32,15 +32,15 @@ public class Address implements java.io.Serializable
     @Column(name = "ma_location_id")
     private Integer   maLocationId;
     private Character invalid;
-    
+
     @Column(columnDefinition="numeric(10,8)")
     @Type(type="java.lang.Double")
     private Double    longitude;
-    
+
     @Column(columnDefinition="numeric(10,8)")
     @Type(type="java.lang.Double")
     private Double    latitude;
-    
+
     @Transient
     private Integer   unitId;               // needed for a new address
 
@@ -81,26 +81,34 @@ public class Address implements java.io.Serializable
         this.latitude      = latitude;
     }
 
-    public int getId()
-    {
-        return this.id;
-    }
+    //-----------------------------------------------------
+    // Generic Getters and Setters
+    //-----------------------------------------------------
+    public int       getId           () { return this.id;            }
+    public Integer   getRentalId     () { return this.rentalId;      }
+    public String    getStreetAddress() { return this.streetAddress; }
+    public String    getCity         () { return this.city;          }
+    public Integer   getMaStreetId   () { return this.maStreetId;    }
+    public Integer   getMaSubunitId  () { return this.maSubunitId;   }
+    public Integer   getMaLocationId () { return this.maLocationId;  }
+    public Double    getLatitude     () { return this.latitude;      }
+    public Double    getLongitude    () { return this.longitude;     }
+    public Character getInvalid      () { return this.invalid;       }
 
-    public void setId(int id)
-    {
-        this.id = id;
-    }
+    public void setId           (int       i) { this.id            = i; }
+    public void setRentalId     (Integer   i) { this.rentalId      = i; }
+    public void setStreetAddress(String    s) { this.streetAddress = s; }
+    public void setCity         (String    s) { this.city          = s; }
+    public void setMaStreetId   (Integer   i) { this.maStreetId    = i; }
+    public void setMaSubunitId  (Integer   i) { this.maSubunitId   = i; }
+    public void setMaLocationId (Integer   i) { this.maLocationId  = i; }
+    public void setLatitude     (Double    d) { this.latitude      = d; }
+    public void setLongitude    (Double    d) { this.longitude     = d; }
+    public void setInvalid      (Character c) { this.invalid       = c; }
 
-    public Integer getRentalId()
-    {
-        return rentalId;
-    }
-
-    public void setRentalId(Integer val)
-    {
-        this.rentalId = val;
-    }
-
+    //-----------------------------------------------------
+    // Transient functions
+    //-----------------------------------------------------
     @Transient
     public Integer getUnitId()
     {
@@ -118,86 +126,6 @@ public class Address implements java.io.Serializable
     public void setAddressId(Integer val)
     {
         if (val != null) this.id = val.intValue();
-    }
-
-    public String getStreetAddress()
-    {
-        return this.streetAddress;
-    }
-
-    public void setStreetAddress(String streetAddress)
-    {
-        this.streetAddress = streetAddress;
-    }
-
-    public String getCity()
-    {
-        return this.city;
-    }
-
-    public void setCity(String city)
-    {
-        if (city != null) this.city = city;
-    }
-
-    public Integer getMaStreetId()
-    {
-        return this.maStreetId;
-    }
-
-    public void setMaStreetId(Integer val)
-    {
-        this.maStreetId = val;
-    }
-
-    public Integer getMaSubunitId()
-    {
-        return this.maSubunitId;
-    }
-
-    public void setMaSubunitId(Integer maSubunitId)
-    {
-        this.maSubunitId = maSubunitId;
-    }
-
-    public Integer getMaLocationId()
-    {
-        return this.maLocationId;
-    }
-
-    public void setMaLocationId(Integer val)
-    {
-        this.maLocationId = val;
-    }
-
-    public Double getLongitude()
-    {
-        return this.longitude;
-    }
-
-    public void setLongitude(Double val)
-    {
-        this.longitude = val;
-    }
-
-    public Double getLatitude()
-    {
-        return this.latitude;
-    }
-
-    public void setLatitude(Double val)
-    {
-        this.latitude = val;
-    }
-
-    public Character getInvalid()
-    {
-        return this.invalid;
-    }
-
-    public void setInvalid(Character invalid)
-    {
-        this.invalid = invalid;
     }
 
     @Transient
