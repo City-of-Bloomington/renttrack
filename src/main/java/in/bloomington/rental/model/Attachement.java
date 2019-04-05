@@ -23,12 +23,31 @@ public class Attachement implements java.io.Serializable
     private static final long serialVersionUID = 1L;
 
     SimpleDateFormat   dtf = new SimpleDateFormat("MM/dd/yyyy");
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int        id;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "inspection_id")
     private Inspection inspection;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rental_id")
     private Rental     rental;
+    
+    @Temporal(TemporalType.DATE)
+    @Column(name = "date", length = 13)
     private Date       date;
+    
+    @Column(name = "file_name")
     private String     fileName;
+    
+    @Column(name = "old_file_name")
     private String     oldFileName;
+    
+    @Column(name = "notes")
     private String     notes;
 
     public Attachement()
@@ -52,9 +71,6 @@ public class Attachement implements java.io.Serializable
         this.notes       = notes;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     public int getId()
     {
         return this.id;
@@ -65,8 +81,6 @@ public class Attachement implements java.io.Serializable
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "inspection_id")
     public Inspection getInspection()
     {
         return this.inspection;
@@ -77,8 +91,6 @@ public class Attachement implements java.io.Serializable
         this.inspection = inspection;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "rental_id")
     public Rental getRental()
     {
         return this.rental;
@@ -89,8 +101,6 @@ public class Attachement implements java.io.Serializable
         this.rental = rental;
     }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "date", length = 13)
     public Date getDate()
     {
         return this.date;
@@ -138,7 +148,6 @@ public class Attachement implements java.io.Serializable
         }
     }
 
-    @Column(name = "file_name", length = 70)
     public String getFileName()
     {
         return this.fileName;
@@ -149,7 +158,6 @@ public class Attachement implements java.io.Serializable
         this.fileName = fileName;
     }
 
-    @Column(name = "old_file_name", length = 150)
     public String getOldFileName()
     {
         return this.oldFileName;
@@ -160,7 +168,6 @@ public class Attachement implements java.io.Serializable
         this.oldFileName = oldFileName;
     }
 
-    @Column(name = "notes", length = 500)
     public String getNotes()
     {
         return this.notes;
@@ -170,5 +177,4 @@ public class Attachement implements java.io.Serializable
     {
         this.notes = notes;
     }
-
 }

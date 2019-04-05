@@ -5,26 +5,42 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import org.hibernate.annotations.Type;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
 @Entity
 @Table(name = "addresses")
-
 public class Address implements java.io.Serializable
 {
     private static final long serialVersionUID = 1L;
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int       id;
-    private Integer   rentalId;
+    private int       rentalId;
+    
+    @Column(name = "street_address")
     private String    streetAddress;
     private String    city = "Bloomington"; // default
+    @Column(name = "ma_street_id")
     private Integer   maStreetId;
+    @Column(name = "ma_subunit_id")
     private Integer   maSubunitId;
+    @Column(name = "ma_location_id")
     private Integer   maLocationId;
     private Character invalid;
+    
+    @Column(columnDefinition="numeric(10,8)")
+    @Type(type="java.lang.Double")
     private Double    longitude;
+    
+    @Column(columnDefinition="numeric(10,8)")
+    @Type(type="java.lang.Double")
     private Double    latitude;
+    
     @Transient
     private Integer   unitId;               // needed for a new address
 
@@ -65,9 +81,6 @@ public class Address implements java.io.Serializable
         this.latitude      = latitude;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     public int getId()
     {
         return this.id;
@@ -78,7 +91,6 @@ public class Address implements java.io.Serializable
         this.id = id;
     }
 
-    @Column(name = "rental_id")
     public Integer getRentalId()
     {
         return rentalId;
@@ -108,7 +120,6 @@ public class Address implements java.io.Serializable
         if (val != null) this.id = val.intValue();
     }
 
-    @Column(name = "street_address", nullable = false, length = 70)
     public String getStreetAddress()
     {
         return this.streetAddress;
@@ -119,7 +130,6 @@ public class Address implements java.io.Serializable
         this.streetAddress = streetAddress;
     }
 
-    @Column(name = "city", length = 30)
     public String getCity()
     {
         return this.city;
@@ -130,7 +140,6 @@ public class Address implements java.io.Serializable
         if (city != null) this.city = city;
     }
 
-    @Column(name = "ma_street_id")
     public Integer getMaStreetId()
     {
         return this.maStreetId;
@@ -141,7 +150,6 @@ public class Address implements java.io.Serializable
         this.maStreetId = val;
     }
 
-    @Column(name = "ma_subunit_id")
     public Integer getMaSubunitId()
     {
         return this.maSubunitId;
@@ -152,7 +160,6 @@ public class Address implements java.io.Serializable
         this.maSubunitId = maSubunitId;
     }
 
-    @Column(name = "ma_location_id")
     public Integer getMaLocationId()
     {
         return this.maLocationId;
@@ -163,7 +170,6 @@ public class Address implements java.io.Serializable
         this.maLocationId = val;
     }
 
-    @Column(name = "longitude")
     public Double getLongitude()
     {
         return this.longitude;
@@ -174,7 +180,6 @@ public class Address implements java.io.Serializable
         this.longitude = val;
     }
 
-    @Column(name = "latitude")
     public Double getLatitude()
     {
         return this.latitude;
@@ -185,7 +190,6 @@ public class Address implements java.io.Serializable
         this.latitude = val;
     }
 
-    @Column(name = "invalid", length = 1)
     public Character getInvalid()
     {
         return this.invalid;

@@ -13,6 +13,9 @@ public class AttachementSeq implements java.io.Serializable
 {
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
 
     public AttachementSeq()
@@ -24,9 +27,6 @@ public class AttachementSeq implements java.io.Serializable
         this.id = id;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     public int getId()
     {
         return this.id;
