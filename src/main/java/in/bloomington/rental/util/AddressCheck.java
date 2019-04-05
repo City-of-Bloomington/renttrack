@@ -132,7 +132,7 @@ public class AddressCheck{
 																if(!jObj2.isNull("id")){
 																		full_addr = street;
 																		Address one = new Address();
-																		one.setMaStreetId(new Integer(street_id));
+																		one.setAddressId(new Integer(street_id));
 																		one.setMaSubunitId(new Integer(jObj2.getString("id")));
 																		// one.setMaLocationId(new Integer(location_id));
 																		String type = jObj2.getString("type");;
@@ -156,8 +156,8 @@ public class AddressCheck{
 														address.setLongitude(new Double(lngVal));
 												}												
 												one.setStreetAddress(full_addr);
-												one.setMaStreetId(new Integer(street_id));
-												address.setMaStreetId(new Integer(street_id));
+												one.setAddressId(new Integer(street_id));
+												address.setAddressId(new Integer(street_id));
 												// one.setMaLocationId(new Integer(location_id));
 												addresses.add(one);
 										}
