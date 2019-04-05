@@ -13,43 +13,42 @@ import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+
 import in.bloomington.rental.model.Address;
-import in.bloomington.rental.model.RentUser;
-import in.bloomington.rental.model.Owner;
-import in.bloomington.rental.model.Zoning;
-import in.bloomington.rental.model.OwnerPhone;
-import in.bloomington.rental.model.PropertyType;
-import in.bloomington.rental.model.PullReason;
-import in.bloomington.rental.model.Rental;
-import in.bloomington.rental.model.Variance;
-import in.bloomington.rental.model.RentalOwner;
-import in.bloomington.rental.model.BuildingType;
-import in.bloomington.rental.model.RentalStatus;
-import in.bloomington.rental.model.RentalUnit;
-import in.bloomington.rental.model.RentalStructure;
-import in.bloomington.rental.model.InspectionType;
-import in.bloomington.rental.model.RentalNote;
-import in.bloomington.rental.model.RentalLog;
-import in.bloomington.rental.model.RentalLegal;
-import in.bloomington.rental.model.PullHistory;
+import in.bloomington.rental.model.Attachement;
 import in.bloomington.rental.model.Bill;
-import in.bloomington.rental.model.Receipt;
-import in.bloomington.rental.model.Inspection;
-import in.bloomington.rental.model.InspectionCan;
+import in.bloomington.rental.model.BuildingType;
 import in.bloomington.rental.model.Can;
 import in.bloomington.rental.model.Egress;
-import in.bloomington.rental.model.InspectionTemplate;
-import in.bloomington.rental.model.TemplateComponent;
-import in.bloomington.rental.model.EmailLog;
 import in.bloomington.rental.model.EmailDetailLog;
-import in.bloomington.rental.model.Attachement;
-import in.bloomington.rental.model.AttachementSeq;
-import in.bloomington.rental.model.LegalItEmailLog;
+import in.bloomington.rental.model.EmailLog;
+import in.bloomington.rental.model.Inspection;
+import in.bloomington.rental.model.InspectionCan;
 import in.bloomington.rental.model.InspectionFileLog;
-import in.bloomington.rental.model.UnitRoom;
+import in.bloomington.rental.model.InspectionTemplate;
+import in.bloomington.rental.model.InspectionType;
+import in.bloomington.rental.model.LegalItEmailLog;
+import in.bloomington.rental.model.Owner;
+import in.bloomington.rental.model.OwnerPhone;
+import in.bloomington.rental.model.PropertyType;
+import in.bloomington.rental.model.PullHistory;
+import in.bloomington.rental.model.PullReason;
+import in.bloomington.rental.model.Receipt;
+import in.bloomington.rental.model.RentUser;
+import in.bloomington.rental.model.Rental;
+import in.bloomington.rental.model.RentalLegal;
+import in.bloomington.rental.model.RentalLog;
+import in.bloomington.rental.model.RentalNote;
+import in.bloomington.rental.model.RentalOwner;
+import in.bloomington.rental.model.RentalStatus;
+import in.bloomington.rental.model.RentalStructure;
+import in.bloomington.rental.model.RentalUnit;
 import in.bloomington.rental.model.StandardFees;
+import in.bloomington.rental.model.TemplateComponent;
+import in.bloomington.rental.model.UnitRoom;
+import in.bloomington.rental.model.Variance;
+import in.bloomington.rental.model.Zoning;
 
 @Configuration
 @PropertySource("file:/srv/data/renttrack/conf/application.properties")
@@ -111,7 +110,6 @@ public class AppConfig
                                         PullHistory.class,
                                         Bill.class,
                                         Receipt.class,
-                                        AttachementSeq.class,
                                         Attachement.class,
                                         LegalItEmailLog.class,
                                         RentalLog.class,

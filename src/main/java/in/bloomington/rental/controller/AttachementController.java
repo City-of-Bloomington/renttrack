@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
+import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -27,10 +28,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import in.bloomington.rental.model.AttachBase;
 import in.bloomington.rental.model.Attachement;
-import in.bloomington.rental.model.AttachementSeq;
 import in.bloomington.rental.model.Inspection;
 import in.bloomington.rental.model.Rental;
-import in.bloomington.rental.service.AttachementSeqService;
 import in.bloomington.rental.service.AttachementService;
 import in.bloomington.rental.service.InspectionService;
 import in.bloomington.rental.service.RentalService;
@@ -45,8 +44,6 @@ public class AttachementController
     private static final Logger   logger  = LogManager.getLogger(AttachementController.class);
     @Autowired
     private AttachementService    attachementService;
-    @Autowired
-    private AttachementSeqService attachementSeqService;
     @Autowired
     private RentalService         rentalService;
     @Autowired
@@ -118,8 +115,10 @@ public class AttachementController
     }
 
     @PostMapping("/uploadFile")
-    public String doUpload(@RequestParam("file") MultipartFile file, @RequestParam("id") int id,
-                           @RequestParam("notes") String notes, @RequestParam("type") String type)
+    public String doUpload(@RequestParam("file" ) MultipartFile file,
+                           @RequestParam("id"   ) int           id,
+                           @RequestParam("notes") String        notes,
+                           @RequestParam("type" ) String        type)
     {
         String fileName = null;
         if (file == null || file.isEmpty()) {
@@ -145,7 +144,7 @@ public class AttachementController
                 message += back;
                 logger.error(back);
             }
-            
+
             Path path = Paths.get(dirPath + newName);
             Files.write(path, bytes);
             Attachement one = new Attachement();
@@ -202,12 +201,6 @@ public class AttachementController
 
     String genNewFileName(String file_ext, String type)
     {
-        String         file_name = "";
-        AttachementSeq seq       = new AttachementSeq();
-        attachementSeqService.save(seq);
-        int new_id = seq.getId();
-        if (file_ext == null) file_ext = "";
-        file_name = type + "_" + new_id + "." + file_ext;
-        return file_name;
+        return UUID.randomUUID().toString() + '.' + file_ext;
     }
 }
