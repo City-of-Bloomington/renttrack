@@ -67,11 +67,8 @@ public class InspectionController
     @Autowired
     private GeneralHelper            ghelper;
     @Autowired
-    private Helper                   helper;
-    @Autowired
     private HttpSession              session;
 
-    static Inspection                inspection      = null;
     static List<InspectionType>      inspectionTypes = null;
     static List<RentUser>            inspectors      = new ArrayList<>();
 
@@ -209,10 +206,8 @@ public class InspectionController
     @GetMapping("/inspectionNew/{id}")
     public String inspectionForm(@PathVariable("id") int id, Model model)
     {
-        if (inspection == null) {
-            inspection = new Inspection();
-        }
-        Rental rental = rentalService.get(id);
+        Inspection inspection = new Inspection();
+        Rental     rental     = rentalService.get(id);
         inspection.setRental(rental);
         model.addAttribute("inspection", inspection);
         if (inspectionTypes == null) {
@@ -227,13 +222,12 @@ public class InspectionController
         if (inspectors != null) {
             model.addAttribute("inspectors", inspectors);
         }
-        this.inspection = null;
         return "inspectionNew";
     }
 
-    // save
     @PostMapping("/inspectionSave")
-    public String saveInspection(@ModelAttribute("inspection") @Valid Inspection inspection, BindingResult result,
+    public String saveInspection(@ModelAttribute("inspection") @Valid Inspection inspection,
+                                 BindingResult result,
                                  Model model)
     {
         if (result.hasErrors()) {
@@ -245,12 +239,10 @@ public class InspectionController
             inspectionService.save(inspection);
             int id = inspection.getId();
             message         = "Inspection saved successfully";
-            this.inspection = null;                           // clean up
             return "redirect:/inspection/" + id;
         }
         else {
             int rentalId = inspection.getRental().getId();
-            this.inspection = inspection;
             return "redirect:/inspectionNew/" + rentalId;
         }
     }
@@ -268,7 +260,7 @@ public class InspectionController
                 String fullPath = filePath + fileName;
                 System.err.println(" path " + fullPath);
                 File        file        = new File(fullPath);
-                String      fileType    = helper.findFileType(file);
+                String      fileType    = Helper.findFileType(file);
                 HttpHeaders respHeaders = new HttpHeaders();
                 respHeaders.setContentType(MediaType.valueOf(fileType));
                 respHeaders.setContentLength(file.length());
