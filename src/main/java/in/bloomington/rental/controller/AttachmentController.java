@@ -50,8 +50,6 @@ public class AttachmentController
     private InspectionService     inspectionService;
     @Autowired
     private GeneralHelper         ghelper;
-    @Autowired
-    private Helper                helper;
 
     // @Autowired
     // private RentalService inspectionService;
@@ -185,7 +183,7 @@ public class AttachmentController
                 String      filePath    = ghelper.getFilePath();
                 String      fullPath    = filePath + year + "/" + one.getFileName();
                 File        file        = new File(fullPath);
-                String      fileType    = helper.findFileType(file);
+                String      fileType    = Helper.findFileType(file);
                 HttpHeaders respHeaders = new HttpHeaders();
                 respHeaders.setContentType(MediaType.valueOf(fileType));
                 respHeaders.setContentLength(file.length());
