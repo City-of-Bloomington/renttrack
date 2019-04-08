@@ -2,7 +2,10 @@ package in.bloomington.rental.dao;
 
 import java.util.List;
 
-import org.hibernate.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +34,7 @@ public class AttachmentDaoImp implements AttachmentDao
     @Override
     public void delete(int id)
     {
-        Session     session     = sessionFactory.getCurrentSession();
+        Session    session    = sessionFactory.getCurrentSession();
         Attachment attachment = session.byId(Attachment.class).load(id);
         session.delete(attachment);
     }
@@ -39,29 +42,37 @@ public class AttachmentDaoImp implements AttachmentDao
     @Override
     public void delete(Attachment attachment)
     {
-        Session session = sessionFactory.getCurrentSession();
-        if (attachment != null)
+        if (attachment != null) {
+            Session session = sessionFactory.getCurrentSession();
             session.delete(attachment);
+        }
     }
 
     @Override
     public List<Attachment> findByRentalId(Integer rentalId)
     {
-        String  qq      = "from attachments where rentalId =:rentalId";
-        Session session = sessionFactory.getCurrentSession();
-        Query   query   = session.createQuery(qq);
-        query.setParameter("rentalId", rentalId);
-        return query.list();
+        Session                 session = sessionFactory.getCurrentSession();
+        CriteriaBuilder          builder = session.getCriteriaBuilder();
+        CriteriaQuery<Attachment> select = builder.createQuery(Attachment.class);
+        Root<Attachment>            root = select.from(Attachment.class);
+        
+        select.where(builder.equal(root.get("rental_id"), rentalId));
+        
+        return session.createQuery(select)
+                      .getResultList();
     }
 
     @Override
-    public List<Attachment> findByInspectionId(Integer val)
+    public List<Attachment> findByInspectionId(Integer id)
     {
-        String  qq      = "from attachments where inspection.id=:inspectionId";
-        Session session = sessionFactory.getCurrentSession();
-        Query   query   = session.createQuery(qq);
-        query.setParameter("inspectionId", val);
-        return query.list();
-
+        Session                 session = sessionFactory.getCurrentSession();
+        CriteriaBuilder          builder = session.getCriteriaBuilder();
+        CriteriaQuery<Attachment> select = builder.createQuery(Attachment.class);
+        Root<Attachment>            root = select.from(Attachment.class);
+        
+        select.where(builder.equal(root.get("inspection_id"), id));
+        
+        return session.createQuery(select)
+                      .getResultList();
     }
 }

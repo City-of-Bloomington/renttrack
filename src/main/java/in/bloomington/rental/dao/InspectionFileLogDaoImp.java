@@ -2,7 +2,10 @@ package in.bloomington.rental.dao;
 
 import java.util.List;
 
-import org.hibernate.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,28 +36,25 @@ public class InspectionFileLogDaoImp implements InspectionFileLogDao
     @Override
     public List<InspectionFileLog> findByRentalId(Integer rentalId)
     {
-        String  qq      = "from InspectionFileLog l where l.rentalId =:rentalId order by l.id desc";
-        Session session = sessionFactory.getCurrentSession();
-        Query   query   = session.createQuery(qq);
-        // query.setFirstResult(0); // for paging
-        // query.setMaxResults(limit);
-        query.setParameter("rentalId", rentalId);
-        return query.list();
+        Session             session = sessionFactory.getCurrentSession();
+        CriteriaBuilder     builder = session.getCriteriaBuilder();
+        CriteriaQuery<InspectionFileLog> select = builder.createQuery(InspectionFileLog.class);
+        Root<InspectionFileLog>            root = select.from(InspectionFileLog.class);
+        
+        select.where  (builder.equal(root.get("rental_id"), rentalId));
+        select.orderBy(builder.desc (root.get("id")));
+        
+        return session.createQuery(select)
+                      .getResultList();
     }
 
     @Override
     public int findCountByRentalId(int id)
     {
+        String  qq      = "select count(*) from inspection_file_log where rental_id=:id";
         Session session = sessionFactory.getCurrentSession();
-        Query   query   = session.createQuery("select COUNT(i) from InspectionFileLog i where i.rentalId=:rental_id");
-        int     cnti    = 0;
-        try {
-            query.setInteger("rental_id", id);
-            Long cnt  = (Long) query.getSingleResult();
-                 cnti = cnt.intValue();
-        } catch (Exception ex) {
-            System.err.println(" inspection " + ex);
-        }
-        return cnti;
+        return  session.createQuery(qq, Integer.class)
+                       .setParameter("id", id)
+                       .getSingleResult();
     }
 }

@@ -2,11 +2,8 @@ package in.bloomington.rental.dao;
 
 import java.util.List;
 
-import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -52,22 +49,20 @@ public class CanDaoImp implements CanDao
     @Override
     public List<Can> getAll()
     {
-        Session  session  = sessionFactory.getCurrentSession();
-        Criteria criteria = session.createCriteria(Can.class);
-        // criteria.setMaxResults(limit); we list all for now
-        criteria.addOrder(Order.desc("id"));
-        return criteria.list();
+        String  qq       = "select * from cans order by id desc";
+        Session session  = sessionFactory.getCurrentSession();
+        return  session.createQuery(qq, Can.class)
+                       .getResultList();
     }
 
     // needed for auto_complete
     @Override
     public List<Can> findByName(String name)
     {
-        String  qq      = "from Can c where c.title like :name ";
+        String  qq      = "select * from cans where title like :name";
         Session session = sessionFactory.getCurrentSession();
-        Query   query   = session.createQuery(qq);
-        query.setParameter("name", "%" + name + "%");
-        List<Can> cans = query.list();
-        return cans;
+        return  session.createQuery(qq, Can.class)
+                       .setParameter("name", "%" + name + "%")
+                       .getResultList();
     }
 }

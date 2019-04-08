@@ -2,14 +2,14 @@ package in.bloomington.rental.dao;
 
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.SessionFactory;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.hibernate.query.Query;
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Order;
-import org.hibernate.transform.*;
 import in.bloomington.rental.model.Item;
 import in.bloomington.rental.model.Address;
 
@@ -61,59 +61,59 @@ public class AddressDaoImp implements AddressDao
     }
 
     @Override
-    public List<Address> findByRentalId(Integer rentalId)
+    public List<Address> findByRentalId(Integer id)
     {
-        String  qq      = "from Address where rentalId =:rentalId";
-        Session session = sessionFactory.getCurrentSession();
-        Query   query   = session.createQuery(qq);
-        query.setParameter("rentalId", rentalId);
-        return query.list();
+        Session session               = sessionFactory.getCurrentSession();
+        CriteriaBuilder builder       = session.getCriteriaBuilder();
+        CriteriaQuery<Address> select = builder.createQuery(Address.class);
+        Root<Address> root            = select.from(Address.class);
+        
+        select.where(builder.equal(root.get("rental_id"), id));
+        
+        return session.createQuery(select).getResultList();
     }
 
     @Override
     public List<Address> find(String address, String inValid)
     {
-        Session session = sessionFactory.getCurrentSession();
-        String  qq      = "from Address s ";
-        String  qw      = "";
+        Session session               = sessionFactory.getCurrentSession();
+        CriteriaBuilder builder       = session.getCriteriaBuilder();
+        CriteriaQuery<Address> select = builder.createQuery(Address.class);
+        Root<Address> root            = select.from(Address.class);
+        
         if (address != null && !address.equals("")) {
-            qw += " s.streetAddress like :address ";
+            select.where(builder.equal(root.get("street_address"), address));
         }
         if (inValid != null && !inValid.equals("")) {
-            if (!qw.equals("")) {
-                qw += " and ";
-            }
-            qw += " s.invalid is not null ";
+            select.where(builder.isNotNull(root.get("invalid")));
         }
-        if (!qw.equals("")) {
-            qq += " where " + qw;
-        }
-        Query query = session.createQuery(qq);
-        if (address != null && !address.equals("")) {
-            query.setParameter("address", "%" + address + "%");
-        }
-        return query.getResultList();
+        return session.createQuery(select).getResultList();
     }
 
     @Override
     public List<Address> getAll()
     {
-        Session  session  = sessionFactory.getCurrentSession();
-        Criteria criteria = session.createCriteria(Address.class);
-        criteria.setMaxResults(limit);
-        criteria.addOrder(Order.desc("id"));
-        return criteria.list();
+        Session               session = sessionFactory.getCurrentSession();
+        CriteriaBuilder       builder = session.getCriteriaBuilder();
+        CriteriaQuery<Address> select = builder.createQuery(Address.class);
+        Root<Address>            root = select.from(Address.class);
+        
+        select.orderBy(builder.desc(root.get("id")));
+        
+        return session.createQuery(select)
+                      .setMaxResults(limit)
+                      .getResultList();
     }
 
     @Override
     public List<Item> getList(String address)
     {
         Session    session = sessionFactory.getCurrentSession();
-        String     qq      = "select s.id as id,s.street_address as name from addresses s "
-                           + " where  s.street_address like '%" + address + "%' ";
-        List<Item> items   = session.createNativeQuery(qq)
-                                    .setResultTransformer(Transformers.aliasToBean(Item.class))
-                                    .list();
-        return items;
+        String     qq      = "select id, street_address as namefrom addresses"
+                           + " from addresses"
+                           + " where  street_address like :address";
+        return session.createNativeQuery(qq, Item.class)
+                      .setParameter("address", "%" + address + "%")
+                      .list();
     }
 }

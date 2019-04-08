@@ -2,10 +2,12 @@ package in.bloomington.rental.dao;
 
 import java.util.List;
 
-import org.hibernate.Criteria;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -33,10 +35,15 @@ public class EmailLogDaoImp implements EmailLogDao
     @Override
     public List<EmailLog> getAll()
     {
-        Session  session  = sessionFactory.getCurrentSession();
-        Criteria criteria = session.createCriteria(EmailLog.class);
-        criteria.setMaxResults(limit);
-        criteria.addOrder(Order.desc("id"));
-        return criteria.list();
+        Session                session = sessionFactory.getCurrentSession();
+        CriteriaBuilder        builder = session.getCriteriaBuilder();
+        CriteriaQuery<EmailLog> select = builder.createQuery(EmailLog.class);
+        Root<EmailLog>            root = select.from(EmailLog.class);
+        
+        select.orderBy(builder.desc(root.get("id")));
+        
+        return session.createQuery(select)
+                      .setMaxResults(limit)
+                      .getResultList();
     }
 }

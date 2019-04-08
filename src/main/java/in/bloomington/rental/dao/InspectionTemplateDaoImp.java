@@ -2,7 +2,10 @@ package in.bloomington.rental.dao;
 
 import java.util.List;
 
-import org.hibernate.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,12 +57,15 @@ public class InspectionTemplateDaoImp implements InspectionTemplateDao
     @Override
     public List<InspectionTemplate> findByRentalId(int id)
     {
-        String  qq      = "from InspectionTemplate c where c.rentalId =:rentalId";
-        Session session = sessionFactory.getCurrentSession();
-        Query   query   = session.createQuery(qq);
-        query.setParameter("rentalId", id);
-        List<InspectionTemplate> vals = query.list();
-        return vals;
+        Session                          session = sessionFactory.getCurrentSession();
+        CriteriaBuilder                  builder = session.getCriteriaBuilder();
+        CriteriaQuery<InspectionTemplate> select = builder.createQuery(InspectionTemplate.class);
+        Root<InspectionTemplate>            root = select.from(InspectionTemplate.class);
+        
+        select.where  (builder.equal(root.get("rental_id"), id));
+        
+        return session.createQuery(select)
+                      .getResultList();
 
     }
 }

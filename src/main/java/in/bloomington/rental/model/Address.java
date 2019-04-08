@@ -186,12 +186,12 @@ public class Address implements java.io.Serializable
             String[] vals = val.split("_");
             if (vals != null) {
                 if (vals.length == 3) {
-                    address_id    = new Integer(vals[0]);
-                    maSubunitId   = new Integer(vals[1]);
+                    address_id    = Integer.valueOf(vals[0]);
+                    maSubunitId   = Integer.valueOf(vals[1]);
                     streetAddress = vals[2];
                 }
                 if (vals.length == 2) {
-                    address_id    = new Integer(vals[0]);
+                    address_id    = Integer.valueOf(vals[0]);
                     streetAddress = vals[1];
                 }
             }

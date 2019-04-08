@@ -2,11 +2,12 @@ package in.bloomington.rental.dao;
 
 import java.util.List;
 
-import org.hibernate.Criteria;
-import org.hibernate.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -55,38 +56,40 @@ public class InspectionDaoImp implements InspectionDao
     @Override
     public List<Inspection> getAll()
     {
-        Session  session  = sessionFactory.getCurrentSession();
-        Criteria criteria = session.createCriteria(Inspection.class);
-        criteria.setMaxResults(limit);
-        criteria.addOrder(Order.desc("id"));
-        return criteria.list();
+        Session                  session = sessionFactory.getCurrentSession();
+        CriteriaBuilder          builder = session.getCriteriaBuilder();
+        CriteriaQuery<Inspection> select = builder.createQuery(Inspection.class);
+        Root<Inspection>            root = select.from(Inspection.class);
+        
+        select.orderBy(builder.desc(root.get("id")));
+        
+        return session.createQuery(select)
+                      .setMaxResults(limit)
+                      .getResultList();
     }
 
     @Override
     public List<Inspection> findByRentalId(int id)
     {
-        String  qq      = "from Inspection i where i.rental.id = :rentalId order by i.id desc ";
-        Session session = sessionFactory.getCurrentSession();
-        Query   query   = session.createQuery(qq);
-        query.setParameter("rentalId", id);
-        List<Inspection> inspections = query.list();
-        return inspections;
-
+        Session                  session = sessionFactory.getCurrentSession();
+        CriteriaBuilder          builder = session.getCriteriaBuilder();
+        CriteriaQuery<Inspection> select = builder.createQuery(Inspection.class);
+        Root<Inspection>            root = select.from(Inspection.class);
+        
+        select.where  (builder.equal(root.get("rental_id"), id));
+        select.orderBy(builder.desc (root.get("id")));
+        
+        return session.createQuery(select)
+                      .getResultList();
     }
 
     @Override
     public int findCountByRentalId(int id)
     {
+        String  qq      = "select count(*) from inspections where rental_id=:id";
         Session session = sessionFactory.getCurrentSession();
-        Query   query   = session.createQuery("select COUNT(i) from Inspection i where i.rental.id=:rental_id");
-        int     cnti    = 0;
-        try {
-            query.setInteger("rental_id", id);
-            Long cnt  = (Long) query.getSingleResult();
-                 cnti = cnt.intValue();
-        } catch (Exception ex) {
-            System.err.println(" inspection " + ex);
-        }
-        return cnti;
+        return  session.createQuery(qq, Integer.class)
+                       .setParameter("id", id)
+                       .getSingleResult();
     }
 }

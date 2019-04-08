@@ -50,7 +50,6 @@ public class InspectionTypeDaoImp implements InspectionTypeDao
     @Override
     public List<InspectionType> list()
     {
-        @SuppressWarnings("unchecked")
         TypedQuery<InspectionType> query = sessionFactory.getCurrentSession()
                                                          .createQuery("from InspectionType");
         return query.getResultList();

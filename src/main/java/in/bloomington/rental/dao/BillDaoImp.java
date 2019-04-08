@@ -2,10 +2,12 @@ package in.bloomington.rental.dao;
 
 import java.util.List;
 
-import org.hibernate.Criteria;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -61,11 +63,16 @@ public class BillDaoImp implements BillDao
     @Override
     public List<Bill> getAll()
     {
-        Session  session  = sessionFactory.getCurrentSession();
-        Criteria criteria = session.createCriteria(Bill.class);
-        criteria.setMaxResults(limit);
-        criteria.addOrder(Order.desc("id"));
-        return criteria.list();
+        Session             session = sessionFactory.getCurrentSession();
+        CriteriaBuilder     builder = session.getCriteriaBuilder();
+        CriteriaQuery<Bill> select = builder.createQuery(Bill.class);
+        Root<Bill>            root = select.from(Bill.class);
+        
+        select.orderBy(builder.desc(root.get("id")));
+        
+        return session.createQuery(select)
+                      .setMaxResults(limit)
+                      .getResultList();
+        
     }
-
 }

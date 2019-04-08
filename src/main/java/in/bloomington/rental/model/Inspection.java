@@ -373,7 +373,6 @@ public class Inspection implements java.io.Serializable
     public String createFileName(String path, String groupName, int cnt)
     {
         String filePath    = "";
-        String newFileName = "";                      // exclude path
         String ret         = "" + getRental().getId();
         ret += "_";
         if (cnt < 10) {
