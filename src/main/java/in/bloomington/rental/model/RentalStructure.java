@@ -63,10 +63,10 @@ public class RentalStructure implements java.io.Serializable
     private Integer          egressSillHeight;
 
     @Column(name = "egress_area")
-    private Double           egressArea;
+    private Float            egressArea;
 
     @Column(name = "egress_area2")
-    private Double           egressArea2;
+    private Float            egressArea2;
 
     @Column(name = "egress_decree_years")
     private String           egressDecreeYears;
@@ -95,8 +95,8 @@ public class RentalStructure implements java.io.Serializable
                                    Integer      egressHeight,
                                    Integer      egressWidth,
                                    Integer      egressSillHeight,
-                                   Double       egressArea,
-                                   Double       egressArea2,
+                                   Float        egressArea,
+                                   Float        egressArea2,
                                    String       egressDecreeYears,
                          List<RentalUnit>       rentalUnits)
     {
@@ -134,8 +134,8 @@ public class RentalStructure implements java.io.Serializable
     public Integer      getEgressHeight     () { return this.egressHeight; }
     public Integer      getEgressWidth      () { return this.egressWidth; }
     public Integer      getEgressSillHeight () { return this.egressSillHeight; }
-    public Double       getEgressArea       () { return this.egressArea; }
-    public Double       getEgressArea2      () { return this.egressArea2; }
+    public Float        getEgressArea       () { return this.egressArea; }
+    public Float        getEgressArea2      () { return this.egressArea2; }
     public List<RentalUnit> getRentalUnits  () { return this.rentalUnits; }
 
     public void setId               (int         id) { this.id                = id; }
@@ -151,8 +151,8 @@ public class RentalStructure implements java.io.Serializable
     public void setEgressHeight     (Integer      i) { this.egressHeight      = i; }
     public void setEgressWidth      (Integer      i) { this.egressWidth       = i; }
     public void setEgressSillHeight (Integer      i) { this.egressSillHeight  = i; }
-    public void setEgressArea       (Double       d) { this.egressArea        = d; }
-    public void setEgressArea2      (Double       d) { this.egressArea2       = d; }
+    public void setEgressArea       (Float        d) { this.egressArea        = d; }
+    public void setEgressArea2      (Float        d) { this.egressArea2       = d; }
     public void setRentalUnits      (List<RentalUnit> u) { this.rentalUnits   = u; }
 
     //-----------------------------------------------------
