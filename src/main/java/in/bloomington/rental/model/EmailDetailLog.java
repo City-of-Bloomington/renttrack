@@ -19,14 +19,34 @@ public class EmailDetailLog implements java.io.Serializable
 {
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int      id;
+
+    @Column(name =  "log_to")
     private String   logTo;
+
+    @Column(name =  "log_cc")
     private String   logCc;
+
+    @Column(name =  "log_bcc")
     private String   logBcc;
+
+    @Column(name =  "owners_id")
     private String   ownersId;
+
+    @Column(name =  "agent_id")
     private String   agentId;
+
+    @Column(name =  "rentals_id")
     private String   rentalsId;
+
+    @Column(name =  "error_text")
     private String   errorText;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "email_log_id")
     private EmailLog emailLog;
 
     public EmailDetailLog()
@@ -79,37 +99,35 @@ public class EmailDetailLog implements java.io.Serializable
         this.errorText = errorText;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    public int getId()
-    {
-        return this.id;
-    }
+    //-----------------------------------------------------
+    // Generic Getters and Setters
+    //-----------------------------------------------------
+    public int      getId       () { return this.id;        }
+    public String   getLogTo    () { return this.logTo;     }
+    public String   getLogCc    () { return this.logCc;     }
+    public String   getLogBcc   () { return this.logBcc;    }
+    public String   getOwnersId () { return this.ownersId;  }
+    public String   getAgentId  () { return this.agentId;   }
+    public String   getRentalsId() { return this.rentalsId; }
+    public String   getErrorText() { return this.errorText; }
+    public EmailLog getEmailLog () { return this.emailLog;  }
 
-    public void setId(int id)
-    {
-        this.id = id;
-    }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "email_log_id")
-    public EmailLog getEmailLog()
-    {
-        return this.emailLog;
-    }
 
-    public void setEmailLog(EmailLog val)
-    {
-        this.emailLog = val;
-    }
 
-    @Column(name = "log_to", length = 70)
-    public String getLogTo()
-    {
-        return this.logTo;
-    }
+    public void setId       (int     id) { this.id        = id; }
+    public void setLogTo    (String   s) { this.logTo     = s; }
+    public void setLogCc    (String   s) { this.logCc     = s; }
+    public void setLogBcc   (String   s) { this.logBcc    = s; }
+    public void setOwnersId (String   s) { this.ownersId  = s; }
+    public void setAgentId  (String   s) { this.agentId   = s; }
+    public void setRentalsId(String   s) { this.rentalsId = s; }
+    public void setErrorText(String   s) { this.errorText = s; }
+    public void setEmailLog (EmailLog l) { this.emailLog  = l; }
 
+    //-----------------------------------------------------
+    // Transients
+    //-----------------------------------------------------
     @Transient
     public String getLogToClean()
     {
@@ -117,17 +135,6 @@ public class EmailDetailLog implements java.io.Serializable
             return Helper.doCleanTag(getLogTo());
         }
         return logTo;
-    }
-
-    public void setLogTo(String logTo)
-    {
-        this.logTo = logTo;
-    }
-
-    @Column(name = "log_cc", length = 70)
-    public String getLogCc()
-    {
-        return this.logCc;
     }
 
     @Transient
@@ -139,17 +146,6 @@ public class EmailDetailLog implements java.io.Serializable
         return logCc;
     }
 
-    public void setLogCc(String logCc)
-    {
-        this.logCc = logCc;
-    }
-
-    @Column(name = "log_bcc", length = 300)
-    public String getLogBcc()
-    {
-        return this.logBcc;
-    }
-
     @Transient
     public String getLogBccClean()
     {
@@ -157,54 +153,5 @@ public class EmailDetailLog implements java.io.Serializable
             return Helper.doCleanTag(logBcc);
         }
         return this.logBcc;
-    }
-
-    public void setLogBcc(String logBcc)
-    {
-        this.logBcc = logBcc;
-    }
-
-    @Column(name = "owners_id", length = 30)
-    public String getOwnersId()
-    {
-        return this.ownersId;
-    }
-
-    public void setOwnersId(String ownersId)
-    {
-        this.ownersId = ownersId;
-    }
-
-    @Column(name = "agent_id", length = 30)
-    public String getAgentId()
-    {
-        return this.agentId;
-    }
-
-    public void setAgentId(String agentId)
-    {
-        this.agentId = agentId;
-    }
-
-    @Column(name = "rentals_id", length = 50)
-    public String getRentalsId()
-    {
-        return this.rentalsId;
-    }
-
-    public void setRentalsId(String rentalsId)
-    {
-        this.rentalsId = rentalsId;
-    }
-
-    @Column(name = "error_text", length = 500)
-    public String getErrorText()
-    {
-        return this.errorText;
-    }
-
-    public void setErrorText(String errorText)
-    {
-        this.errorText = errorText;
     }
 }
