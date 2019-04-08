@@ -28,10 +28,10 @@ import org.apache.logging.log4j.Logger;
 @Table(name = "rentals")
 public class Rental implements java.io.Serializable
 {
-    private static final long serialVersionUID = 1L;
-
-    private static final Logger   logger           = LogManager.getLogger(Rental.class);
-    SimpleDateFormat              dtf              = new SimpleDateFormat("MM/dd/yyyy");
+    private static final long   serialVersionUID = 1L;
+    private static final Logger           logger = LogManager.getLogger(Rental.class);
+    private static final SimpleDateFormat dtf    = new SimpleDateFormat("MM/dd/yyyy");
+    
     private int                   id;
     private Owner                 agent;
     private RentalStatus          rentalStatus;
