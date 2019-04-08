@@ -21,19 +21,59 @@ public class RentalStructure implements java.io.Serializable
 {
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int              id;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "building_type_id")
     private BuildingType     buildingType;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "prop_type_id")
     private PropertyType     propertyType;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rental_id")
     private Rental           rental;
+
+    @Column(name = "identifier")
     private String           identifier;
+
+    @Column(name = "foundation")
     private String           foundation;
+
+    @Column(name = "story_cnt")
     private Short            storyCnt;
+
+    @Column(name = "year_built")
     private Short            yearBuilt;
+
+    @Column(name = "heat_source")
     private String           heatSource;
-    private Integer          egressHeight, egressWidth, egressSillHeight;
-    private Double           egressArea, egressArea2;
+
+    @Column(name = "egress_height")
+    private Integer          egressHeight;
+
+    @Column(name = "egress_width")
+    private Integer          egressWidth;
+
+    @Column(name = "egress_sill_height")
+    private Integer          egressSillHeight;
+
+    @Column(name = "egress_area")
+    private Double           egressArea;
+
+    @Column(name = "egress_area2")
+    private Double           egressArea2;
+
+    @Column(name = "egress_decree_years")
     private String           egressDecreeYears;
-    private List<RentalUnit> rentalUnits = new ArrayList<>(0);
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "rentalStructure")
+    @OrderBy("id ASC")
+    private List<RentalUnit> rentalUnits = new ArrayList<RentalUnit>();
 
     public RentalStructure()
     {
@@ -78,43 +118,46 @@ public class RentalStructure implements java.io.Serializable
         this.egressDecreeYears = egressDecreeYears;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    public int getId()
-    {
-        return this.id;
-    }
+    //-----------------------------------------------------
+    // Generic Getters and Setters
+    //-----------------------------------------------------
+    public int          getId               () { return this.id; }
+    public BuildingType getBuildingType     () { return this.buildingType; }
+    public PropertyType getPropertyType     () { return this.propertyType; }
+    public Rental       getRental           () { return this.rental; }
+    public String       getIdentifier       () { return this.identifier; }
+    public String       getFoundation       () { return this.foundation; }
+    public String       getEgressDecreeYears() { return this.egressDecreeYears;}
+    public Short        getStoryCnt         () { return this.storyCnt; }
+    public Short        getYearBuilt        () { return this.yearBuilt; }
+    public String       getHeatSource       () { return this.heatSource; }
+    public Integer      getEgressHeight     () { return this.egressHeight; }
+    public Integer      getEgressWidth      () { return this.egressWidth; }
+    public Integer      getEgressSillHeight () { return this.egressSillHeight; }
+    public Double       getEgressArea       () { return this.egressArea; }
+    public Double       getEgressArea2      () { return this.egressArea2; }
+    public List<RentalUnit> getRentalUnits  () { return this.rentalUnits; }
 
-    public void setId(int id)
-    {
-        this.id = id;
-    }
+    public void setId               (int         id) { this.id                = id; }
+    public void setBuildingType     (BuildingType t) { this.buildingType      = t; }
+    public void setPropertyType     (PropertyType t) { this.propertyType      = t; }
+    public void setRental           (Rental       r) { this.rental            = r; }
+    public void setIdentifier       (String       s) { this.identifier        = s; }
+    public void setFoundation       (String       s) { this.foundation        = s; }
+    public void setEgressDecreeYears(String       s) { this.egressDecreeYears = s; }
+    public void setStoryCnt         (Short        i) { this.storyCnt          = i; }
+    public void setYearBuilt        (Short        i) { this.yearBuilt         = i; }
+    public void setHeatSource       (String       s) { this.heatSource        = s; }
+    public void setEgressHeight     (Integer      i) { this.egressHeight      = i; }
+    public void setEgressWidth      (Integer      i) { this.egressWidth       = i; }
+    public void setEgressSillHeight (Integer      i) { this.egressSillHeight  = i; }
+    public void setEgressArea       (Double       d) { this.egressArea        = d; }
+    public void setEgressArea2      (Double       d) { this.egressArea2       = d; }
+    public void setRentalUnits      (List<RentalUnit> u) { this.rentalUnits   = u; }
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "building_type_id")
-    public BuildingType getBuildingType()
-    {
-        return this.buildingType;
-    }
-
-    public void setBuildingType(BuildingType buildingType)
-    {
-        this.buildingType = buildingType;
-    }
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "prop_type_id")
-    public PropertyType getPropertyType()
-    {
-        return this.propertyType;
-    }
-
-    public void setPropertyType(PropertyType propertyType)
-    {
-        this.propertyType = propertyType;
-    }
-
+    //-----------------------------------------------------
+    // Transients
+    //-----------------------------------------------------
     @Transient
     public void setPropertyTypeId(int val)
     {
@@ -166,62 +209,6 @@ public class RentalStructure implements java.io.Serializable
         }
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "rental_id")
-    public Rental getRental()
-    {
-        return this.rental;
-    }
-
-    public void setRental(Rental rental)
-    {
-        this.rental = rental;
-    }
-
-    @Column(name = "identifier", length = 30)
-    public String getIdentifier()
-    {
-        return this.identifier;
-    }
-
-    public void setIdentifier(String identifier)
-    {
-        this.identifier = identifier;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "rentalStructure")
-    @OrderBy("id ASC")
-    public List<RentalUnit> getRentalUnits()
-    {
-        return this.rentalUnits;
-    }
-
-    public void setRentalUnits(List<RentalUnit> rentalUnits)
-    {
-        this.rentalUnits = rentalUnits;
-    }
-
-    @Column(name = "foundation")
-    public String getFoundation()
-    {
-        return this.foundation;
-    }
-
-    public void setFoundation(String foundation)
-    {
-        this.foundation = foundation;
-    }
-
-    @Column(name = "egress_decree_years")
-    public String getEgressDecreeYears()
-    {
-        return this.egressDecreeYears;
-    }
-
-    public void setEgressDecreeYears(String val)
-    {
-        this.egressDecreeYears = val;
-    }
 
     @Transient
     public void setYearBuiltType(String val)
@@ -235,93 +222,6 @@ public class RentalStructure implements java.io.Serializable
         return "";
     }
 
-    @Column(name = "story_cnt")
-    public Short getStoryCnt()
-    {
-        return this.storyCnt;
-    }
-
-    public void setStoryCnt(Short storyCnt)
-    {
-        this.storyCnt = storyCnt;
-    }
-
-    @Column(name = "year_built")
-    public Short getYearBuilt()
-    {
-        return this.yearBuilt;
-    }
-
-    public void setYearBuilt(Short val)
-    {
-        this.yearBuilt = val;
-    }
-
-    @Column(name = "heat_source")
-    public String getHeatSource()
-    {
-        return this.heatSource;
-    }
-
-    public void setHeatSource(String heatSource)
-    {
-        this.heatSource = heatSource;
-    }
-
-    @Column(name = "egress_height")
-    public Integer getEgressHeight()
-    {
-        return this.egressHeight;
-    }
-
-    public void setEgressHeight(Integer val)
-    {
-        this.egressHeight = val;
-    }
-
-    @Column(name = "egress_width")
-    public Integer getEgressWidth()
-    {
-        return this.egressWidth;
-    }
-
-    public void setEgressWidth(Integer val)
-    {
-        this.egressWidth = val;
-    }
-
-    @Column(name = "egress_sill_height")
-    public Integer getEgressSillHeight()
-    {
-        return this.egressSillHeight;
-    }
-
-    public void setEgressSillHeight(Integer val)
-    {
-        this.egressSillHeight = val;
-    }
-
-    @Column(name = "egress_area")
-    public Double getEgressArea()
-    {
-        return this.egressArea;
-    }
-
-    public void setEgressArea(Double val)
-    {
-        this.egressArea = val;
-    }
-
-    @Column(name = "egress_area2")
-    public Double getEgressArea2()
-    {
-        return this.egressArea2;
-    }
-
-    public void setEgressArea2(Double val)
-    {
-        this.egressArea2 = val;
-    }
 
     // all these measures must be available
     @Transient
@@ -375,5 +275,4 @@ public class RentalStructure implements java.io.Serializable
         }
         return ret;
     }
-
 }
