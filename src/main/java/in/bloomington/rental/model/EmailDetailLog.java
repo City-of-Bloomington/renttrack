@@ -33,13 +33,13 @@ public class EmailDetailLog implements java.io.Serializable
     @Column(name =  "log_bcc")
     private String   logBcc;
 
-    @Column(name =  "owners_id")
+    @Column(name =  "owners")
     private String   ownersId;
 
-    @Column(name =  "agent_id")
-    private String   agentId;
+    @Column(name =  "agents")
+    private String   agentsId;
 
-    @Column(name =  "rentals_id")
+    @Column(name =  "rentals")
     private String   rentalsId;
 
     @Column(name =  "error_text")
@@ -73,7 +73,7 @@ public class EmailDetailLog implements java.io.Serializable
         this.logCc     = logCc;
         this.logBcc    = logBcc;
         this.ownersId  = ownersId;
-        this.agentId   = agentId;
+        this.agentsId  = agentId;
         this.rentalsId = rentalsId;
         this.errorText = errorText;
 
@@ -94,7 +94,7 @@ public class EmailDetailLog implements java.io.Serializable
         this.logCc     = logCc;
         this.logBcc    = logBcc;
         this.ownersId  = ownersId;
-        this.agentId   = agentId;
+        this.agentsId  = agentId;
         this.rentalsId = rentalsId;
         this.errorText = errorText;
     }
@@ -107,7 +107,7 @@ public class EmailDetailLog implements java.io.Serializable
     public String   getLogCc    () { return this.logCc;     }
     public String   getLogBcc   () { return this.logBcc;    }
     public String   getOwnersId () { return this.ownersId;  }
-    public String   getAgentId  () { return this.agentId;   }
+    public String   getAgentId  () { return this.agentsId;  }
     public String   getRentalsId() { return this.rentalsId; }
     public String   getErrorText() { return this.errorText; }
     public EmailLog getEmailLog () { return this.emailLog;  }
@@ -120,7 +120,7 @@ public class EmailDetailLog implements java.io.Serializable
     public void setLogCc    (String   s) { this.logCc     = s; }
     public void setLogBcc   (String   s) { this.logBcc    = s; }
     public void setOwnersId (String   s) { this.ownersId  = s; }
-    public void setAgentId  (String   s) { this.agentId   = s; }
+    public void setAgentId  (String   s) { this.agentsId  = s; }
     public void setRentalsId(String   s) { this.rentalsId = s; }
     public void setErrorText(String   s) { this.errorText = s; }
     public void setEmailLog (EmailLog l) { this.emailLog  = l; }
