@@ -2,12 +2,14 @@ package in.bloomington.rental.dao;
 
 import java.util.List;
 
-import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 import in.bloomington.rental.model.PropertyType;
 
 @Repository
@@ -48,9 +50,11 @@ public class PropertyTypeDaoImp implements PropertyTypeDao
     @Override
     public List<PropertyType> list()
     {
-        @SuppressWarnings("unchecked")
-        TypedQuery<PropertyType> query = sessionFactory.getCurrentSession()
-                                                       .createQuery("from PropertyType");
-        return query.getResultList();
+        Session             session = sessionFactory.getCurrentSession();
+        CriteriaBuilder     builder = session.getCriteriaBuilder();
+        CriteriaQuery<PropertyType> select = builder.createQuery(PropertyType.class);
+
+        return session.createQuery(select)
+                      .getResultList();
     }
 }

@@ -2,13 +2,17 @@ package in.bloomington.rental.dao;
 
 import java.util.List;
 
-import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 import in.bloomington.rental.model.BuildingType;
+import in.bloomington.rental.model.BuildingType_;
 
 @Repository
 public class BuildingTypeDaoImp implements BuildingTypeDao
@@ -48,9 +52,15 @@ public class BuildingTypeDaoImp implements BuildingTypeDao
     @Override
     public List<BuildingType> list()
     {
-        @SuppressWarnings("unchecked")
-        TypedQuery<BuildingType> query = sessionFactory.getCurrentSession().createQuery("from BuildingType");
-        return query.getResultList();
+        Session                    session = sessionFactory.getCurrentSession();
+        CriteriaBuilder            builder = session.getCriteriaBuilder();
+        CriteriaQuery<BuildingType> select = builder.createQuery(BuildingType.class);
+        Root<BuildingType>            root = select.from(BuildingType.class);
+
+        select.orderBy(builder.desc(root.get(BuildingType_.name)));
+
+        return session.createQuery(select)
+                      .getResultList();
     }
 
 }

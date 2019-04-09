@@ -2,11 +2,12 @@ package in.bloomington.rental.dao;
 
 import java.util.List;
 
-import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -52,19 +53,25 @@ public class OwnerPhoneDaoImp implements OwnerPhoneDao
     @Override
     public List<OwnerPhone> list()
     {
-        TypedQuery<OwnerPhone> query = sessionFactory.getCurrentSession()
-                                                     .createQuery("from OwnerPhone", OwnerPhone.class);
-        return query.getResultList();
+        Session                  session = sessionFactory.getCurrentSession();
+        CriteriaBuilder          builder = session.getCriteriaBuilder();
+        CriteriaQuery<OwnerPhone> select = builder.createQuery(OwnerPhone.class);
+        
+        return session.createQuery(select)
+                      .getResultList();
     }
 
     @Override
     public List<OwnerPhone> findByOwnerId(int owner_id)
     {
-        String  qq      = "from owner_phones op where op.owner_id :owner_id";
-        Session session = sessionFactory.getCurrentSession();
-        Query   query   = session.createQuery(qq)
-                                 .setParameter("owner_id", owner_id);
-        List<OwnerPhone> phones = query.list();
-        return phones;
+        Session                  session = sessionFactory.getCurrentSession();
+        CriteriaBuilder          builder = session.getCriteriaBuilder();
+        CriteriaQuery<OwnerPhone> select = builder.createQuery(OwnerPhone.class);
+        Root<OwnerPhone>            root = select.from(OwnerPhone.class);
+        
+        select.where(builder.equal(root.get("owner_id"), owner_id));
+        
+        return session.createQuery(select)
+                      .getResultList();
     }
 }

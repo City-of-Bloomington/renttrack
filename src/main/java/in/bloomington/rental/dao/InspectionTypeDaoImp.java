@@ -2,12 +2,14 @@ package in.bloomington.rental.dao;
 
 import java.util.List;
 
-import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 import in.bloomington.rental.model.InspectionType;
 
 @Repository
@@ -50,8 +52,11 @@ public class InspectionTypeDaoImp implements InspectionTypeDao
     @Override
     public List<InspectionType> list()
     {
-        TypedQuery<InspectionType> query = sessionFactory.getCurrentSession()
-                                                         .createQuery("from InspectionType");
-        return query.getResultList();
+        Session                      session = sessionFactory.getCurrentSession();
+        CriteriaBuilder              builder = session.getCriteriaBuilder();
+        CriteriaQuery<InspectionType> select = builder.createQuery(InspectionType.class);
+        
+        return session.createQuery(select)
+                      .getResultList();
     }
 }

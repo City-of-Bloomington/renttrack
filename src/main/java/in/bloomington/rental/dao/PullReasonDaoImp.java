@@ -2,12 +2,14 @@ package in.bloomington.rental.dao;
 
 import java.util.List;
 
-import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 import in.bloomington.rental.model.PullReason;
 
 @Repository
@@ -50,9 +52,11 @@ public class PullReasonDaoImp implements PullReasonDao
     @Override
     public List<PullReason> list()
     {
-        @SuppressWarnings("unchecked")
-        TypedQuery<PullReason> query = sessionFactory.getCurrentSession()
-                                                     .createQuery("from PullReason");
-        return query.getResultList();
+        Session                  session = sessionFactory.getCurrentSession();
+        CriteriaBuilder          builder = session.getCriteriaBuilder();
+        CriteriaQuery<PullReason> select = builder.createQuery(PullReason.class);
+
+        return session.createQuery(select)
+                      .getResultList();
     }
 }

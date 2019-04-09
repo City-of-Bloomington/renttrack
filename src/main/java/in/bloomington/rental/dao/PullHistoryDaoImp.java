@@ -2,11 +2,12 @@ package in.bloomington.rental.dao;
 
 import java.util.List;
 
-import org.hibernate.Criteria;
-import org.hibernate.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -54,15 +55,16 @@ public class PullHistoryDaoImp implements PullHistoryDao
     @Override
     public List<PullHistory> getPullHistoryForRental(int rental_id)
     {
-        String   qq       = "from pull_history o where o.rental_id = :rental_id";
-        Session  session  = sessionFactory.getCurrentSession();
-        Criteria criteria = session.createCriteria(PullHistory.class);
-        criteria.setMaxResults(limit);
-        criteria.addOrder(Order.desc("id"));
-        Query query = session.createQuery(qq);
-        query.setParameter("rental_id", rental_id);
-        List<PullHistory> pullHistories = query.list();
-        return pullHistories;
+        Session            session = sessionFactory.getCurrentSession();
+        CriteriaBuilder    builder = session.getCriteriaBuilder();
+        CriteriaQuery<PullHistory> select = builder.createQuery(PullHistory.class);
+        Root<PullHistory>            root = select.from(PullHistory.class);
 
+        select.where  (builder.equal(root.get("rental_id"), rental_id))
+              .orderBy(builder.desc (root.get("id")));
+
+        return session.createQuery(select)
+                      .setMaxResults(limit)
+                      .getResultList();
     }
 }

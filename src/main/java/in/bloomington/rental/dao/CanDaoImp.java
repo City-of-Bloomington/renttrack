@@ -2,12 +2,17 @@ package in.bloomington.rental.dao;
 
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import in.bloomington.rental.model.Can;
+import in.bloomington.rental.model.Can_;
 
 @Repository
 public class CanDaoImp implements CanDao
@@ -49,20 +54,28 @@ public class CanDaoImp implements CanDao
     @Override
     public List<Can> getAll()
     {
-        String  qq       = "select * from cans order by id desc";
-        Session session  = sessionFactory.getCurrentSession();
-        return  session.createQuery(qq, Can.class)
-                       .getResultList();
+        Session            session = sessionFactory.getCurrentSession();
+        CriteriaBuilder    builder = session.getCriteriaBuilder();
+        CriteriaQuery<Can> select = builder.createQuery(Can.class);
+        Root<Can>            root = select.from(Can.class);
+
+        select.orderBy(builder.desc(root.get(Can_.id)));
+
+        return session.createQuery(select)
+                      .getResultList();
     }
 
     // needed for auto_complete
     @Override
     public List<Can> findByName(String name)
     {
-        String  qq      = "select * from cans where title like :name";
-        Session session = sessionFactory.getCurrentSession();
-        return  session.createQuery(qq, Can.class)
-                       .setParameter("name", "%" + name + "%")
-                       .getResultList();
+        Session            session = sessionFactory.getCurrentSession();
+        CriteriaBuilder    builder = session.getCriteriaBuilder();
+        CriteriaQuery<Can> select = builder.createQuery(Can.class);
+        Root<Can>            root = select.from(Can.class);
+        
+        select.where(builder.like(root.get(Can_.title), "%" + name + "%"));
+        return session.createQuery(select)
+                      .getResultList();
     }
 }

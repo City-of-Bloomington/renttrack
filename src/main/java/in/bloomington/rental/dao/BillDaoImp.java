@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import in.bloomington.rental.model.Bill;
+import in.bloomington.rental.model.Bill_;
 import in.bloomington.rental.model.Rental;
 
 @Repository
@@ -63,16 +64,15 @@ public class BillDaoImp implements BillDao
     @Override
     public List<Bill> getAll()
     {
-        Session             session = sessionFactory.getCurrentSession();
-        CriteriaBuilder     builder = session.getCriteriaBuilder();
+        Session            session = sessionFactory.getCurrentSession();
+        CriteriaBuilder    builder = session.getCriteriaBuilder();
         CriteriaQuery<Bill> select = builder.createQuery(Bill.class);
         Root<Bill>            root = select.from(Bill.class);
-        
-        select.orderBy(builder.desc(root.get("id")));
-        
+
+        select.orderBy(builder.desc(root.get(Bill_.id)));
+
         return session.createQuery(select)
                       .setMaxResults(limit)
                       .getResultList();
-        
     }
 }

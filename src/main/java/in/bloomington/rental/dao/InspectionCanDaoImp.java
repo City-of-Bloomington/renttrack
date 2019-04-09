@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import in.bloomington.rental.model.InspectionCan;
+import in.bloomington.rental.model.InspectionCan_;
 
 @Repository
 public class InspectionCanDaoImp implements InspectionCanDao
@@ -80,8 +81,8 @@ public class InspectionCanDaoImp implements InspectionCanDao
         Root<InspectionCan>            root = select.from(InspectionCan.class);
         Predicate[]                 filters = new Predicate[2];
         
-        filters[0] = builder.like(root.get("title"), "%" + name + "%");
-        filters[1] = builder.like(root.get("item1"), "%" + name + "%");
+        filters[0] = builder.like(root.get(InspectionCan_.title), "%" + name + "%");
+        filters[1] = builder.like(root.get(InspectionCan_.item1), "%" + name + "%");
         select.where(builder.or(filters));
         
         return session.createQuery(select)

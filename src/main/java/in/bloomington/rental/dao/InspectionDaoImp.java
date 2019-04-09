@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import in.bloomington.rental.model.Inspection;
+import in.bloomington.rental.model.Inspection_;
 
 @Repository
 public class InspectionDaoImp implements InspectionDao
@@ -76,8 +77,8 @@ public class InspectionDaoImp implements InspectionDao
         CriteriaQuery<Inspection> select = builder.createQuery(Inspection.class);
         Root<Inspection>            root = select.from(Inspection.class);
         
-        select.where  (builder.equal(root.get("rental_id"), id));
-        select.orderBy(builder.desc (root.get("id")));
+        select.where  (builder.equal(root.get(Inspection_.rental), id));
+        select.orderBy(builder.desc (root.get(Inspection_.id)));
         
         return session.createQuery(select)
                       .getResultList();

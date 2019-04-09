@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import in.bloomington.rental.model.Egress;
+import in.bloomington.rental.model.Egress_;
 
 @Repository
 public class EgressDaoImp implements EgressDao
@@ -59,7 +60,7 @@ public class EgressDaoImp implements EgressDao
         CriteriaQuery<Egress> select = builder.createQuery(Egress.class);
         Root<Egress>            root = select.from(Egress.class);
         
-        select.orderBy(builder.asc(root.get("id")));
+        select.orderBy(builder.asc(root.get(Egress_.id)));
         return session.createQuery(select)
                       .getResultList();
     }
@@ -73,8 +74,8 @@ public class EgressDaoImp implements EgressDao
         CriteriaQuery<Egress> select = builder.createQuery(Egress.class);
         Root<Egress>            root = select.from(Egress.class);
         Predicate[]              and = new Predicate[2];
-        and[0] = builder.   lessThanOrEqualTo(root.get("start_year"), year);
-        and[1] = builder.greaterThanOrEqualTo(root.get(  "end_year"), year);
+        and[0] = builder.   lessThanOrEqualTo(root.get(Egress_.start_year), year);
+        and[1] = builder.greaterThanOrEqualTo(root.get(Egress_.  end_year), year);
         select.where(and);
         
         return session.createQuery(select)

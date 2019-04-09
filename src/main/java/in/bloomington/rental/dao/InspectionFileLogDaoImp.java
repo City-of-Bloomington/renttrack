@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import in.bloomington.rental.model.InspectionFileLog;
+import in.bloomington.rental.model.InspectionFileLog_;
 
 @Repository
 public class InspectionFileLogDaoImp implements InspectionFileLogDao
@@ -41,7 +42,7 @@ public class InspectionFileLogDaoImp implements InspectionFileLogDao
         CriteriaQuery<InspectionFileLog> select = builder.createQuery(InspectionFileLog.class);
         Root<InspectionFileLog>            root = select.from(InspectionFileLog.class);
         
-        select.where  (builder.equal(root.get("rental_id"), rentalId));
+        select.where  (builder.equal(root.get(InspectionFileLog_.rentalId), rentalId));
         select.orderBy(builder.desc (root.get("id")));
         
         return session.createQuery(select)

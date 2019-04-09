@@ -2,18 +2,21 @@ package in.bloomington.rental.dao;
 
 import java.util.List;
 
-import org.hibernate.Criteria;
-import org.hibernate.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
+import org.hibernate.query.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Order;
 import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import in.bloomington.rental.model.Item;
 import in.bloomington.rental.model.Owner;
+import in.bloomington.rental.model.Owner_;
 import in.bloomington.rental.model.RentalOwner;
 
 @Repository
@@ -84,26 +87,31 @@ public class OwnerDaoImp implements OwnerDao
     @Override
     public List<Owner> getAll()
     {
-        Session  session  = sessionFactory.getCurrentSession();
-        Criteria criteria = session.createCriteria(Owner.class);
-        criteria.setMaxResults(limit);
-        criteria.addOrder(Order.desc("id"));
-        // remove dups
-        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-        return criteria.list();
+        Session             session = sessionFactory.getCurrentSession();
+        CriteriaBuilder     builder = session.getCriteriaBuilder();
+        CriteriaQuery<Owner> select = builder.createQuery(Owner.class);
+        Root<Owner>            root = select.from(Owner.class);
 
+        select.distinct(true)
+              .orderBy(builder.desc(root.get(Owner_.id)));
+
+        return session.createQuery(select)
+                      .setMaxResults(limit)
+                      .getResultList();
     }
 
     //
     // we used for auto_complete too
     public List<Owner> findByName(String name)
     {
-        String  qq      = "from Owner o where o.name like :name";
-        Session session = sessionFactory.getCurrentSession();
-        Query   query   = session.createQuery(qq);
-        query.setParameter("name", "%" + name + "%");
-        List<Owner> owners = query.list();
-        return owners;
+        Session             session = sessionFactory.getCurrentSession();
+        CriteriaBuilder     builder = session.getCriteriaBuilder();
+        CriteriaQuery<Owner> select = builder.createQuery(Owner.class);
+        Root<Owner>            root = select.from(Owner.class);
+        
+        select.where(builder.like(root.get(Owner_.name), "%" + name + "%"));
+        return session.createQuery(select)
+                      .getResultList();
     }
 
     // we used for auto_complete too
@@ -111,14 +119,13 @@ public class OwnerDaoImp implements OwnerDao
     public List<Owner> findAgentByName(String name)
     {
         Session  session = sessionFactory.getCurrentSession();
-        String   qq      = "select distinct o.* from owners o, rentals r where "
-                         + " r.agent_id=o.id and o.name like '%"
-                         + name + "%'";
-        
-        SQLQuery query   = session.createSQLQuery(qq);
-        query.addEntity("owner", Owner.class);
-        List<Owner> owners = query.list();
-        return owners;
+        String   qq      = "select distinct o.*"
+                         + " from owners  o"
+                         + " join rentals r on o.id=r.agent_id"
+                         + " where name like :name";
+        return session.createNativeQuery(qq, Owner.class)
+                      .setParameter("name", name)
+                      .list();
     }
 
     @Override

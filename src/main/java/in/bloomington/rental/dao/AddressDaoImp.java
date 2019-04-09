@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import in.bloomington.rental.model.Item;
 import in.bloomington.rental.model.Address;
+import in.bloomington.rental.model.Address_;
 
 @Repository
 public class AddressDaoImp implements AddressDao
@@ -67,9 +68,9 @@ public class AddressDaoImp implements AddressDao
         CriteriaBuilder builder       = session.getCriteriaBuilder();
         CriteriaQuery<Address> select = builder.createQuery(Address.class);
         Root<Address> root            = select.from(Address.class);
-        
-        select.where(builder.equal(root.get("rental_id"), id));
-        
+
+        select.where(builder.equal(root.get(Address_.rentalId), id));
+
         return session.createQuery(select).getResultList();
     }
 
@@ -80,9 +81,9 @@ public class AddressDaoImp implements AddressDao
         CriteriaBuilder builder       = session.getCriteriaBuilder();
         CriteriaQuery<Address> select = builder.createQuery(Address.class);
         Root<Address> root            = select.from(Address.class);
-        
+
         if (address != null && !address.equals("")) {
-            select.where(builder.equal(root.get("street_address"), address));
+            select.where(builder.equal(root.get(Address_.streetAddress), address));
         }
         if (inValid != null && !inValid.equals("")) {
             select.where(builder.isNotNull(root.get("invalid")));
@@ -97,9 +98,9 @@ public class AddressDaoImp implements AddressDao
         CriteriaBuilder       builder = session.getCriteriaBuilder();
         CriteriaQuery<Address> select = builder.createQuery(Address.class);
         Root<Address>            root = select.from(Address.class);
-        
-        select.orderBy(builder.desc(root.get("id")));
-        
+
+        select.orderBy(builder.desc(root.get(Address_.id)));
+
         return session.createQuery(select)
                       .setMaxResults(limit)
                       .getResultList();
