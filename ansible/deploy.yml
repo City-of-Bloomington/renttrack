@@ -29,6 +29,12 @@
         - "{{ renttrack_backup_path  }}"
         - "{{ renttrack_site_home    }}"
 
+    - name: "Create tomcat context parameters"
+      template:
+        src: "context.xml"
+        dest: "/etc/tomcat8/Catalina/localhost/{{ renttrack_app_name }}.xml"
+      notify: "tomcat_restart"
+
     - name: "Configure renttrack webapp"
       template:
         src: "{{ item }}"
