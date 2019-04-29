@@ -308,9 +308,9 @@ alter table inspections alter column time_status type varchar(15);
  
  insert into egresses values(2,1992,1994,     26,    21,         45,  6.5, 'Single',null),( 1,1991,1992,25,20,44,  6.4,'Single',null),(3,2008,2011,24,20,44,5,'Multi',5.7);
 
-insert into inspection_templates values(10,     10884, 1, '2018-06-06', 17);
+
  
-insert into template_components values(180 , 10 , 0 , 0 ,  0 , 'Living Room 5-7,8-2'),( 181 ,  10 ,  0 , 0 ,   0 , 'Bedroom 8-5,8-4'),(182 , 10 , 0 ,  0 ,  0 , 'Bedroom 8-5,10-3'),(184 , 10 , 0 , 1 , 0 , 'Unit 2'),(185 ,  10 ,  0 , 1 , 0 , 'Hallway'),(186, 10 , 0 , 1 ,  0 , 'Mechanic Closet'), (187 , 10 , 0 , 1 , 0 , 'Bathroom'), (188 ,          10 ,            0 ,        1 ,         0 , 'Kitchen'), (189 ,          10 ,            0 ,        1 ,         0 , 'Living Room'), (190 ,          10 ,            0 ,        1 ,         0 , 'Bedroom'), (191 ,          10 ,            0 ,        1 ,         0 , 'Bedroom'), (193 ,          10 ,            0 ,        2 ,         0 , 'Garage'), (194 ,          10 ,            0 ,        2 ,         0 , 'Unit 3'),(195 ,          10 ,            0 ,        2 ,         0 , 'Hallway'), (196 ,          10 ,            0 ,        2 ,         0 , 'Mechanic Closet'), (197 ,          10 ,            0 ,        2 ,         0 , 'Bathroom'), (198 ,          10 ,            0 ,        2 ,         0 , 'Kitchen'), (199 ,          10 ,            0 ,        2 ,         0 , 'Living Room'), (200 ,          10 ,            0 ,        2 ,         0 , 'Bedroom'), (201 ,          10 ,            0 ,        2 ,         0 , 'Bedroom'), (202 ,          10 ,            0 ,        0 ,         0 , 'Porch');
+
 
  
  
