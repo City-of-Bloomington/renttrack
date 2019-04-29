@@ -1,7 +1,7 @@
 package in.bloomington.rental.controller;
 
-import java.util.Locale;
 import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,19 +10,17 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 
-import in.bloomington.rental.model.RentalStructure;
-import in.bloomington.rental.service.RentalStructureService;
-import in.bloomington.rental.model.Rental;
-import in.bloomington.rental.model.PropertyType;
 import in.bloomington.rental.model.BuildingType;
-import in.bloomington.rental.service.RentalService;
-import in.bloomington.rental.service.PropertyTypeService;
+import in.bloomington.rental.model.PropertyType;
+import in.bloomington.rental.model.Rental;
+import in.bloomington.rental.model.RentalStructure;
 import in.bloomington.rental.service.BuildingTypeService;
+import in.bloomington.rental.service.PropertyTypeService;
+import in.bloomington.rental.service.RentalService;
+import in.bloomington.rental.service.RentalStructureService;
 
 
 @Controller
@@ -104,7 +102,6 @@ public class StructureController {
 				}
 				structureService.update(structure.getId(), structure);
 				message = "Structure updated successfully";
-				Integer rentalId = structure.getRentalId();
 				return "redirect:/structure/"+structure.getId();
 		}		
 		@GetMapping("/structureNew/{id}")

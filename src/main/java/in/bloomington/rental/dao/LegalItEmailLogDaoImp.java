@@ -2,43 +2,50 @@ package in.bloomington.rental.dao;
 
 import java.util.List;
 
-import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
-import org.hibernate.SessionFactory;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.hibernate.Query;
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Order;
+
 import in.bloomington.rental.model.LegalItEmailLog;
 
-
 @Repository
-public class LegalItEmailLogDaoImp implements LegalItEmailLogDao {
+public class LegalItEmailLogDaoImp implements LegalItEmailLogDao
+{
+    private int limit = 10;
+    @Autowired
+    private SessionFactory sessionFactory;
 
-		int limit = 10;
-		@Autowired
-		private SessionFactory sessionFactory;
+    @Override
+    public LegalItEmailLog get(int id)
+    {
+        return sessionFactory.getCurrentSession()
+                             .get(LegalItEmailLog.class, id);
+    }
 
-		@Override
-		public LegalItEmailLog get(int id) {
-				return sessionFactory.getCurrentSession().get(LegalItEmailLog.class, id);
-		}
-		@Override
-		public void save(LegalItEmailLog val) {
-				sessionFactory.getCurrentSession().save(val);
-		}
+    @Override
+    public void save(LegalItEmailLog val)
+    {
+        sessionFactory.getCurrentSession().save(val);
+    }
 
-		@Override
-		public List<LegalItEmailLog> findByRentalId(Integer rentalId) {
-				String qq = "from LegalItEmailLog l where l.rentalId =:rentalId order by l.id";
-				Session session = sessionFactory.getCurrentSession();
-				Query query = session.createQuery(qq);
-				// query.setFirstResult(0); // for paging
-				query.setMaxResults(limit);
-				query.setParameter("rentalId", rentalId);
-				return query.list();
-		}
-		
+    @Override
+    public List<LegalItEmailLog> findByRentalId(Integer rentalId)
+    {
+        Session                       session = sessionFactory.getCurrentSession();
+        CriteriaBuilder               builder = session.getCriteriaBuilder();
+        CriteriaQuery<LegalItEmailLog> select = builder.createQuery(LegalItEmailLog.class);
+        Root<LegalItEmailLog>            root = select.from(LegalItEmailLog.class);
+        
+        select.where  (builder.equal(root.get("rental_id"), rentalId));
+        select.orderBy(builder.desc (root.get("id")));
+        
+        return session.createQuery(select)
+                      .setMaxResults(limit)
+                      .getResultList();
+    }
 }

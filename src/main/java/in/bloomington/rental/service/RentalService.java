@@ -1,8 +1,9 @@
 package in.bloomington.rental.service;
+
 import java.util.List;
+
 import in.bloomington.rental.model.Rental;
 import in.bloomington.rental.util.Search;
-import java.util.List;
 
 public interface RentalService {
 

@@ -12,64 +12,74 @@ import javax.persistence.GenerationType;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name="rental_owners")
-public class RentalOwner  implements java.io.Serializable {
+@Table(name = "rental_owners")
+public class RentalOwner implements java.io.Serializable
+{
+    private static final long serialVersionUID = 1L;
 
-     private int id;
-     private Owner owner;
-     private Rental rental;
+    private int    id;
+    private Owner  owner;
+    private Rental rental;
 
-    public RentalOwner() {
+    public RentalOwner()
+    {
     }
-	
-    public RentalOwner(int id) {
+
+    public RentalOwner(int id)
+    {
         this.id = id;
     }
-    public RentalOwner(int id, Owner owner, Rental rental) {
-       this.id = id;
-       this.owner = owner;
-       this.rental = rental;
+
+    public RentalOwner(int id, Owner owner, Rental rental)
+    {
+        this.id     = id;
+        this.owner  = owner;
+        this.rental = rental;
     }
-   
-		@Id 
-    @Column(name="id")
-		@GeneratedValue(strategy=GenerationType.IDENTITY)
-    public int getId() {
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public int getId()
+    {
         return this.id;
     }
-    
-    public void setId(int id) {
+
+    public void setId(int id)
+    {
         this.id = id;
     }
 
-		@ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="owner_id")
-    public Owner getOwner() {
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "owner_id")
+    public Owner getOwner()
+    {
         return this.owner;
     }
-    
-    public void setOwner(Owner owner) {
+
+    public void setOwner(Owner owner)
+    {
         this.owner = owner;
     }
 
-		@ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="rental_id")
-    public Rental getRental() {
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "rental_id")
+    public Rental getRental()
+    {
         return this.rental;
     }
-    
-    public void setRental(Rental rental) {
+
+    public void setRental(Rental rental)
+    {
         this.rental = rental;
     }
-		//
-		// needed for auot_complete
-		@Transient
-		public void setOnwerName(String val){
 
-		}
+    //
+    // needed for auot_complete
+    @Transient
+    public void setOnwerName(String val)
+    {
 
-
+    }
 
 }
-
-

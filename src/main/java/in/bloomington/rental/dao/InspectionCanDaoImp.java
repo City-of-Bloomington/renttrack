@@ -1,74 +1,106 @@
 package in.bloomington.rental.dao;
+
 import java.util.List;
-import org.hibernate.SessionFactory;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.hibernate.Query;
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Order;
+
 import in.bloomington.rental.model.InspectionCan;
+import in.bloomington.rental.model.InspectionCan_;
 
 @Repository
-public class InspectionCanDaoImp implements InspectionCanDao{
-		@Autowired
-		private SessionFactory sessionFactory;
-		int limit = 30;
+public class InspectionCanDaoImp implements InspectionCanDao
+{
+    @Autowired
+    private SessionFactory sessionFactory;
+    private int            limit = 30;
 
-		@Override
-		public InspectionCan get(int id){
-				return sessionFactory.getCurrentSession().get(InspectionCan.class, id);
-		}
-		@Override
-		public void save(InspectionCan inspectionCan){
-				sessionFactory.getCurrentSession().save(inspectionCan);
-		}
-		@Override
-    public void update(int id, InspectionCan inspectionCan) {
-      Session session = sessionFactory.getCurrentSession();
-      InspectionCan inspectionCan2 = session.byId(InspectionCan.class).load(id);
-			inspectionCan2 = (InspectionCan)session.merge(inspectionCan);
-			session.update(inspectionCan2); 
-      session.flush();				
+    @Override
+    public InspectionCan get(int id)
+    {
+        return sessionFactory.getCurrentSession().get(InspectionCan.class, id);
     }
- 		
-		@Override
-    public void delete(int id) {
-        InspectionCan inspectionCan = (InspectionCan) sessionFactory.getCurrentSession().load(
-                InspectionCan.class, id);
-        if (inspectionCan != null) {
-            this.sessionFactory.getCurrentSession().delete(inspectionCan);
+
+    @Override
+    public void save(InspectionCan inspectionCan)
+    {
+        sessionFactory.getCurrentSession().save(inspectionCan);
+    }
+
+    @Override
+    public void update(int id, InspectionCan inspectionCan)
+    {
+        Session       session = sessionFactory.getCurrentSession();
+        InspectionCan can     = session.byId(InspectionCan.class)
+                                       .load(id);
+                      can     = (InspectionCan) session.merge(inspectionCan);
+        session.update(can);
+        session.flush();
+    }
+
+    @Override
+    public void delete(int id)
+    {
+        InspectionCan can = (InspectionCan) sessionFactory.getCurrentSession()
+                                                          .load(InspectionCan.class, id);
+        if (can != null) {
+            this.sessionFactory.getCurrentSession()
+                               .delete(can);
         }
     }
-		@Override		
-		public List<InspectionCan> getAll(){
-				Session session = sessionFactory.getCurrentSession();
-				Criteria criteria = session.createCriteria(InspectionCan.class);
-				criteria.setMaxResults(limit);
-        criteria.addOrder(Order.desc("id"));				
-				return criteria.list();
-		}
-		// needed for auto_complete
-		@Override
-		public List<InspectionCan> findByName(String name){
-				String qq = "from InspectionCan c where c.canTile like :name or c.item1 like :name2 ";
-				Session session = sessionFactory.getCurrentSession();
-				Query query = session.createQuery(qq);
-				query.setParameter("name", "%"+name+"%");
-				query.setParameter("name2", "%"+name+"%");				
-				List<InspectionCan> cans = query.list();
-				return cans;
 
-		}
-		@Override
-		public List<InspectionCan> findByInspectionId(int id){
-				String qq = "from InspectionCan c where c.inspection.id =:inspectionId";
-				Session session = sessionFactory.getCurrentSession();
-				Query query = session.createQuery(qq);
-				query.setParameter("inspectionId", id);
-				List<InspectionCan> cans = query.list();
-				return cans;
+    @Override
+    public List<InspectionCan> getAll()
+    {
+        Session                     session = sessionFactory.getCurrentSession();
+        CriteriaBuilder             builder = session.getCriteriaBuilder();
+        CriteriaQuery<InspectionCan> select = builder.createQuery(InspectionCan.class);
+        Root<InspectionCan>            root = select.from(InspectionCan.class);
+        
+        select.orderBy(builder.desc(root.get("id")));
+        
+        return session.createQuery(select)
+                      .setMaxResults(limit)
+                      .getResultList();
+    }
 
-		}
-		
+    // needed for auto_complete
+    @Override
+    public List<InspectionCan> findByName(String name)
+    {
+        Session                     session = sessionFactory.getCurrentSession();
+        CriteriaBuilder             builder = session.getCriteriaBuilder();
+        CriteriaQuery<InspectionCan> select = builder.createQuery(InspectionCan.class);
+        Root<InspectionCan>            root = select.from(InspectionCan.class);
+        Predicate[]                 filters = new Predicate[2];
+        
+        filters[0] = builder.like(root.get(InspectionCan_.title), "%" + name + "%");
+        filters[1] = builder.like(root.get(InspectionCan_.item1), "%" + name + "%");
+        select.where(builder.or(filters));
+        
+        return session.createQuery(select)
+                      .getResultList();
+    }
+
+    @Override
+    public List<InspectionCan> findByInspectionId(int id)
+    {
+        Session                     session = sessionFactory.getCurrentSession();
+        CriteriaBuilder             builder = session.getCriteriaBuilder();
+        CriteriaQuery<InspectionCan> select = builder.createQuery(InspectionCan.class);
+        Root<InspectionCan>            root = select.from(InspectionCan.class);
+        
+        select.where(builder.equal(root.get("inspection_id"), id));
+        
+        return session.createQuery(select)
+                      .getResultList();
+        
+    }
 }
