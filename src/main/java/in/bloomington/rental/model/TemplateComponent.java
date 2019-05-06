@@ -17,12 +17,26 @@ import javax.persistence.GenerationType;
 public class TemplateComponent implements java.io.Serializable
 {
     private static final long serialVersionUID = 1L;
-
+		
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int                id;
+		
+		@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "template_id")
     private InspectionTemplate inspectionTemplate;
+		
+		@Column(name = "building_num")
     private int                buildingNum     = 0;
+		
+		@Column(name = "unit_num")
     private int                unitNum         = 0;
+		
+		@Column(name = "floor_num")
     private int                floorNum        = 0;
+
+		@Column(name = "component")
     private String             component;
     //
     @Transient
@@ -68,9 +82,6 @@ public class TemplateComponent implements java.io.Serializable
         this.component          = component;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     public int getId()
     {
         return this.id;
@@ -81,8 +92,7 @@ public class TemplateComponent implements java.io.Serializable
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "template_id")
+
     public InspectionTemplate getInspectionTemplate()
     {
         return this.inspectionTemplate;
@@ -93,7 +103,7 @@ public class TemplateComponent implements java.io.Serializable
         this.inspectionTemplate = val;
     }
 
-    @Column(name = "building_num")
+
     public int getBuildingNum()
     {
         return this.buildingNum;
@@ -104,7 +114,6 @@ public class TemplateComponent implements java.io.Serializable
         this.buildingNum = val;
     }
 
-    @Column(name = "unit_num")
     public int getUnitNum()
     {
         return this.unitNum;
@@ -115,7 +124,7 @@ public class TemplateComponent implements java.io.Serializable
         this.unitNum = val;
     }
 
-    @Column(name = "floor_num")
+
     public int getFloorNum()
     {
         return this.floorNum;
@@ -126,7 +135,7 @@ public class TemplateComponent implements java.io.Serializable
         this.floorNum = val;
     }
 
-    @Column(name = "component")
+
     public String getComponent()
     {
         return this.component;

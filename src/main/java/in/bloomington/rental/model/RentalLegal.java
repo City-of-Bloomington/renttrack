@@ -20,10 +20,23 @@ public class RentalLegal implements java.io.Serializable
 {
     private static final long serialVersionUID = 1L;
 
+		@Transient
     SimpleDateFormat dtf = new SimpleDateFormat("MM/dd/yyyy");
+		
+    @Id
+    @Column(name = "id")		
     private int      id;
+
+		@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rental_id")
     private Rental   rental;
+
+		@Temporal(TemporalType.DATE)
+    @Column(name = "date", length = 13)
     private Date     date;
+		
+		@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "start_by")
     private RentUser startByUser;
 
     public RentalLegal()
@@ -43,8 +56,7 @@ public class RentalLegal implements java.io.Serializable
         this.startByUser = user;
     }
 
-    @Id
-    @Column(name = "id")
+
     public int getId()
     {
         return this.id;
@@ -55,8 +67,7 @@ public class RentalLegal implements java.io.Serializable
         this.id = id;
     }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "date", length = 13)
+
     public Date getDate()
     {
         return this.date;
@@ -77,8 +88,7 @@ public class RentalLegal implements java.io.Serializable
         return ret;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "rental_id")
+
     public Rental getRental()
     {
         return this.rental;
@@ -89,8 +99,7 @@ public class RentalLegal implements java.io.Serializable
         this.rental = val;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "start_by")
+
     public RentUser getStartByUser()
     {
         return this.startByUser;

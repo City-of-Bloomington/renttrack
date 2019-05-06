@@ -24,13 +24,31 @@ public class InspectionFileLog implements java.io.Serializable
 {
     private static final long serialVersionUID = 1L;
 
+		@Transient
     SimpleDateFormat            dtf    = new SimpleDateFormat("MM/dd/yyyy");
+		
     private static final Logger logger = LogManager.getLogger(InspectionFileLog.class);
+		
+		@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int                 id;
+
+		@Column(name = "rental_id")
     private Integer             rentalId;
+
+		@Column(name = "inspection_id")
     private Integer             inspectionId;
+		
+		@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private RentUser            user;
+		
+		@Temporal(TemporalType.DATE)
+    @Column(name = "date", length = 13)
     private Date                date;
+
+		@Column(name = "inspect_file", length = 70)
     private String              inspectFile;
 
     public InspectionFileLog()
@@ -70,9 +88,7 @@ public class InspectionFileLog implements java.io.Serializable
         this.inspectFile  = inspectFile;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+
     public int getId()
     {
         return this.id;
@@ -83,8 +99,6 @@ public class InspectionFileLog implements java.io.Serializable
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
     public RentUser getUser()
     {
         return this.user;
@@ -95,7 +109,7 @@ public class InspectionFileLog implements java.io.Serializable
         this.user = val;
     }
 
-    @Column(name = "rental_id")
+
     public Integer getRentalId()
     {
         return this.rentalId;
@@ -106,7 +120,6 @@ public class InspectionFileLog implements java.io.Serializable
         this.rentalId = val;
     }
 
-    @Column(name = "inspection_id")
     public Integer getInspectionId()
     {
         return this.inspectionId;
@@ -117,8 +130,6 @@ public class InspectionFileLog implements java.io.Serializable
         this.inspectionId = val;
     }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "date", length = 13)
     public Date getDate()
     {
         return this.date;
@@ -151,7 +162,7 @@ public class InspectionFileLog implements java.io.Serializable
         return "";
     }
 
-    @Column(name = "inspect_file", length = 70)
+
     public String getInspectFile()
     {
         return this.inspectFile;

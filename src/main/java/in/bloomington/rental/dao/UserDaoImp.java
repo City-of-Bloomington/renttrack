@@ -94,4 +94,14 @@ public class UserDaoImp implements UserDao
         List<RentUser> users = query.list();
         return users;
     }
+    @Override
+    public List<RentUser> getActiveInspectors()
+    {
+        String  qq      = "from RentUser u where u.inactive is null and u.role like :role";
+        Session session = sessionFactory.getCurrentSession();
+        Query   query   = session.createQuery(qq);
+        query.setParameter("role", "Inspect");
+        List<RentUser> users = query.list();
+        return users;
+    }		
 }

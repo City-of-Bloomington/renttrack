@@ -5,40 +5,40 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <jsp:include page="header.jsp" />	
   <fieldset>
-    <legend>Attachement</legend>
+    <legend>Attachment</legend>
     <table class="vertaTable">
       <tr>
 				<th>Id</th>
-				<td>${attachement.id}</td>
+				<td>${attachment.id}</td>
 			</tr>
-			<c:if test="${not empty attachement.inspectionId}">
+			<c:if test="${not empty attachment.inspectionId}">
 				<tr>
 					<th>Related Inspection</th>
 					<td>${attachement.inspectionId}</td>
 				</tr>
 			</c:if>
-			<c:if test="${not empty attachement.rental.id}">
+			<c:if test="${not empty attachment.rental.id}">
 				<tr>
 					<th>Related Rental</th>
-					<td>${attachement.rental.id}</td>
+					<td>${attachment.rental.id}</td>
 				</tr>
 			</c:if>			
 			<tr>
 				<th>Old File Name</th>
-				<td>${attachement.oldFileName}</td>
+				<td>${attachment.oldFileName}</td>
 			</tr>
 			<tr>
 				<th>File Name</th>
-        <td>${attachement.fileName}</td>
+        <td>${attachment.fileName}</td>
 			</tr>
 			<tr>
 				<th>Date</th>
-				<td>${attachement.dateFr}</td>
+				<td>${attachment.dateFr}</td>
 			</tr>
-			<c:if test="${not empty attachement.notes}">
+			<c:if test="${not empty attachment.notes}">
 				<tr>
 					<th>Notes</th>
-					<td>${attachement.notes}</td>
+					<td>${attachment.notes}</td>
 				</tr>
 			</c:if>
     </table>

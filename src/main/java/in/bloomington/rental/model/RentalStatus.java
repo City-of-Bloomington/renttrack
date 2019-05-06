@@ -23,10 +23,6 @@ public class RentalStatus implements java.io.Serializable
     @Column(name = "name", length = 30, nullable = false)
     private String name;
 
-    /*
-     * @OneToMany(fetch=FetchType.EAGER, mappedBy="rentalStatus") private
-     * Set<Rental> rentals = new HashSet<>(0);
-     */
     public RentalStatus()
     {
     }
@@ -38,11 +34,9 @@ public class RentalStatus implements java.io.Serializable
 
     public RentalStatus(int id, String alias, String name)
     {
-        // Set<Rental> rentals) {
         this.id    = id;
         this.alias = alias;
         this.name  = name;
-        // this.rentals = rentals;
     }
 
     public int getId()

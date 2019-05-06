@@ -36,11 +36,9 @@ public class PullReason implements java.io.Serializable
 
     public PullReason(int id, String alias, String reason)
     {
-        // , Set rentals) {
         this.id     = id;
         this.alias  = alias;
         this.reason = reason;
-        // this.rentals = rentals;
     }
 
     public int getId()
@@ -73,12 +71,7 @@ public class PullReason implements java.io.Serializable
         this.reason = name;
     }
 
-    /**
-     * @OneToMany(fetch=FetchType.LAZY, mappedBy="pullReason") public Set
-     * getRentals() { return this.rentals; } public void setRentals(Set rentals) {
-     * this.rentals = rentals; }
-     */
-    public String toString()
+		public String toString()
     {
         return reason;
     }

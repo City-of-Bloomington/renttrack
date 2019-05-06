@@ -22,14 +22,35 @@ public class Receipt implements java.io.Serializable
 {
     private static final long serialVersionUID = 1L;
 
+		@Transient
     SimpleDateFormat   dtf = new SimpleDateFormat("MM/dd/yyyy");
+		
+		@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int        id;
+
+		@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bill_id")
     private Bill       bill;
+
+		@Column(name = "receipt_no")
     private Integer    receiptNo;
+
+		@Column(name = "received_sum", precision = 7)
     private BigDecimal receivedSum;
+
+		@Temporal(TemporalType.DATE)
+    @Column(name = "received_date", length = 13)
     private Date       receivedDate;
+
+    @Column(name = "received_from", length = 70)
     private String     receivedFrom;
+		
+		@Column(name = "paid_by")
     private String     paidBy;
+
+		@Column(name = "check_no", length = 50)
     private String     checkNo;
 
     public Receipt()
@@ -59,9 +80,6 @@ public class Receipt implements java.io.Serializable
         this.checkNo      = checkNo;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     public int getId()
     {
         return this.id;
@@ -72,8 +90,6 @@ public class Receipt implements java.io.Serializable
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bill_id")
     public Bill getBill()
     {
         return this.bill;
@@ -84,7 +100,6 @@ public class Receipt implements java.io.Serializable
         this.bill = bill;
     }
 
-    @Column(name = "receipt_no")
     public Integer getReceiptNo()
     {
         if (receiptNo == null && id > 0) receiptNo = new Integer(id);
@@ -96,7 +111,6 @@ public class Receipt implements java.io.Serializable
         this.receiptNo = receiptNo;
     }
 
-    @Column(name = "received_sum", precision = 7)
     public BigDecimal getReceivedSum()
     {
         return this.receivedSum;
@@ -107,8 +121,6 @@ public class Receipt implements java.io.Serializable
         this.receivedSum = receivedSum;
     }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "received_date", length = 13)
     public Date getReceivedDate()
     {
         if (id == 0) receivedDate = new Date();
@@ -143,7 +155,6 @@ public class Receipt implements java.io.Serializable
         }
     }
 
-    @Column(name = "received_from", length = 70)
     public String getReceivedFrom()
     {
         return this.receivedFrom;
@@ -154,7 +165,6 @@ public class Receipt implements java.io.Serializable
         this.receivedFrom = receivedFrom;
     }
 
-    @Column(name = "paid_by")
     public String getPaidBy()
     {
         return this.paidBy;
@@ -165,7 +175,7 @@ public class Receipt implements java.io.Serializable
         this.paidBy = paidBy;
     }
 
-    @Column(name = "check_no", length = 50)
+
     public String getCheckNo()
     {
         return this.checkNo;

@@ -14,5 +14,6 @@ public interface UserDao
 
     List<RentUser> list();
     List<RentUser> getInspectors();
+		List<RentUser> getActiveInspectors();
     List<RentUser> getAllInspectors();
 }

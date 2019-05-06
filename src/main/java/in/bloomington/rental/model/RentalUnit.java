@@ -23,21 +23,58 @@ public class RentalUnit implements java.io.Serializable
     private static final long serialVersionUID = 1L;
 
     private static final Logger logger = LogManager.getLogger(RentalUnit.class);
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")		
     private int                 id;
+		
+		@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "structure_id")
     private RentalStructure     rentalStructure;
+		
+		@OneToMany(fetch = FetchType.LAZY, mappedBy = "rentalUnit")
+    @OrderBy("id ASC")
     private List<UnitRoom>      unitRooms;
+		
+		@Column(name = "old_id")
     private Integer             oldId;
+		
+		@Column(name = "identifier", nullable = false, length = 30)
     private String              identifier;
+		
+		@Column(name = "bedrooms")
     private Short               bedrooms;
+		
+		@Column(name = "occup_load")
     private Short               occupLoad;
+
+		@Column(name = "sleep_room", length = 1)
     private Character           sleepRoom;
+
+		@Column(name = "efficiency", length = 1)
     private Character           efficiency;
+		
+		@Column(name = "bathrooms")
     private Short               bathrooms;
+		
+		@Column(name = "half_bath")
     private Short               halfBath;
+		
+		@Column(name = "uninspected", length = 1)
     private Character           uninspected;
+		
+		@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id")
     private Address             address;
+
+		@Column(name = "accessory_dwelling", length = 1)
     private Character           accessoryDwelling;
+		
+		@Column(name = "notes", length = 500)
     private String              notes;
+		
+		@Column(name = "attic_access", length = 1)
     private Character           atticAccess;
 
     public RentalUnit()
@@ -83,9 +120,7 @@ public class RentalUnit implements java.io.Serializable
         this.efficiency        = efficiency;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+
     public int getId()
     {
         return this.id;
@@ -96,8 +131,6 @@ public class RentalUnit implements java.io.Serializable
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "structure_id")
     public RentalStructure getRentalStructure()
     {
         return this.rentalStructure;
@@ -120,7 +153,6 @@ public class RentalUnit implements java.io.Serializable
         rentalStructure = new RentalStructure(val);
     }
 
-    @Column(name = "old_id")
     public Integer getOldId()
     {
         return this.oldId;
@@ -131,7 +163,7 @@ public class RentalUnit implements java.io.Serializable
         this.oldId = oldId;
     }
 
-    @Column(name = "identifier", nullable = false, length = 30)
+
     public String getIdentifier()
     {
         return this.identifier;
@@ -142,7 +174,7 @@ public class RentalUnit implements java.io.Serializable
         this.identifier = identifier;
     }
 
-    @Column(name = "bedrooms")
+
     public Short getBedrooms()
     {
         return this.bedrooms;
@@ -153,7 +185,7 @@ public class RentalUnit implements java.io.Serializable
         this.bedrooms = bedrooms;
     }
 
-    @Column(name = "occup_load")
+
     public Short getOccupLoad()
     {
         return this.occupLoad;
@@ -164,7 +196,6 @@ public class RentalUnit implements java.io.Serializable
         this.occupLoad = occupLoad;
     }
 
-    @Column(name = "sleep_room", length = 1)
     public Character getSleepRoom()
     {
         return this.sleepRoom;
@@ -181,7 +212,7 @@ public class RentalUnit implements java.io.Serializable
         return this.sleepRoom != null;
     }
 
-    @Column(name = "bathrooms")
+
     public Short getBathrooms()
     {
         return this.bathrooms;
@@ -198,7 +229,7 @@ public class RentalUnit implements java.io.Serializable
         return this.bathrooms != null && bathrooms > 0;
     }
 
-    @Column(name = "half_bath")
+
     public Short getHalfBath()
     {
         return this.halfBath;
@@ -209,7 +240,7 @@ public class RentalUnit implements java.io.Serializable
         this.halfBath = halfBath;
     }
 
-    @Column(name = "uninspected", length = 1)
+
     public Character getUninspected()
     {
         return this.uninspected;
@@ -226,8 +257,7 @@ public class RentalUnit implements java.io.Serializable
         return this.uninspected != null;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "address_id")
+
     public Address getAddress()
     {
         return this.address;
@@ -256,7 +286,7 @@ public class RentalUnit implements java.io.Serializable
         return id > 0 && bedrooms > 0;
     }
 
-    @Column(name = "accessory_dwelling", length = 1)
+
     public Character getAccessoryDwelling()
     {
         return this.accessoryDwelling;
@@ -267,7 +297,6 @@ public class RentalUnit implements java.io.Serializable
         this.accessoryDwelling = accessoryDwelling;
     }
 
-    @Column(name = "notes", length = 500)
     public String getNotes()
     {
         return this.notes;
@@ -278,7 +307,7 @@ public class RentalUnit implements java.io.Serializable
         this.notes = val;
     }
 
-    @Column(name = "attic_access", length = 1)
+
     public Character getAtticAccess()
     {
         return this.atticAccess;
@@ -289,7 +318,7 @@ public class RentalUnit implements java.io.Serializable
         this.atticAccess = atticAccess;
     }
 
-    @Column(name = "efficiency", length = 1)
+
     public Character getEfficiency()
     {
         return this.efficiency;
@@ -306,8 +335,7 @@ public class RentalUnit implements java.io.Serializable
         return this.efficiency != null;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "rentalUnit")
-    @OrderBy("id ASC")
+
     public List<UnitRoom> getUnitRooms()
     {
         return this.unitRooms;

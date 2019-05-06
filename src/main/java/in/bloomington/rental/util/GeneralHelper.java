@@ -148,7 +148,7 @@ public class GeneralHelper
                     NamingEnumeration ne = attrs.getAll();
                     while (ne.hasMore()) {
                         Attribute attr = (Attribute) ne.next();
-                        System.err.println(attr.getID() + " " + attr.get());
+                        // System.err.println(attr.getID() + " " + attr.get());
                         found = true;
                     }
                     ne.close();

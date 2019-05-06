@@ -125,7 +125,7 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 					<input type="button" value="New Bill" onclick="window.location='${uri}billNew/${rental.id}'" />
 				</li>
 				<li class="menu">
-					<input type="button" value="New Attachement" onclick="window.location='${uri}attachementNew/rental/${rental.id}'" />
+					<input type="button" value="New Attachment" onclick="window.location='${uri}attachmentNew/rental/${rental.id}'" />
 				</li>
 				<li class="menu">
 					<input type="button" value="New Inspection" onclick="window.location='${uri}inspectionNew/${rental.id}'" />

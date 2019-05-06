@@ -17,8 +17,17 @@ public class RentalOwner implements java.io.Serializable
 {
     private static final long serialVersionUID = 1L;
 
+		@Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int    id;
+
+		@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "owner_id")
     private Owner  owner;
+		
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "rental_id")		
     private Rental rental;
 
     public RentalOwner()
@@ -37,9 +46,7 @@ public class RentalOwner implements java.io.Serializable
         this.rental = rental;
     }
 
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     public int getId()
     {
         return this.id;
@@ -50,8 +57,7 @@ public class RentalOwner implements java.io.Serializable
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "owner_id")
+
     public Owner getOwner()
     {
         return this.owner;
@@ -62,8 +68,7 @@ public class RentalOwner implements java.io.Serializable
         this.owner = owner;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "rental_id")
+
     public Rental getRental()
     {
         return this.rental;

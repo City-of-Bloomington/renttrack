@@ -23,15 +23,36 @@ public class PullHistory implements java.io.Serializable
 {
     private static final long serialVersionUID = 1L;
 
-    private final static SimpleDateFormat dtf    = new SimpleDateFormat("MM/dd/yyyy");
-    private static final Logger           logger = LogManager.getLogger(PullHistory.class);
-    private int                           id;
-    private PullReason                    pullReason;
-    private Rental                        rental;
-    private RentUser                      user;
-    private Date                          date;
-    private Character                     completed;
-    private Date                          completedDate;
+		@Transient
+    private final static SimpleDateFormat dtf = new SimpleDateFormat("MM/dd/yyyy");
+    private static final Logger logger = LogManager.getLogger(PullHistory.class);
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+		
+		@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pull_reason_id")
+    private PullReason pullReason;
+		
+		@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rental_id")
+    private Rental rental;
+		
+		@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pull_by_id")
+    private RentUser  user;
+		
+		@Temporal(TemporalType.DATE)
+    @Column(name = "date", length = 13)
+    private Date  date;
+
+		@Column(name = "completed", length = 1)
+    private Character  completed;
+		
+    @Temporal(TemporalType.DATE)
+    @Column(name = "completed_date", length = 13)		
+    private Date completedDate;
 
     public PullHistory()
     {
@@ -58,9 +79,6 @@ public class PullHistory implements java.io.Serializable
         this.completedDate = completedDate;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     public int getId()
     {
         return this.id;
@@ -71,8 +89,7 @@ public class PullHistory implements java.io.Serializable
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pull_reason_id")
+
     public PullReason getPullReason()
     {
         return this.pullReason;
@@ -83,8 +100,7 @@ public class PullHistory implements java.io.Serializable
         this.pullReason = pullReason;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "rental_id")
+
     public Rental getRental()
     {
         return this.rental;
@@ -95,8 +111,6 @@ public class PullHistory implements java.io.Serializable
         this.rental = rental;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pull_by_id")
     public RentUser getUser()
     {
         return this.user;
@@ -107,8 +121,6 @@ public class PullHistory implements java.io.Serializable
         this.user = user;
     }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "date", length = 13)
     public Date getDate()
     {
         if (date != null) {
@@ -160,7 +172,7 @@ public class PullHistory implements java.io.Serializable
         return "";
     }
 
-    @Column(name = "completed", length = 1)
+
     public Character getCompleted()
     {
         return this.completed;
@@ -171,8 +183,7 @@ public class PullHistory implements java.io.Serializable
         this.completed = completed;
     }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "completed_date", length = 13)
+
     public Date getCompletedDate()
     {
         if (completedDate == null && isDone()) {

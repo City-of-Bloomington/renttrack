@@ -17,6 +17,7 @@ public class BuildingType implements java.io.Serializable
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int    id;
+		
     @Column(name = "name", nullable = false, length = 30)
     private String name;
 

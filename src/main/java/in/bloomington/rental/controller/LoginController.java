@@ -79,7 +79,6 @@ public class LoginController {
 				if(user2 != null){
 						String username = user2.getUsername();
 						String password = user2.getPassword();
-						System.err.println(" username "+username);
 						if(username == null || username.trim().equals("")){
 								message = "username is required ";
 								return "redirect:/login";
@@ -98,7 +97,6 @@ public class LoginController {
 								return "redirect:/login";
 						}
 						user = userService.findByUsername(username);
-						System.err.println(" login user "+user);
 						if(user != null && session != null){
 								session.setAttribute("user",user);
 								message = "User login successfully";

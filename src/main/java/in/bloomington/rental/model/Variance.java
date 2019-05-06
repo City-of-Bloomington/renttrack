@@ -25,11 +25,27 @@ public class Variance implements java.io.Serializable
     private static final long serialVersionUID = 1L;
 
     private static final Logger logger = LogManager.getLogger(Variance.class);
-    SimpleDateFormat            dtf    = new SimpleDateFormat("MM/dd/yyyy");
-    private int                 id;
+		@Transient
+    SimpleDateFormat  dtf = new SimpleDateFormat("MM/dd/yyyy");
+		@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int    id;
+
+		@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rental_id")
     private Rental              rental;
+		
+		@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
     private RentUser            user;
+		
+		@Temporal(TemporalType.DATE)
+    @Column(name = "date", length = 13)
     private Date                date;
+		
+		@NotNull(message = "{variance.text.empty}")
+    @Column(name = "variance", length = 4000)
     private String              variance;
 
     public Variance()
@@ -50,9 +66,6 @@ public class Variance implements java.io.Serializable
         this.variance = variance;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     public int getId()
     {
         return this.id;
@@ -63,8 +76,7 @@ public class Variance implements java.io.Serializable
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "rental_id")
+
     public Rental getRental()
     {
         return this.rental;
@@ -75,8 +87,7 @@ public class Variance implements java.io.Serializable
         this.rental = rental;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
+
     public RentUser getUser()
     {
         return this.user;
@@ -92,8 +103,7 @@ public class Variance implements java.io.Serializable
         return user != null && user.isValid();
     }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "date", length = 13)
+
     public Date getDate()
     {
         return this.date;
@@ -126,8 +136,7 @@ public class Variance implements java.io.Serializable
         }
     }
 
-    @NotNull(message = "{variance.text.empty}")
-    @Column(name = "variance", length = 4000)
+
     public String getVariance()
     {
         return this.variance;

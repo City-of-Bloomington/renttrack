@@ -28,11 +28,26 @@ public class InspectionTemplate implements java.io.Serializable
 {
     private static final long serialVersionUID = 1L;
 
-    SimpleDateFormat                dtf                = new SimpleDateFormat("MM/dd/yyyy");
+		@Transient
+    SimpleDateFormat  dtf  = new SimpleDateFormat("MM/dd/yyyy");
+
+		@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int                     id;
+
+		@Column(name = "rental_id")
     private Integer                 rentalId;
+
+		@Column(name = "building_cnt")
     private int                     buildingCnt        = 1;
+
+		@Temporal(TemporalType.DATE)
+		@Column(name = "date", length = 13)
     private Date                    date;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private RentUser                user;
     // this item come from a form that will be submitted
     // stored temporary in this object
@@ -48,6 +63,9 @@ public class InspectionTemplate implements java.io.Serializable
     private int                     floorNum           = 0;
     @Transient
     private Map<Integer, Integer>   visitedMap         = new HashMap<>();
+		
+		@OneToMany(fetch = FetchType.LAZY, mappedBy = "inspectionTemplate")
+    @OrderBy("buildingNum ASC, unitNum ASC, floorNum ASC, id ASC")
     private List<TemplateComponent> templateComponents = new ArrayList<>();
 
     public InspectionTemplate()
@@ -73,9 +91,7 @@ public class InspectionTemplate implements java.io.Serializable
         this.templateComponents = vals;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+
     public int getId()
     {
         return this.id;
@@ -86,7 +102,7 @@ public class InspectionTemplate implements java.io.Serializable
         this.id = id;
     }
 
-    @Column(name = "rental_id")
+
     public Integer getRentalId()
     {
         return this.rentalId;
@@ -97,7 +113,7 @@ public class InspectionTemplate implements java.io.Serializable
         this.rentalId = val;
     }
 
-    @Column(name = "building_cnt")
+
     public int getBuildingCnt()
     {
         return this.buildingCnt;
@@ -108,8 +124,6 @@ public class InspectionTemplate implements java.io.Serializable
         this.buildingCnt = val;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
     public RentUser getUser()
     {
         return this.user;
@@ -120,8 +134,7 @@ public class InspectionTemplate implements java.io.Serializable
         this.user = val;
     }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "date", length = 13)
+
     public Date getDate()
     {
         return this.date;
@@ -255,8 +268,6 @@ public class InspectionTemplate implements java.io.Serializable
         return unitNum;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "inspectionTemplate")
-    @OrderBy("buildingNum ASC, unitNum ASC, floorNum ASC, id ASC")
     public List<TemplateComponent> getTemplateComponents()
     {
         return this.templateComponents;

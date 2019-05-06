@@ -101,7 +101,6 @@ public class UserController {
 		private void handleErrors(BindingResult result){
 				List<FieldError> errors = result.getFieldErrors();
 				for (FieldError error : errors ) {
-						// System.err.println(" error "+error);
 						message += error.getObjectName() + " - " + error.getDefaultMessage()+" - "+error.getRejectedValue()+"<br />";		
 				}
 		}

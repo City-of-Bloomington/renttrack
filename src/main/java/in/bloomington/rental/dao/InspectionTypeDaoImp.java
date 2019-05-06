@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.Session;
@@ -52,9 +53,12 @@ public class InspectionTypeDaoImp implements InspectionTypeDao
     @Override
     public List<InspectionType> list()
     {
-        Session                      session = sessionFactory.getCurrentSession();
-        CriteriaBuilder              builder = session.getCriteriaBuilder();
+        Session          session = sessionFactory.getCurrentSession();
+        CriteriaBuilder   builder = session.getCriteriaBuilder();
         CriteriaQuery<InspectionType> select = builder.createQuery(InspectionType.class);
+        Root<InspectionType>  root = select.from(InspectionType.class);
+        
+        select.orderBy(builder.asc(root.get("id")));				
         
         return session.createQuery(select)
                       .getResultList();

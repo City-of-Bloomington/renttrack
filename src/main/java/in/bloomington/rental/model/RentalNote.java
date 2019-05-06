@@ -22,11 +22,28 @@ public class RentalNote implements java.io.Serializable
 {
     private static final long serialVersionUID = 1L;
 
+		@Transient
     SimpleDateFormat dtf = new SimpleDateFormat("MM/dd/yyyy");
+
+		@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int      id;
+		
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rental_id")
     private Rental   rental;
+		
+		@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
     private RentUser user;
+
+		@Temporal(TemporalType.DATE)
+    @Column(name = "date", length = 13)
     private Date     date;
+
+		@Column(name = "notes", length = 500)
+		@NotNull(message = "{rental.notes.empty}")
     private String   notes;
 
     public RentalNote()
@@ -50,9 +67,6 @@ public class RentalNote implements java.io.Serializable
         this.notes  = notes;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     public int getId()
     {
         return this.id;
@@ -63,8 +77,6 @@ public class RentalNote implements java.io.Serializable
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "rental_id")
     public Rental getRental()
     {
         return this.rental;
@@ -75,8 +87,7 @@ public class RentalNote implements java.io.Serializable
         this.rental = rental;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
+
     public RentUser getUser()
     {
         return this.user;
@@ -87,8 +98,6 @@ public class RentalNote implements java.io.Serializable
         this.user = user;
     }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "date", length = 13)
     public Date getDate()
     {
         if (id == 0) {
@@ -112,8 +121,6 @@ public class RentalNote implements java.io.Serializable
         return "";
     }
 
-    @Column(name = "notes", length = 500)
-    @NotNull(message = "{rental.notes.empty}")
     public String getNotes()
     {
         return this.notes;

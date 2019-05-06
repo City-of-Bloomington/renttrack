@@ -27,47 +27,127 @@ public class Bill implements java.io.Serializable
 {
     private static final long serialVersionUID = 1L;
 
-    SimpleDateFormat      dtf                 = new SimpleDateFormat("MM/dd/yyyy");
+		@Transient
+    SimpleDateFormat dtf = new SimpleDateFormat("MM/dd/yyyy");
+		@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int           id;
+		
+		@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rental_id")
     private Rental        rental;
-
+		
+    @Temporal(TemporalType.DATE)
+    @Column(name = "issue_date", length = 13)
+    @DateTimeFormat(pattern = "mm/dd/yyyy")
     private Date          issueDate;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "due_date", length = 13)
+    @DateTimeFormat(pattern = "mm/dd/yyyy")		
     private Date          dueDate;
+
+    @Column(name = "single_building_rate", precision = 6)		
     private BigDecimal    singleBuildingRate  = new BigDecimal("0");
+		
+		@Column(name = "multi_building_rate", precision = 6)
     private BigDecimal    multiBuildingRate   = new BigDecimal("0");
+		
+		@Column(name = "condo_building_rate", precision = 6)
     private BigDecimal    condoBuildingRate   = new BigDecimal("0");
+		
+		@Column(name = "rooming_building_rate", precision = 6)
     private BigDecimal    roomingBuildingRate = new BigDecimal("0");
+
+		@Column(name = "unit_rate", precision = 6)
     private BigDecimal    unitRate            = new BigDecimal("0");
+
+		@Column(name = "bath_rate", precision = 6)
     private BigDecimal    bathRate            = new BigDecimal("0");
+
+		@Column(name = "reinsp_rate", precision = 6)
     private BigDecimal    reinspRate          = new BigDecimal("0");
+
+		@Column(name = "noshow_rate", precision = 6)
     private BigDecimal    noshowRate          = new BigDecimal("0");
+
+		@Column(name = "bhqa_fine", precision = 6)
     private BigDecimal    bhqaFine            = new BigDecimal("0");
+
+		@Column(name = "single_building_cnt")
     private Short         singleBuildingCnt   = new Short("0");
+
+		@Column(name = "multi_building_cnt")
     private Short         multiBuildingCnt    = new Short("0");
+		
+		@Column(name = "condo_building_cnt")
     private Short         condoBuildingCnt    = new Short("0");
+		
+		@Column(name = "rooming_building_cnt")
     private Short         roomingBuildingCnt  = new Short("0");
+		
+		@Column(name = "unit_cnt")
     private Short         unitCnt             = new Short("0");
-    private Short         bathCnt             = new Short("0");                    // for rooming houses
+
+		@Column(name = "bath_cnt")
+    private Short         bathCnt             = new Short("0");
+
+		@Column(name = "noshow_cnt")
     private Short         noshowCnt           = new Short("0");
+		
+		@Column(name = "reinsp_cnt")
     private Short         reinspCnt           = new Short("0");
+		
+		@Column(name = "reinsp_dates", length = 80)
     private String        reinspDates;
+		
+		@Column(name = "noshow_dates", length = 80)
     private String        noshowDates;
+		
+		@Column(name = "status")
     private String        status              = "Unpaid";
+		
+		@Column(name = "appeal", length = 1)
     private Character     appeal;
+		
+    @Column(name = "appeal_fee")
     private BigDecimal    appealFee           = new BigDecimal("0");
+		
+		@Column(name = "credit", precision = 6)
     private BigDecimal    credit              = new BigDecimal(0.0);
+		
+		@Column(name = "summary_rate", precision = 6)
     private BigDecimal    summaryRate         = new BigDecimal("0");;
+		
+		@Column(name = "idl_rate", precision = 6)
     private BigDecimal    idlRate             = new BigDecimal("0");
+
+		@Column(name = "summary_flag", length = 1)
     private Character     summaryFlag;
+		
+		@Column(name = "idl_flag", length = 1)
     private Character     idlFlag;
+		
+		@Column(name = "summary_cnt")
     private Short         summaryCnt          = new Short("0");
+
+    @Column(name = "idl_cnt")
     private Short         idlCnt              = new Short("0");
+		
+		@OneToMany(fetch = FetchType.LAZY, mappedBy = "bill")
     private List<Receipt> receipts            = new ArrayList<>(0);
+
+		@Transient
     private String        propertyTypes       = "";
+		
+		@Transient
     private double        balance             = 0;
     //
-    // insepctionFee is building + units + rooms cost except noshow or reinspection
-    // etc
+    // inspectionFee is building + units + rooms cost except
+		// noshow or reinspection etc
+		//
+		@Transient
     private Double        inspectionFee       = new Double(0);
 
     public Bill()
@@ -124,9 +204,7 @@ public class Bill implements java.io.Serializable
         this.receipts            = receipts;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+
     public int getId()
     {
         return this.id;
@@ -137,8 +215,6 @@ public class Bill implements java.io.Serializable
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "rental_id")
     public Rental getRental()
     {
         return this.rental;
@@ -149,9 +225,7 @@ public class Bill implements java.io.Serializable
         this.rental = rental;
     }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "issue_date", length = 13)
-    @DateTimeFormat(pattern = "mm/dd/yyyy")
+
     public Date getIssueDate()
     {
         if (issueDate == null) issueDate = new Date();
@@ -187,9 +261,7 @@ public class Bill implements java.io.Serializable
         }
     }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "due_date", length = 13)
-    @DateTimeFormat(pattern = "mm/dd/yyyy")
+
     public Date getDueDate()
     {
         if (dueDate == null) {
@@ -229,7 +301,7 @@ public class Bill implements java.io.Serializable
         }
     }
 
-    @Column(name = "single_building_rate", precision = 6)
+
     public BigDecimal getSingleBuildingRate()
     {
         return this.singleBuildingRate;
@@ -240,7 +312,7 @@ public class Bill implements java.io.Serializable
         this.singleBuildingRate = val;
     }
 
-    @Column(name = "multi_building_rate", precision = 6)
+
     public BigDecimal getMultiBuildingRate()
     {
         return this.multiBuildingRate;
@@ -251,7 +323,7 @@ public class Bill implements java.io.Serializable
         this.multiBuildingRate = val;
     }
 
-    @Column(name = "condo_building_rate", precision = 6)
+
     public BigDecimal getCondoBuildingRate()
     {
         return this.condoBuildingRate;
@@ -262,7 +334,6 @@ public class Bill implements java.io.Serializable
         this.condoBuildingRate = val;
     }
 
-    @Column(name = "rooming_building_rate", precision = 6)
     public BigDecimal getRoomingBuildingRate()
     {
         return this.roomingBuildingRate;
@@ -273,7 +344,6 @@ public class Bill implements java.io.Serializable
         this.roomingBuildingRate = val;
     }
 
-    @Column(name = "unit_rate", precision = 6)
     public BigDecimal getUnitRate()
     {
         return this.unitRate;
@@ -284,7 +354,6 @@ public class Bill implements java.io.Serializable
         this.unitRate = unitRate;
     }
 
-    @Column(name = "bath_rate", precision = 6)
     public BigDecimal getBathRate()
     {
         return this.bathRate;
@@ -295,7 +364,6 @@ public class Bill implements java.io.Serializable
         this.bathRate = bathRate;
     }
 
-    @Column(name = "reinsp_rate", precision = 6)
     public BigDecimal getReinspRate()
     {
         return this.reinspRate;
@@ -306,7 +374,7 @@ public class Bill implements java.io.Serializable
         this.reinspRate = reinspRate;
     }
 
-    @Column(name = "noshow_rate", precision = 6)
+
     public BigDecimal getNoshowRate()
     {
         return this.noshowRate;
@@ -317,7 +385,6 @@ public class Bill implements java.io.Serializable
         this.noshowRate = noshowRate;
     }
 
-    @Column(name = "bhqa_fine", precision = 6)
     public BigDecimal getBhqaFine()
     {
         return this.bhqaFine;
@@ -328,7 +395,6 @@ public class Bill implements java.io.Serializable
         this.bhqaFine = bhqaFine;
     }
 
-    @Column(name = "single_building_cnt")
     public Short getSingleBuildingCnt()
     {
         return this.singleBuildingCnt;
@@ -339,7 +405,7 @@ public class Bill implements java.io.Serializable
         this.singleBuildingCnt = val;
     }
 
-    @Column(name = "multi_building_cnt")
+
     public Short getMultiBuildingCnt()
     {
         return this.multiBuildingCnt;
@@ -350,7 +416,7 @@ public class Bill implements java.io.Serializable
         this.multiBuildingCnt = val;
     }
 
-    @Column(name = "condo_building_cnt")
+
     public Short getCondoBuildingCnt()
     {
         return this.condoBuildingCnt;
@@ -361,7 +427,7 @@ public class Bill implements java.io.Serializable
         this.condoBuildingCnt = val;
     }
 
-    @Column(name = "rooming_building_cnt")
+
     public Short getRoomingBuildingCnt()
     {
         return this.roomingBuildingCnt;
@@ -372,7 +438,7 @@ public class Bill implements java.io.Serializable
         this.roomingBuildingCnt = val;
     }
 
-    @Column(name = "unit_cnt")
+
     public Short getUnitCnt()
     {
         return this.unitCnt;
@@ -383,7 +449,6 @@ public class Bill implements java.io.Serializable
         this.unitCnt = unitCnt;
     }
 
-    @Column(name = "bath_cnt")
     public Short getBathCnt()
     {
         return this.bathCnt;
@@ -418,7 +483,7 @@ public class Bill implements java.io.Serializable
         return condoBuildingCnt != null && condoBuildingCnt > 0;
     }
 
-    @Column(name = "noshow_cnt")
+
     public Short getNoshowCnt()
     {
         return this.noshowCnt;
@@ -429,7 +494,6 @@ public class Bill implements java.io.Serializable
         this.noshowCnt = noshowCnt;
     }
 
-    @Column(name = "reinsp_cnt")
     public Short getReinspCnt()
     {
         return this.reinspCnt;
@@ -440,7 +504,7 @@ public class Bill implements java.io.Serializable
         this.reinspCnt = reinspCnt;
     }
 
-    @Column(name = "reinsp_dates", length = 80)
+
     public String getReinspDates()
     {
         return this.reinspDates;
@@ -451,7 +515,7 @@ public class Bill implements java.io.Serializable
         this.reinspDates = reinspDates;
     }
 
-    @Column(name = "noshow_dates", length = 80)
+
     public String getNoshowDates()
     {
         return this.noshowDates;
@@ -462,7 +526,7 @@ public class Bill implements java.io.Serializable
         this.noshowDates = noshowDates;
     }
 
-    @Column(name = "status")
+
     public String getStatus()
     {
         if (status == null || status.equals("Unpaid")) {
@@ -483,7 +547,7 @@ public class Bill implements java.io.Serializable
         return status.equals("Unpaid");
     }
 
-    @Column(name = "appeal", length = 1)
+
     public Character getAppeal()
     {
         return this.appeal;
@@ -494,7 +558,6 @@ public class Bill implements java.io.Serializable
         this.appeal = appeal;
     }
 
-    @Column(name = "appeal_fee")
     public BigDecimal getAppealFee()
     {
         return this.appealFee;
@@ -505,7 +568,7 @@ public class Bill implements java.io.Serializable
         this.appealFee = appealFee;
     }
 
-    @Column(name = "credit", precision = 6)
+
     public BigDecimal getCredit()
     {
         return this.credit;
@@ -535,7 +598,6 @@ public class Bill implements java.io.Serializable
         return balance > 0.01;
     }
 
-    @Column(name = "summary_rate", precision = 6)
     public BigDecimal getSummaryRate()
     {
         return this.summaryRate;
@@ -546,7 +608,6 @@ public class Bill implements java.io.Serializable
         this.summaryRate = summaryRate;
     }
 
-    @Column(name = "idl_rate", precision = 6)
     public BigDecimal getIdlRate()
     {
         return this.idlRate;
@@ -557,7 +618,6 @@ public class Bill implements java.io.Serializable
         this.idlRate = idlRate;
     }
 
-    @Column(name = "summary_flag", length = 1)
     public Character getSummaryFlag()
     {
         return this.summaryFlag;
@@ -568,7 +628,6 @@ public class Bill implements java.io.Serializable
         this.summaryFlag = summaryFlag;
     }
 
-    @Column(name = "idl_flag", length = 1)
     public Character getIdlFlag()
     {
         return this.idlFlag;
@@ -579,7 +638,6 @@ public class Bill implements java.io.Serializable
         this.idlFlag = idlFlag;
     }
 
-    @Column(name = "summary_cnt")
     public Short getSummaryCnt()
     {
         return this.summaryCnt;
@@ -590,7 +648,6 @@ public class Bill implements java.io.Serializable
         this.summaryCnt = summaryCnt;
     }
 
-    @Column(name = "idl_cnt")
     public Short getIdlCnt()
     {
         return this.idlCnt;
@@ -601,7 +658,6 @@ public class Bill implements java.io.Serializable
         this.idlCnt = idlCnt;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "bill")
     public List<Receipt> getReceipts()
     {
         return this.receipts;

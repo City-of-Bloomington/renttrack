@@ -23,15 +23,38 @@ public class LegalItEmailLog implements java.io.Serializable
 {
     private static final long serialVersionUID = 1L;
 
+		@Transient
     SimpleDateFormat dtf = new SimpleDateFormat("MM/dd/yyyy");
+		
+		@Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int      id;
+		
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rental_id")
     private Rental   rental;
+
+		@Temporal(TemporalType.DATE)		
+    @Column(name = "date", length = 13)		
     private Date     date;
+
+		@Column(name = "e_from", length = 80)
     private String   EFrom;
+		
+		@Column(name = "e_to", length = 80)
     private String   ETo;
+		
+		@Column(name = "e_cc", length = 80)
     private String   ECc;
+		
+		@Column(name = "e_subject", length = 80)
     private String   ESubject;
+
+		@Column(name = "e_msg", length = 1000)
     private String   EMsg;
+		
+		@Column(name = "error_text", length = 500)
     private String   errorText;
 
     public LegalItEmailLog()
@@ -63,9 +86,6 @@ public class LegalItEmailLog implements java.io.Serializable
         this.errorText = errorText;
     }
 
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId()
     {
         return this.id;
@@ -76,8 +96,6 @@ public class LegalItEmailLog implements java.io.Serializable
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "rental_id")
     public Rental getRental()
     {
         return this.rental;
@@ -88,8 +106,7 @@ public class LegalItEmailLog implements java.io.Serializable
         this.rental = rental;
     }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "date", length = 13)
+
     public Date getDate()
     {
         return this.date;
@@ -109,7 +126,7 @@ public class LegalItEmailLog implements java.io.Serializable
         return "";
     }
 
-    @Column(name = "e_from", length = 80)
+
     public String getEFrom()
     {
         return this.EFrom;
@@ -120,7 +137,6 @@ public class LegalItEmailLog implements java.io.Serializable
         this.EFrom = EFrom;
     }
 
-    @Column(name = "e_to", length = 80)
     public String getETo()
     {
         return this.ETo;
@@ -131,7 +147,6 @@ public class LegalItEmailLog implements java.io.Serializable
         this.ETo = ETo;
     }
 
-    @Column(name = "e_cc", length = 80)
     public String getECc()
     {
         return this.ECc;
@@ -142,7 +157,6 @@ public class LegalItEmailLog implements java.io.Serializable
         this.ECc = ECc;
     }
 
-    @Column(name = "e_subject", length = 80)
     public String getESubject()
     {
         return this.ESubject;
@@ -153,7 +167,7 @@ public class LegalItEmailLog implements java.io.Serializable
         this.ESubject = ESubject;
     }
 
-    @Column(name = "e_msg", length = 1000)
+
     public String getEMsg()
     {
         return this.EMsg;
@@ -164,7 +178,7 @@ public class LegalItEmailLog implements java.io.Serializable
         this.EMsg = EMsg;
     }
 
-    @Column(name = "error_text", length = 500)
+
     public String getErrorText()
     {
         return this.errorText;

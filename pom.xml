@@ -9,8 +9,11 @@
 
   <name>renttrack</name>
   <properties>
-    <maven.compiler.source>10</maven.compiler.source>
-    <maven.compiler.target>10</maven.compiler.target>
+		<!-- change to 10 later
+		    <maven.compiler.source>10</maven.compiler.source>
+				-->
+    <maven.compiler.source>8</maven.compiler.source>
+    <maven.compiler.target>8</maven.compiler.target>
     <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
@@ -196,8 +199,11 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.7.0</version>
                 <configuration>
-                    <source>10</source>
-                    <target>10</target>
+									<!--
+									<source>10</source>
+									-->
+                    <source>8</source>
+                    <target>8</target>
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.hibernate</groupId>

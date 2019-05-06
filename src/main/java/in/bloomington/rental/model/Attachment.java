@@ -60,12 +60,13 @@ public class Attachment implements java.io.Serializable
         this.id = id;
     }
 
-    public Attachment(int id, Inspection inspection,
-                              Rental     rental,
-                              Date       date,
-                              String     fileName,
-                              String     oldFileName,
-                              String     notes)
+    public Attachment(int id,
+											Inspection inspection,
+											Rental     rental,
+											Date       date,
+											String     fileName,
+											String     oldFileName,
+											String     notes)
     {
         this.id          = id;
         this.inspection  = inspection;

@@ -119,7 +119,7 @@ public class InspectionController
             model.addAttribute("inspectionTypes", inspectionTypes);
         }
         if (inspectors.size() == 0) {
-            inspectors = userService.getInspectors();
+            inspectors = userService.getActiveInspectors();
         }
         model.addAttribute("inspectors", inspectors);
         model.addAttribute("foundationTypes", foundationTypes);

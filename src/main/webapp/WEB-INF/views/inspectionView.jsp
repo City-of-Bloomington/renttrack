@@ -96,7 +96,7 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 						<input type="button" value="Approve Inspection" onclick="window.location='${uri}inspectionApprove/${inspection.id}'" />
 				</li>
 				<li class="menu">							
-						<input type="button" value="New Attachement" onclick="window.location='${uri}attachementNew/inspection/${inspection.id}'" />
+						<input type="button" value="New Attachement" onclick="window.location='${uri}attachmentNew/inspection/${inspection.id}'" />
 				</li>
 					<c:if test="${!inspction.hasFile()}">
 						<li class="menu">			
@@ -115,9 +115,9 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 			<jsp:include page="inspectionCans.jsp" />	
 		</c:if>		
 	</c:if>
-	<c:if test="${inspection.hasAttachements()}">
-		<c:set var="attachements" value="${inspection.attachements}" scope="request"/>
-		<jsp:include page="attachements.jsp" />	
+	<c:if test="${inspection.hasAttachments()}">
+		<c:set var="attachments" value="${inspection.attachments}" scope="request"/>
+		<jsp:include page="attachments.jsp" />	
 	</c:if>	
 
 	<jsp:include page="footer.jsp" />	

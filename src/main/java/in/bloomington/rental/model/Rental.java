@@ -30,33 +30,98 @@ public class Rental implements java.io.Serializable
 {
     private static final long   serialVersionUID = 1L;
     private static final Logger           logger = LogManager.getLogger(Rental.class);
+		@Transient
     private static final SimpleDateFormat dtf    = new SimpleDateFormat("MM/dd/yyyy");
-    
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int                   id;
+		
+		@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "agent_id")
     private Owner                 agent;
+
+		@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "status_id")
+    @NotNull(message = "{rental.status.empty}")
     private RentalStatus          rentalStatus;
+
+		@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "zoning_id")
+    @NotNull(message = "{rental.zoning.empty}")
     private Zoning                zoning;
+
+		@Temporal(TemporalType.DATE)
+    @Column(name = "registered_date", length = 13)
     private Date                  registeredDate;
+		
+		@Temporal(TemporalType.DATE)
+    @Column(name = "last_cycle_date", length = 13)
     private Date                  lastCycleDate;
+
+		@Temporal(TemporalType.DATE)
+    @Column(name = "permit_issued", length = 13)
     private Date                  permitIssued;
+
+		@Temporal(TemporalType.DATE)
+    @Column(name = "permit_expires", length = 13)
     private Date                  permitExpires;
+		
+		@Column(name = "permit_length")
     private Short                 permitLength;
+		
+		@Column(name = "grandfathered", length = 1)
     private Character             grandfathered;
+		
+		@Column(name = "cdbg_funding", length = 1)
     private Character             cdbgFunding;
+		
+		@Column(name = "n_hood")
     private Short                 NHood;
+		
+		@Column(name = "affordable", length = 1)
     private Character             affordable;
+		
+		@Column(name = "inactive", length = 1)
     private Character             inactive;
+		
+		@OneToMany(fetch = FetchType.LAZY, mappedBy = "rental")
     private List<RentalOwner>     rentalOwners     = new ArrayList<RentalOwner>();
+		@OneToMany(fetch = FetchType.LAZY, mappedBy = "rental")
+    @OrderBy("id ASC")
     private List<Variance>        variances        = new ArrayList<Variance>();
+
+		@Transient
     private List<Address>         addresses        = new ArrayList<Address>();
+		
+		@Transient
     private List<RentalStructure> rentalStructures = new ArrayList<RentalStructure>();
+		
+		@OneToMany(fetch = FetchType.LAZY, mappedBy = "rental")
+    @OrderBy("id DESC")
     private List<RentalNote>      rentalNotes      = new ArrayList<RentalNote>();
+		@OneToMany(fetch = FetchType.LAZY, mappedBy = "rental")
+    @OrderBy("id DESC")
     private List<PullHistory>     pullHistories    = new ArrayList<PullHistory>();
+		
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "rental")
+    @OrderBy("id DESC")
     private List<Bill>            bills            = new ArrayList<Bill>();
+
+		@OneToMany(fetch = FetchType.LAZY, mappedBy = "rental")
+    @OrderBy("id desc")
     private List<Attachment>      attachments      = new ArrayList<Attachment>();
+		@OneToMany(fetch = FetchType.LAZY, mappedBy = "rental")
+    @OrderBy("id DESC")
     private List<RentalLog>       rentalLogs       = new ArrayList<RentalLog>();
+
+		@OneToMany(fetch = FetchType.LAZY, mappedBy = "rental")
     private List<LegalItEmailLog> legalItEmailLogs = new ArrayList<LegalItEmailLog>();
+		@Transient
     private List<Inspection>      inspections      = new ArrayList<Inspection>();
+		@OneToMany(fetch = FetchType.LAZY, mappedBy = "rental")
+    @OrderBy("id DESC")
     private List<RentalLegal>     rentalLegals     = new ArrayList<RentalLegal>();
     @Transient
     private List<Owner>           owners           = new ArrayList<Owner>();
@@ -128,9 +193,6 @@ public class Rental implements java.io.Serializable
          */
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     public int getId()
     {
         return this.id;
@@ -141,8 +203,7 @@ public class Rental implements java.io.Serializable
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "agent_id")
+
     public Owner getAgent()
     {
         return this.agent;
@@ -178,10 +239,6 @@ public class Rental implements java.io.Serializable
         return agent != null;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "status_id")
-    @NotNull(message = "{rental.status.empty}")
-    // @Min(value=1, message = "{rental.status.invalid}")
     public RentalStatus getRentalStatus()
     {
         return this.rentalStatus;
@@ -207,9 +264,6 @@ public class Rental implements java.io.Serializable
         return 0;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "zoning_id")
-    @NotNull(message = "{rental.zoning.empty}")
     public Zoning getZoning()
     {
         return this.zoning;
@@ -235,8 +289,6 @@ public class Rental implements java.io.Serializable
         return 0;
     }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "registered_date", length = 13)
     public Date getRegisteredDate()
     {
         return this.registeredDate;
@@ -269,8 +321,7 @@ public class Rental implements java.io.Serializable
         this.registeredDate = val;
     }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "last_cycle_date", length = 13)
+
     public Date getLastCycleDate()
     {
         return this.lastCycleDate;
@@ -301,8 +352,7 @@ public class Rental implements java.io.Serializable
         this.lastCycleDate = lastCycleDate;
     }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "permit_issued", length = 13)
+
     public Date getPermitIssued()
     {
         return this.permitIssued;
@@ -332,8 +382,7 @@ public class Rental implements java.io.Serializable
         }
     }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "permit_expires", length = 13)
+
     public Date getPermitExpires()
     {
         return this.permitExpires;
@@ -363,7 +412,7 @@ public class Rental implements java.io.Serializable
         }
     }
 
-    @Column(name = "permit_length")
+
     public Short getPermitLength()
     {
         return this.permitLength;
@@ -374,7 +423,7 @@ public class Rental implements java.io.Serializable
         this.permitLength = permitLength;
     }
 
-    @Column(name = "grandfathered", length = 1)
+
     public Character getGrandfathered()
     {
         return this.grandfathered;
@@ -385,7 +434,7 @@ public class Rental implements java.io.Serializable
         this.grandfathered = grandfathered;
     }
 
-    @Column(name = "cdbg_funding", length = 1)
+
     public Character getCdbgFunding()
     {
         return this.cdbgFunding;
@@ -396,7 +445,6 @@ public class Rental implements java.io.Serializable
         this.cdbgFunding = cdbgFunding;
     }
 
-    @Column(name = "n_hood")
     public Short getNHood()
     {
         return this.NHood;
@@ -407,7 +455,7 @@ public class Rental implements java.io.Serializable
         if (NHood != null && NHood > 0) this.NHood = NHood;
     }
 
-    @Column(name = "affordable", length = 1)
+
     public Character getAffordable()
     {
         return this.affordable;
@@ -439,7 +487,7 @@ public class Rental implements java.io.Serializable
         // just ignore
     }
 
-    @Column(name = "inactive", length = 1)
+
     public Character getInactive()
     {
         return this.inactive;
@@ -461,8 +509,6 @@ public class Rental implements java.io.Serializable
         if (!val) inactive = 'y';
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "rental")
-    @OrderBy("id ASC")
     public List<RentalStructure> getRentalStructures()
     {
         return this.rentalStructures;
@@ -496,8 +542,7 @@ public class Rental implements java.io.Serializable
         return pullHistories.size() > 0;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "rental")
-    @OrderBy("id desc")
+
     public List<Attachment> getAttachments()
     {
         return this.attachments;
@@ -514,8 +559,6 @@ public class Rental implements java.io.Serializable
         return attachments != null && attachments.size() > 0;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "rental")
-    @OrderBy("id DESC")
     public List<RentalLog> getRentalLogs()
     {
         return this.rentalLogs;
@@ -526,8 +569,7 @@ public class Rental implements java.io.Serializable
         this.rentalLogs = rentalLogs;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "rental")
-    @OrderBy("id DESC")
+
     public List<RentalLegal> getRentalLegals()
     {
         return rentalLegals;
@@ -544,7 +586,7 @@ public class Rental implements java.io.Serializable
         return rentalLegals != null && rentalLegals.size() > 0;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "rental")
+
     public List<LegalItEmailLog> getLegalItEmailLogs()
     {
         return this.legalItEmailLogs;
@@ -561,8 +603,7 @@ public class Rental implements java.io.Serializable
         return legalItEmailLogs != null && legalItEmailLogs.size() > 0;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "rental")
-    @OrderBy("id DESC")
+
     public List<PullHistory> getPullHistories()
     {
         return this.pullHistories;
@@ -573,8 +614,7 @@ public class Rental implements java.io.Serializable
         this.pullHistories = pullHistories;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "rental")
-    @OrderBy("id DESC")
+
     public List<RentalNote> getRentalNotes()
     {
         return this.rentalNotes;
@@ -592,7 +632,6 @@ public class Rental implements java.io.Serializable
         return rentalNotes != null && rentalNotes.size() > 0;
     }
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "rental")
     public List<RentalOwner> getRentalOwners()
     {
         return this.rentalOwners;
@@ -635,7 +674,6 @@ public class Rental implements java.io.Serializable
         return rentalOwners != null && rentalOwners.size() > 0;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "rental")
     public List<Variance> getVariances()
     {
         return this.variances;
@@ -653,7 +691,6 @@ public class Rental implements java.io.Serializable
 
     //
     // @OneToMany(fetch=FetchType.LAZY, mappedBy="rental")
-    @Transient
     public List<Inspection> getInspections()
     {
         return this.inspections;
@@ -683,8 +720,6 @@ public class Rental implements java.io.Serializable
         return ret;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "rental")
-    @OrderBy("id DESC")
     public List<Bill> getBills()
     {
         return this.bills;

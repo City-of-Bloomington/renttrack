@@ -49,6 +49,10 @@ public class UserServiceImp implements UserService {
 		public List<RentUser> getAllInspectors(){
 				return userDao.getAllInspectors();
 		}
+		@Transactional(readOnly = true)
+		public List<RentUser> getActiveInspectors(){
+				return userDao.getActiveInspectors();
+		}		
 		
 		@Transactional(readOnly = true)
 		public List<RentUser> list() {

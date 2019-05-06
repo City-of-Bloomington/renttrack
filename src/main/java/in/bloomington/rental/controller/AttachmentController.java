@@ -159,7 +159,11 @@ public class AttachmentController
             }
             else {
                 Inspection inspection = inspectionService.get(id);
+								Rental rental = inspection.getRental();
+								Integer rentalId = rental.getId();
+								one.setRentalId(rentalId);
                 one.setInspection(inspection);
+								
                 ret_str = "/inspection/" + id;
             }
             attachmentService.save(one);

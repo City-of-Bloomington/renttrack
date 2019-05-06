@@ -16,8 +16,8 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 	<c:if test="${not empty address.maLocationId}">
 		<form:hidden path="maLocationId" />
 	</c:if>	
-	<c:if test="${not empty address.maStreetId}">
-		<form:hidden path="maStreetId" />
+	<c:if test="${not empty address.addressId}">
+		<form:hidden path="addressId" />
 	</c:if>
 	<c:if test="${not empty address.maSubunitId}">
 		<form:hidden path="maSubunitId" />

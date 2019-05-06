@@ -21,11 +21,27 @@ public class RentalLog implements java.io.Serializable
 {
     private static final long serialVersionUID = 1L;
 
+		@Transient
     SimpleDateFormat dtf = new SimpleDateFormat("MM/dd/yyyy");
+
+		@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int      id;
+
+		@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rental_id")
     private Rental   rental;
+
+		@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private RentUser user;
+
+		@Temporal(TemporalType.DATE)
+    @Column(name = "date", length = 13)
     private Date     date;
+		
+    @Column(name = "action_taken")
     private String   actionTaken;
 
     public RentalLog()
@@ -49,9 +65,7 @@ public class RentalLog implements java.io.Serializable
         this.actionTaken = actionTaken;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+
     public int getId()
     {
         return this.id;
@@ -62,8 +76,6 @@ public class RentalLog implements java.io.Serializable
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "rental_id")
     public Rental getRental()
     {
         return this.rental;
@@ -74,8 +86,6 @@ public class RentalLog implements java.io.Serializable
         this.rental = rental;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
     public RentUser getUser()
     {
         return this.user;
@@ -86,8 +96,7 @@ public class RentalLog implements java.io.Serializable
         this.user = user;
     }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "date", length = 13)
+
     public Date getDate()
     {
         return this.date;
@@ -108,7 +117,6 @@ public class RentalLog implements java.io.Serializable
     }
 
     // Save, Update
-    @Column(name = "action_taken")
     public String getActionTaken()
     {
         return this.actionTaken;

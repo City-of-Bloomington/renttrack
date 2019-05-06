@@ -20,10 +20,23 @@ public class UnitRoom implements java.io.Serializable
     private static final long serialVersionUID = 1L;
 
     private static final Logger logger = LogManager.getLogger(RentalUnit.class);
+
+		@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int                 id;
+		
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "unit_id")
     private RentalUnit          rentalUnit;
+		
+		@Column(name = "identifier", nullable = false, length = 30)
     private String              identifier;
+		
+    @Column(name = "type")		
     private String              type;
+
+		@Column(name = "measures")
     private String              measures;
 
     public UnitRoom()
@@ -48,9 +61,7 @@ public class UnitRoom implements java.io.Serializable
         this.measures   = measures;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+
     public int getId()
     {
         return this.id;
@@ -61,8 +72,6 @@ public class UnitRoom implements java.io.Serializable
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "unit_id")
     public RentalUnit getRentalUnit()
     {
         return this.rentalUnit;
@@ -73,7 +82,6 @@ public class UnitRoom implements java.io.Serializable
         this.rentalUnit = val;
     }
 
-    @Column(name = "identifier", nullable = false, length = 30)
     public String getIdentifier()
     {
         return this.identifier;
@@ -84,7 +92,7 @@ public class UnitRoom implements java.io.Serializable
         this.identifier = identifier;
     }
 
-    @Column(name = "type")
+
     public String getType()
     {
         return this.type;
@@ -95,7 +103,6 @@ public class UnitRoom implements java.io.Serializable
         this.type = val;
     }
 
-    @Column(name = "measures")
     public String getMeasures()
     {
         return this.measures;

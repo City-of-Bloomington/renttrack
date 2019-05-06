@@ -51,7 +51,8 @@ import in.bloomington.rental.model.Variance;
 import in.bloomington.rental.model.Zoning;
 
 @Configuration
-@PropertySource("file:${SITE_HOME}/conf/application.properties")
+@PropertySource({"file:${SITE_HOME}/conf/application.properties",
+						"File:${SITE_HOME}/conf/db.properties"})
 
 @EnableTransactionManagement
 @ComponentScans(value = {

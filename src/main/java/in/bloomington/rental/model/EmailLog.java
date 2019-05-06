@@ -24,12 +24,29 @@ public class EmailLog implements java.io.Serializable
 {
     private static final long serialVersionUID = 1L;
 
-    SimpleDateFormat             dtf             = new SimpleDateFormat("MM/dd/yyyy");
+		@Transient
+    SimpleDateFormat dtf = new SimpleDateFormat("MM/dd/yyyy");
+		
+		@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int                  id;
+		
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private RentUser             user;
+		
+		@Temporal(TemporalType.DATE)
+		@Column(name = "date", length = 13)
     private Date                 date;
+		
+    @Column(name = "type")
     private String               type;
+		
+		@Column(name = "email_from")
     private String               emailFrom;
+
+		@OneToMany(fetch = FetchType.LAZY, mappedBy = "emailLog")
     private List<EmailDetailLog> emailDetailLogs = new ArrayList<>(0);
 
     public EmailLog()
@@ -64,9 +81,6 @@ public class EmailLog implements java.io.Serializable
         this.emailFrom = emailFrom;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     public int getId()
     {
         return this.id;
@@ -77,8 +91,6 @@ public class EmailLog implements java.io.Serializable
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
     public RentUser getUser()
     {
         return this.user;
@@ -89,8 +101,6 @@ public class EmailLog implements java.io.Serializable
         this.user = user;
     }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "date", length = 13)
     public Date getDate()
     {
         return this.date;
@@ -115,7 +125,6 @@ public class EmailLog implements java.io.Serializable
         return ret;
     }
 
-    @Column(name = "type")
     public String getType()
     {
         return this.type;
@@ -126,7 +135,6 @@ public class EmailLog implements java.io.Serializable
         this.type = type;
     }
 
-    @Column(name = "email_from")
     public String getEmailFrom()
     {
         return this.emailFrom;
@@ -137,7 +145,6 @@ public class EmailLog implements java.io.Serializable
         if (val != null && !val.equals("")) this.emailFrom = val.trim();
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "emailLog")
     public List<EmailDetailLog> getEmailDetailLogs()
     {
         return this.emailDetailLogs;

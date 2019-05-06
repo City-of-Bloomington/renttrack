@@ -15,16 +15,39 @@ public class Can implements java.io.Serializable
 {
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int    id;
+		
+		@Column(name = "type", length = 10)
     private String type = "Paragraph";
+
+		@Column(name = "title", length = 180)
     private String title;
+
+		@Column(name = "item1", length = 1024)
     private String item1;
+
+		@Column(name = "item2", length = 1024)
     private String item2;
+
+		@Column(name = "item3", length = 1024)
     private String item3;
+
+    @Column(name = "item4", length = 1024)
     private String item4;
+
+		@Column(name = "item5", length = 256)
     private String item5;
+
+		@Column(name = "item6", length = 256)
     private String item6;
+
+		@Column(name = "item7", length = 256)
     private String item7;
+
+		@Column(name = "item8", length = 256)
     private String item8;
 
     public Can()
@@ -60,9 +83,6 @@ public class Can implements java.io.Serializable
         this.item8 = item8;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     public int getId()
     {
         return this.id;
@@ -73,7 +93,7 @@ public class Can implements java.io.Serializable
         this.id = id;
     }
 
-    @Column(name = "title", length = 180)
+
     public String getTitle()
     {
         return this.title;
@@ -88,7 +108,6 @@ public class Can implements java.io.Serializable
     }
 
     // Paragraph or List
-    @Column(name = "type", length = 10)
     public String getType()
     {
         return this.type;
@@ -106,7 +125,6 @@ public class Can implements java.io.Serializable
     }
 
     // this is always paragraph
-    @Column(name = "item1", length = 1024)
     public String getItem1()
     {
         return this.item1;
@@ -123,7 +141,6 @@ public class Can implements java.io.Serializable
     //
     // list items start from item2
     //
-    @Column(name = "item2", length = 1024)
     public String getItem2()
     {
         return this.item2;
@@ -137,7 +154,6 @@ public class Can implements java.io.Serializable
         this.item2 = val;
     }
 
-    @Column(name = "item3", length = 1024)
     public String getItem3()
     {
         return this.item3;
@@ -151,7 +167,6 @@ public class Can implements java.io.Serializable
         this.item3 = val;
     }
 
-    @Column(name = "item4", length = 1024)
     public String getItem4()
     {
         return this.item4;
@@ -165,7 +180,6 @@ public class Can implements java.io.Serializable
         this.item4 = val;
     }
 
-    @Column(name = "item5", length = 256)
     public String getItem5()
     {
         return this.item5;
@@ -179,7 +193,6 @@ public class Can implements java.io.Serializable
         this.item5 = val;
     }
 
-    @Column(name = "item6", length = 256)
     public String getItem6()
     {
         return this.item6;
@@ -193,7 +206,6 @@ public class Can implements java.io.Serializable
         this.item6 = val;
     }
 
-    @Column(name = "item7", length = 256)
     public String getItem7()
     {
         return this.item7;
@@ -207,7 +219,6 @@ public class Can implements java.io.Serializable
         this.item7 = val;
     }
 
-    @Column(name = "item8", length = 256)
     public String getItem8()
     {
         return this.item8;

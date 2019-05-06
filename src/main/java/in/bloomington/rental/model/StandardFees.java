@@ -24,29 +24,57 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class StandardFees implements java.io.Serializable
 {
     private static final long serialVersionUID = 1L;
-
+		
+		@Transient
     SimpleDateFormat   dtf = new SimpleDateFormat("MM/dd/yyyy");
-    
+
+		@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int        id;
+		
+		@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private RentUser   user;
-
+		
+    @Temporal(TemporalType.DATE)
+    @Column(name = "date", length = 13)
+    @DateTimeFormat(pattern = "mm/dd/yyyy")
     private Date       date;
+		
+		@Column(name = "single_unit_building_rate", precision = 6)
     private BigDecimal singleUnitBuildingRate = new BigDecimal("0");
+		
+		@Column(name = "multi_unit_building_rate", precision = 6)
     private BigDecimal multiUnitBuildingRate  = new BigDecimal("0");
+		
+		@Column(name = "condo_unit_building_rate", precision = 6)
     private BigDecimal condoUnitBuildingRate  = new BigDecimal("0");
+		
+		@Column(name = "rooming_building_rate", precision = 6)
     private BigDecimal roomingBuildingRate    = new BigDecimal("0");
+		
+		@Column(name = "rooming_bath_rate", precision = 6)
     private BigDecimal roomingBathRate        = new BigDecimal("0");
+		
+		@Column(name = "unit_rate", precision = 6)
     private BigDecimal unitRate               = new BigDecimal("0");
+		
+		@Column(name = "reinspection_rate", precision = 6)
     private BigDecimal reinspectionRate       = new BigDecimal("0");
+		
+		@Column(name = "no_show_rate", precision = 6)
     private BigDecimal noShowRate             = new BigDecimal("0");
-
+		
+    @Column(name = "summary_rate", precision = 6)
     private BigDecimal summaryRate            = new BigDecimal("0");
+		
+		@Column(name = "idl_rate", precision = 6)
     private BigDecimal idlRate                = new BigDecimal("0");
+		
+		@Column(name = "appeal_fee")
     private BigDecimal appealFee              = new BigDecimal("0");
 
-    //
-    // insepctionFee is building + units + rooms cost except noshow or reinspection
-    // etc
 
     public StandardFees()
     {
@@ -86,9 +114,7 @@ public class StandardFees implements java.io.Serializable
         this.idlRate                = idlRate;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+
     public int getId()
     {
         return this.id;
@@ -99,8 +125,7 @@ public class StandardFees implements java.io.Serializable
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+
     public RentUser getUser()
     {
         return this.user;
@@ -111,9 +136,7 @@ public class StandardFees implements java.io.Serializable
         this.user = user;
     }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "date", length = 13)
-    @DateTimeFormat(pattern = "mm/dd/yyyy")
+
     public Date getDate()
     {
         if (date == null) date = new Date();
@@ -137,7 +160,7 @@ public class StandardFees implements java.io.Serializable
         return "";
     }
 
-    @Column(name = "single_unit_building_rate", precision = 6)
+
     public BigDecimal getSingleUnitBuildingRate()
     {
         return this.singleUnitBuildingRate;
@@ -148,7 +171,7 @@ public class StandardFees implements java.io.Serializable
         this.singleUnitBuildingRate = val;
     }
 
-    @Column(name = "multi_unit_building_rate", precision = 6)
+
     public BigDecimal getMultiUnitBuildingRate()
     {
         return this.multiUnitBuildingRate;
@@ -159,7 +182,7 @@ public class StandardFees implements java.io.Serializable
         this.multiUnitBuildingRate = val;
     }
 
-    @Column(name = "condo_unit_building_rate", precision = 6)
+
     public BigDecimal getCondoUnitBuildingRate()
     {
         return this.condoUnitBuildingRate;
@@ -170,7 +193,6 @@ public class StandardFees implements java.io.Serializable
         this.condoUnitBuildingRate = val;
     }
 
-    @Column(name = "rooming_building_rate", precision = 6)
     public BigDecimal getRoomingBuildingRate()
     {
         return this.roomingBuildingRate;
@@ -181,7 +203,7 @@ public class StandardFees implements java.io.Serializable
         this.roomingBuildingRate = val;
     }
 
-    @Column(name = "rooming_bath_rate", precision = 6)
+
     public BigDecimal getRoomingBathRate()
     {
         return this.roomingBathRate;
@@ -192,7 +214,7 @@ public class StandardFees implements java.io.Serializable
         this.roomingBathRate = val;
     }
 
-    @Column(name = "unit_rate", precision = 6)
+
     public BigDecimal getUnitRate()
     {
         return this.unitRate;
@@ -203,7 +225,7 @@ public class StandardFees implements java.io.Serializable
         this.unitRate = unitRate;
     }
 
-    @Column(name = "reinspection_rate", precision = 6)
+
     public BigDecimal getReinspectionRate()
     {
         return this.reinspectionRate;
@@ -214,7 +236,6 @@ public class StandardFees implements java.io.Serializable
         this.reinspectionRate = reinspRate;
     }
 
-    @Column(name = "no_show_rate", precision = 6)
     public BigDecimal getNoShowRate()
     {
         return this.noShowRate;
@@ -225,7 +246,6 @@ public class StandardFees implements java.io.Serializable
         this.noShowRate = val;
     }
 
-    @Column(name = "appeal_fee")
     public BigDecimal getAppealFee()
     {
         return this.appealFee;
@@ -236,7 +256,6 @@ public class StandardFees implements java.io.Serializable
         this.appealFee = appealFee;
     }
 
-    @Column(name = "summary_rate", precision = 6)
     public BigDecimal getSummaryRate()
     {
         return this.summaryRate;
@@ -247,7 +266,6 @@ public class StandardFees implements java.io.Serializable
         this.summaryRate = summaryRate;
     }
 
-    @Column(name = "idl_rate", precision = 6)
     public BigDecimal getIdlRate()
     {
         return this.idlRate;

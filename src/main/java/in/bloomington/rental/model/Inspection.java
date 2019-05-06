@@ -33,39 +33,88 @@ public class Inspection implements java.io.Serializable
 {
     private static final long serialVersionUID = 1L;
 
-    SimpleDateFormat            dtf            = new SimpleDateFormat("MM/dd/yyyy");
-    private static final Logger logger         = LogManager.getLogger(Inspection.class);
+		@Transient
+    SimpleDateFormat dtf = new SimpleDateFormat("MM/dd/yyyy");
+    private static final Logger logger = LogManager.getLogger(Inspection.class);
+
+		@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int                 id;
+		
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rental_id", nullable = false)
     private Rental              rental;
+		
+		@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "inspected_by", nullable = false)
     private RentUser            inspector;
+		
+    @Temporal(TemporalType.DATE)
+    @Column(name = "inspection_date", length = 13)
     private Date                inspectionDate;
+
+		@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "inspection_type_id", nullable = false)
     private InspectionType      inspectionType;
+
+		@Temporal(TemporalType.DATE)
+    @Column(name = "compliance_date", length = 13)
     private Date                complianceDate;
+
+    @Column(name = "violations")
     private Short               violations;
+		
+		@Column(name = "inspect_file", length = 70)
     private String              inspectFile;
+
+		@Column(name = "comments", length = 500)
     private String              comments;
 
     //
     // these four will be removed in production
     //
+		@Column(name = "foundation")
     private String              foundation;
+		@Column(name = "story_cnt")
     private Short               storyCnt;
+
+		@Column(name = "heat_source")
     private String              heatSource;
 
+		@Column(name = "attic_access", length = 1)
     private Character           atticAccess;
 
+		@Column(name = "accessory", length = 30)
     private String              accessory;
+
+		@Column(name = "smoke_detectors")
     private Short               smokeDetectors;
+		@Column(name = "life_safety")
     private Short               lifeSafety;
+		@Column(name = "time_spent", precision = 6)
     private BigDecimal          timeSpent;
+		@Column(name = "time_status")
     private String              timeStatus;
-
+		
+    @Column(name = "cancelled", length = 1)
     private Character           cancelled;
+		@Column(name = "approved", length = 1)
     private Character           approved;
-    private RentUser            approver;
-    private Date                approvedDate;
 
+		@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "approved_by")
+    private RentUser            approver;
+		
+    @Temporal(TemporalType.DATE)
+    @Column(name = "approved_date", length = 13)		
+    private Date                approvedDate;
+		
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "inspection")
     private List<Attachment>    attachments    = new ArrayList<Attachment>();
+		
+		@OneToMany(fetch = FetchType.LAZY, mappedBy = "inspection")
+    @OrderBy("templateComponent.id ASC, id ASC")
     private List<InspectionCan> inspectionCans = new ArrayList<InspectionCan>();
 
     @Transient
@@ -135,9 +184,7 @@ public class Inspection implements java.io.Serializable
 
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+
     public int getId()
     {
         return this.id;
@@ -148,8 +195,6 @@ public class Inspection implements java.io.Serializable
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "rental_id", nullable = false)
     public Rental getRental()
     {
         return this.rental;
@@ -160,8 +205,6 @@ public class Inspection implements java.io.Serializable
         this.rental = rental;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "inspected_by", nullable = false)
     public RentUser getInspector()
     {
         return this.inspector;
@@ -172,8 +215,6 @@ public class Inspection implements java.io.Serializable
         this.inspector = val;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "approved_by")
     public RentUser getApprover()
     {
         return this.approver;
@@ -184,8 +225,7 @@ public class Inspection implements java.io.Serializable
         this.approver = val;
     }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "approved_date", length = 13)
+
     public Date getApprovedDate()
     {
         return this.approvedDate;
@@ -232,8 +272,7 @@ public class Inspection implements java.io.Serializable
         return complianceDate != null;
     }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "inspection_date", length = 13)
+
     public Date getInspectionDate()
     {
         if (id == 0) {
@@ -270,8 +309,6 @@ public class Inspection implements java.io.Serializable
         }
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "inspection_type_id", nullable = false)
     public InspectionType getInspectionType()
     {
         return this.inspectionType;
@@ -282,8 +319,7 @@ public class Inspection implements java.io.Serializable
         this.inspectionType = inspectionType;
     }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "compliance_date", length = 13)
+
     public Date getComplianceDate()
     {
         return this.complianceDate;
@@ -316,7 +352,6 @@ public class Inspection implements java.io.Serializable
         }
     }
 
-    @Column(name = "violations")
     public Short getViolations()
     {
         return this.violations;
@@ -327,7 +362,6 @@ public class Inspection implements java.io.Serializable
         this.violations = violations;
     }
 
-    @Column(name = "inspect_file", length = 70)
     public String getInspectFile()
     {
         return this.inspectFile;
@@ -429,7 +463,7 @@ public class Inspection implements java.io.Serializable
         return path + inspectFile;
     }
 
-    @Column(name = "comments", length = 500)
+
     public String getComments()
     {
         return this.comments;
@@ -440,7 +474,6 @@ public class Inspection implements java.io.Serializable
         this.comments = comments;
     }
 
-    @Column(name = "accessory", length = 30)
     public String getAccessory()
     {
         return this.accessory;
@@ -451,7 +484,6 @@ public class Inspection implements java.io.Serializable
         this.accessory = accessory;
     }
 
-    @Column(name = "foundation")
     public String getFoundation()
     {
         return this.foundation;
@@ -462,7 +494,7 @@ public class Inspection implements java.io.Serializable
         this.foundation = foundation;
     }
 
-    @Column(name = "story_cnt")
+
     public Short getStoryCnt()
     {
         return this.storyCnt;
@@ -473,7 +505,6 @@ public class Inspection implements java.io.Serializable
         this.storyCnt = storyCnt;
     }
 
-    @Column(name = "heat_source")
     public String getHeatSource()
     {
         return this.heatSource;
@@ -484,7 +515,6 @@ public class Inspection implements java.io.Serializable
         this.heatSource = heatSource;
     }
 
-    @Column(name = "attic_access", length = 1)
     public Character getAtticAccess()
     {
         return this.atticAccess;
@@ -501,7 +531,7 @@ public class Inspection implements java.io.Serializable
         return atticAccess != null;
     }
 
-    @Column(name = "cancelled", length = 1)
+
     public Character getCancelled()
     {
         return this.cancelled;
@@ -512,7 +542,6 @@ public class Inspection implements java.io.Serializable
         this.cancelled = val;
     }
 
-    @Column(name = "approved", length = 1)
     public Character getApproved()
     {
         return this.approved;
@@ -541,7 +570,6 @@ public class Inspection implements java.io.Serializable
         return approved != null;
     }
 
-    @Column(name = "smoke_detectors")
     public Short getSmokeDetectors()
     {
         return this.smokeDetectors;
@@ -552,7 +580,6 @@ public class Inspection implements java.io.Serializable
         this.smokeDetectors = smokeDetectors;
     }
 
-    @Column(name = "life_safety")
     public Short getLifeSafety()
     {
         return this.lifeSafety;
@@ -563,7 +590,6 @@ public class Inspection implements java.io.Serializable
         this.lifeSafety = lifeSafety;
     }
 
-    @Column(name = "time_spent", precision = 6)
     public BigDecimal getTimeSpent()
     {
         return this.timeSpent;
@@ -586,7 +612,6 @@ public class Inspection implements java.io.Serializable
         return timeSpent != null && timeSpent.doubleValue() > 0;
     }
 
-    @Column(name = "time_status")
     public String getTimeStatus()
     {
         if (!hasTimeSpent()) {
@@ -602,7 +627,6 @@ public class Inspection implements java.io.Serializable
         }
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "inspection")
     public List<Attachment> getAttachments()
     {
         return this.attachments;
@@ -658,8 +682,7 @@ public class Inspection implements java.io.Serializable
         return template != null;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "inspection")
-    @OrderBy("templateComponent.id ASC, id ASC")
+
     public List<InspectionCan> getInspectionCans()
     {
         return this.inspectionCans;
