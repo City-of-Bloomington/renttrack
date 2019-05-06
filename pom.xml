@@ -17,9 +17,10 @@
     <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-   	<spring.version>5.1.5.RELEASE</spring.version>
+    <spring.version>5.1.5.RELEASE</spring.version>
     <hibernate.version>5.4.2.Final</hibernate.version>
     <log4j.version>2.11.2</log4j.version>
+    <junit.version>5.4.1</junit.version>
   </properties>
 	<dependencies>
 		<!-- Spring MVC Dependency -->
@@ -191,6 +192,20 @@
 			<artifactId>rest</artifactId>
 			<version>6.0.0-alpha2</version>
 		</dependency>
+
+        <!-- jUnit -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
 	</dependencies>
     <build>
         <plugins>
