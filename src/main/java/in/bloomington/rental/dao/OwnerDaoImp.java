@@ -1,10 +1,14 @@
 package in.bloomington.rental.dao;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
 
 import org.hibernate.query.Query;
 import org.hibernate.SQLQuery;
@@ -17,6 +21,8 @@ import org.springframework.stereotype.Repository;
 import in.bloomington.rental.model.Item;
 import in.bloomington.rental.model.Owner;
 import in.bloomington.rental.model.Owner_;
+import in.bloomington.rental.model.Rental;
+import in.bloomington.rental.model.Rental_;
 import in.bloomington.rental.model.RentalOwner;
 
 @Repository
@@ -93,7 +99,7 @@ public class OwnerDaoImp implements OwnerDao
         Root<Owner>            root = select.from(Owner.class);
 
         select.distinct(true)
-              .orderBy(builder.desc(root.get(Owner_.id)));
+              .orderBy(builder.asc(root.get(Owner_.name)));
 
         return session.createQuery(select)
                       .setMaxResults(limit)
@@ -108,8 +114,7 @@ public class OwnerDaoImp implements OwnerDao
         CriteriaBuilder     builder = session.getCriteriaBuilder();
         CriteriaQuery<Owner> select = builder.createQuery(Owner.class);
         Root<Owner>            root = select.from(Owner.class);
-        
-        select.where(builder.like(root.get(Owner_.name), "%" + name + "%"));
+        select.where(builder.like(root.get(Owner_.name), name + "%"));
         return session.createQuery(select)
                       .getResultList();
     }
@@ -119,38 +124,43 @@ public class OwnerDaoImp implements OwnerDao
     public List<Owner> findAgentByName(String name)
     {
         Session  session = sessionFactory.getCurrentSession();
+
         String   qq      = "select distinct o.*"
                          + " from owners  o"
                          + " join rentals r on o.id=r.agent_id"
                          + " where name like :name";
         return session.createNativeQuery(qq, Owner.class)
-                      .setParameter("name", name)
+                      .setParameter("name", "%"+name+"%")
                       .list();
+				/*
+					 // need to be refined
+				CriteriaBuilder     builder = session.getCriteriaBuilder();
+        CriteriaQuery<Owner> cq = builder.createQuery(Owner.class);
+        Root<Owner>            root = cq.from(Owner.class);
+				ListJoin<Rental, Owner> agent = cq.join(Rental_.agent);
+				cq.select(root);
+        cq.where(builder.like(root.get(Owner_.name), "%"+name+"%"));
+				*/
     }
 
     @Override
     public List<Owner> search(Owner owner)
     {
-        Session session    = sessionFactory.getCurrentSession();
+        // Session session    = sessionFactory.getCurrentSession();
         String  qq         = "from Owner o ";
         String  qw         = "";
         String  name       = null, address = null, city = null, state = null, zip = null, phone = null, email = null;
         boolean hasNoEmail = false;
-        Integer ownerId    = owner.getOwnerId();
-        int     id         = 0;
-        if (ownerId != null && ownerId > 0) {
-            id  = ownerId.intValue();
-            qq += " where o.id=:id";
-        }
-        else {
-            name       = owner.getName();
-            address    = owner.getAddress();
-            email      = owner.getEmail();
-            city       = owner.getCity();
-            state      = owner.getState();
-            zip        = owner.getZip();
-            phone      = owner.getPhone();
-            hasNoEmail = owner.hasNoEmail();
+				name       = owner.getName();
+				address    = owner.getAddress();
+				email      = owner.getEmail();
+				city       = owner.getCity();
+				state      = owner.getState();
+				zip        = owner.getZip();
+				phone      = owner.getPhone();
+				hasNoEmail = owner.hasNoEmail();
+				return find(name, address, city, state, zip, email);
+				/*
             if (phone != null && !phone.equals("")) {
                 qq = "select o.* from owners o,owner_phones p where p.owner_id=o.id and p.phone_num like '%"
                    + phone + "%' order by o.name ";
@@ -225,6 +235,7 @@ public class OwnerDaoImp implements OwnerDao
             owners = query.list();
         }
         return owners;
+				*/
     }
 
     /**
@@ -273,8 +284,97 @@ public class OwnerDaoImp implements OwnerDao
     }
 
     //
-    public List<Owner> find(String name, String address, String city, String state, String zip, String email)
+    public List<Owner> find(String name,
+														String address,
+														String city,
+														String state,
+														String zip,
+														String email)
     {
+				boolean multiple = false;
+				boolean onlyOne = false;
+        if (name != null && !name.equals("")) {
+						onlyOne = true;
+        }
+				if (address != null && !address.equals("")) {
+						if(onlyOne)
+								multiple = true;
+						onlyOne = true;
+        }
+        if (city != null && !city.equals("")) {
+						if(onlyOne)
+								multiple = true;
+						onlyOne = true;
+        }
+        if (state != null && !state.equals("")) {
+						if(onlyOne)
+								multiple = true;
+						onlyOne = true;
+        }
+        if (zip != null && !zip.equals("")) {
+						if(onlyOne)
+								multiple = true;
+						onlyOne = true;
+        }
+        if (email != null && !email.equals("")) {
+						if(onlyOne)
+								multiple = true;
+						onlyOne = true;
+        }
+        Session session = sessionFactory.getCurrentSession();
+				CriteriaBuilder builder = session.getCriteriaBuilder();
+				CriteriaQuery<Owner> select = builder.createQuery(Owner.class);
+        Root<Owner> root = select.from(Owner.class);
+				if(multiple){
+						List<Predicate> preds = new ArrayList<>();
+						if (name != null && !name.equals("")) {								
+								Predicate pred = builder.like(root.get(Owner_.name), name);
+								preds.add(pred);
+						}
+						if(address != null && !address.equals("")){
+								Predicate pred = builder.like(root.get(Owner_.address),
+																							address);
+								preds.add(pred);
+						};
+						if(city != null && !city.equals("")){
+								Predicate pred = builder.like(root.get(Owner_.city),city);
+								preds.add(pred);
+						};
+						if(zip != null && !zip.equals("")){
+								Predicate pred = builder.equal(root.get(Owner_.zip),zip);
+								preds.add(pred);
+						};
+						if(email != null && !email.equals("")){
+								Predicate pred = builder.like(root.get(Owner_.email),email);
+								preds.add(pred);
+						};
+						select.where(builder.and(preds.toArray(new Predicate[0])));
+						return session.createQuery(select).getResultList();
+				}
+				else if(onlyOne){
+						Predicate pred = null;
+						if (name != null && !name.equals("")) {			
+								pred = builder.like(root.get(Owner_.name), name);
+						}
+						if(address != null && !address.equals("")){
+								pred = builder.like(root.get(Owner_.address), address);
+						};
+						if(city != null && !city.equals("")){
+								pred = builder.like(root.get(Owner_.city),city);
+						};
+						if(zip != null && !zip.equals("")){
+								pred = builder.equal(root.get(Owner_.zip),zip);
+						};
+						if(email != null && !email.equals("")){
+								pred = builder.like(root.get(Owner_.email),email);
+						};						
+						select.where(pred);
+						return session.createQuery(select).getResultList();
+				}
+				else{
+						return null;
+				}
+				/*
         List<Owner> owners = null;
         String      qq     = "from Owner o where ";
         boolean     and    = false;
@@ -318,16 +418,30 @@ public class OwnerDaoImp implements OwnerDao
         if (email   != null) { query.setParameter("email", "%" + email + "%"); }
         owners = query.list();
         return owners;
+				*/
     }
 
     @Override
     public List<Item> getList(String name)
     {
         Session    session = sessionFactory.getCurrentSession();
-        List<Item> items   = session.createSQLQuery("select id, name from owners where name like '%" + name + "%'")
-                                    .setResultTransformer(Transformers.aliasToBean(Item.class))
-                                    .list();
-        return items;
+        CriteriaBuilder builder = session.getCriteriaBuilder();				
+				CriteriaQuery<Object[]> criteria = builder.createQuery( Object[].class );
+				Root<Owner> ownerRoot = criteria.from( Owner.class );
+				Path<Integer> idPath = ownerRoot.get( Owner_.id );
+				Path<String> namePath = ownerRoot.get( Owner_.name );
+				criteria.select( builder.array( idPath, namePath ));
+				criteria.where( builder.like( ownerRoot.get(Owner_.name ), "%"+name+"%"));
+				List<Object[]> valueArray = session.createQuery(criteria).getResultList();
+				List<Item> items = new ArrayList<>();
+				for ( Object[] values : valueArray ) {
+						final Integer id = (Integer) values[0];
+						final String str = (String) values[1];
+						System.err.println(id+" "+str);
+						Item item = new Item(id, str);
+						items.add(item);
+				}
+				return items;
     }
 
     @Override

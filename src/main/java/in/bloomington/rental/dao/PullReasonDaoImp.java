@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.Session;
@@ -55,8 +56,12 @@ public class PullReasonDaoImp implements PullReasonDao
         Session                  session = sessionFactory.getCurrentSession();
         CriteriaBuilder          builder = session.getCriteriaBuilder();
         CriteriaQuery<PullReason> select = builder.createQuery(PullReason.class);
-
+				Root<PullReason> root = select.from(PullReason.class);
+				select.orderBy(builder.asc (root.get("reason")));				
         return session.createQuery(select)
                       .getResultList();
+
+
+				
     }
 }

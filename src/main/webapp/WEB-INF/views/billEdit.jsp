@@ -155,6 +155,27 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
             <form:input path="reinspDates" size="40" /> 
           </td>
 				</tr>
+				<tr><td colspan="4">You can add other fees below, add fees title
+					and the fees value below</td>
+				</tr>
+				<tr>
+					<th>Other Fees Title:</th>
+          <td colspan="2">
+            <form:input path="otherFeeTitle" size="30" /> 
+          </td>
+					<td>
+             Fees $<form:input path="otherFee" />
+					</td>
+				</tr>
+				<tr>
+					<th>Another Fees Title:</th>
+          <td colspan="2">
+            <form:input path="otherFee2Title" size="30" /> 
+          </td>
+					<td>
+            Fees $<form:input path="otherFee2" />
+					</td>
+				</tr>				
 				<tr>
           <th>Bill Issue Date:</th>
           <td>

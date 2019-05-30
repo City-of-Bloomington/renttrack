@@ -1,7 +1,7 @@
 package in.bloomington.rental.dao;
 
 import java.util.List;
-
+import java.util.Date;
 import javax.persistence.TypedQuery;
 
 import org.hibernate.Query;
@@ -28,6 +28,7 @@ public class RentalNoteDaoImp implements RentalNoteDao
     @Override
     public void save(RentalNote val)
     {
+				val.setDate(new Date());
         Session session = sessionFactory.getCurrentSession();
         session.save(val);
         Rental rental = val.getRental();

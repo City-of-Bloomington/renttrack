@@ -1,9 +1,10 @@
 package in.bloomington.rental.dao;
 
 import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
-import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import in.bloomington.rental.model.RentalStructure;
+import in.bloomington.rental.model.RentalStructure_;
+import in.bloomington.rental.model.Rental;
 
 @Repository
 public class RentalStructureDaoImp implements RentalStructureDao
@@ -64,6 +67,7 @@ public class RentalStructureDaoImp implements RentalStructureDao
     @Override
     public List<RentalStructure> getAll()
     {
+				/*
         Session  session  = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(RentalStructure.class);
         criteria.setMaxResults(limit);
@@ -71,17 +75,23 @@ public class RentalStructureDaoImp implements RentalStructureDao
         // remove dups
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         return criteria.list();
-
+				*/
+				return null;
     }
+
+		
 
     //
     public List<RentalStructure> findByRentalId(Integer rentalId)
     {
-        String  qq      = "from RentalStructure o where o.rental.id = :rentalId order by o.id";
-        Session session = sessionFactory.getCurrentSession();
-        Query   query   = session.createQuery(qq);
-        query.setParameter("rentalId", rentalId);
-        List<RentalStructure> rentalStructures = query.list();
-        return rentalStructures;
+				//
+        Session session               = sessionFactory.getCurrentSession();
+        CriteriaBuilder builder       = session.getCriteriaBuilder();
+        CriteriaQuery<RentalStructure> select = builder.createQuery(RentalStructure.class);
+        Root<RentalStructure> root = select.from(RentalStructure.class);
+
+        select.where (builder.equal(root.get(RentalStructure_.rental), rentalId));				
+        return session.createQuery(select).getResultList();
+				
     }
 }

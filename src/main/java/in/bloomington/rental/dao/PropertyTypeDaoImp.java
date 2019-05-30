@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.Session;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import in.bloomington.rental.model.PropertyType;
+import in.bloomington.rental.model.PropertyType_;
 
 @Repository
 public class PropertyTypeDaoImp implements PropertyTypeDao
@@ -50,11 +52,15 @@ public class PropertyTypeDaoImp implements PropertyTypeDao
     @Override
     public List<PropertyType> list()
     {
-        Session             session = sessionFactory.getCurrentSession();
-        CriteriaBuilder     builder = session.getCriteriaBuilder();
+        Session                    session = sessionFactory.getCurrentSession();
+        CriteriaBuilder            builder = session.getCriteriaBuilder();
         CriteriaQuery<PropertyType> select = builder.createQuery(PropertyType.class);
+        Root<PropertyType>            root = select.from(PropertyType.class);
+
+        select.orderBy(builder.asc(root.get(PropertyType_.name)));
 
         return session.createQuery(select)
                       .getResultList();
     }
+		
 }

@@ -49,8 +49,10 @@ public class InspectionTemplate implements java.io.Serializable
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private RentUser                user;
+		//
     // this item come from a form that will be submitted
     // stored temporary in this object
+		//
     @Transient
     private String[]                components         = null;
     @Transient

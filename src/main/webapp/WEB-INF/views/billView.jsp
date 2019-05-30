@@ -156,6 +156,22 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
             ${bill.reinspDates}
           </td>
 				</tr>
+				<s:if test="${bill.hasOtherFee()}">
+					<tr>
+						<td colspan="2">${bill.otherFeeTitle}</td>
+						<td>
+							${bill.otherFee}
+						</td>
+					</tr>
+				</s:if>
+				<s:if test="${bill.hasOtherFee2()}">
+					<tr>
+						<td colspan="2">${bill.otherFee2Title}</td>
+						<td>
+							${bill.otherFee2}
+						</td>
+					</tr>
+				</s:if>				
 				<tr>
           <td>Bill Issue Date:</td>
           <td>

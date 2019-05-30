@@ -37,6 +37,9 @@ public class RentalStructure implements java.io.Serializable
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rental_id")
     private Rental           rental;
+		
+		@Transient
+		private Integer rentalId;
 
     @Column(name = "identifier")
     private String           identifier;
@@ -193,17 +196,20 @@ public class RentalStructure implements java.io.Serializable
     }
 
     @Transient
-    public int getRentalId()
+    public Integer getRentalId()
     {
-        if (rental != null) {
-            return rental.getId();
-        }
-        return 0;
+				if(rentalId == null){
+						if (rental != null) {
+								rentalId = rental.getId();
+						}
+				}						
+        return rentalId;
     }
 
     @Transient
-    public void setRentalId(int val)
+    public void setRentalId(Integer val)
     {
+				rentalId = val;
         if (rental == null) {
             rental = new Rental(val);
         }

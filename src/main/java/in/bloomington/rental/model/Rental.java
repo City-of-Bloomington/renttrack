@@ -95,7 +95,7 @@ public class Rental implements java.io.Serializable
 		@Transient
     private List<Address>         addresses        = new ArrayList<Address>();
 		
-		@Transient
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "rental")
     private List<RentalStructure> rentalStructures = new ArrayList<RentalStructure>();
 		
 		@OneToMany(fetch = FetchType.LAZY, mappedBy = "rental")
@@ -522,11 +522,7 @@ public class Rental implements java.io.Serializable
     @Transient
     public int getStructureCount()
     {
-        int cnt = 0;
-        if (hasStructures()) {
-            cnt = rentalStructures.size();
-        }
-        return cnt;
+				return rentalStructures.size();
     }
 
     @Transient

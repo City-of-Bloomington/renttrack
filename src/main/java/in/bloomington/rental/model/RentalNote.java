@@ -101,7 +101,7 @@ public class RentalNote implements java.io.Serializable
     public Date getDate()
     {
         if (id == 0) {
-            date = new Date(); // current date
+            this.date = new Date(); // current date
         }
         return this.date;
     }

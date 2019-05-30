@@ -77,7 +77,6 @@ public class RentalController {
 		@GetMapping("/view/{id}")
 		public String getRental(@PathVariable("id") int id,
 														Model model) {
-				// System.err.println(" principal "+principal.getName());
 				Rental rental = rentalService.get(id);
 				inspections = inspectionService.findByRentalId(id);
 				if(inspections != null && inspections.size()> 0){

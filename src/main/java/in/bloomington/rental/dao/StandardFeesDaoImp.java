@@ -1,8 +1,11 @@
 package in.bloomington.rental.dao;
 
 import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
-import org.hibernate.Criteria;
+// import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
@@ -53,21 +56,25 @@ public class StandardFeesDaoImp implements StandardFeesDao
     @Override
     public List<StandardFees> getAll()
     {
-        Session  session  = sessionFactory.getCurrentSession();
-        Criteria criteria = session.createCriteria(StandardFees.class);
-        criteria.setMaxResults(limit);
-        criteria.addOrder(Order.desc("id"));
-        return criteria.list();
+				Session session = sessionFactory.getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<StandardFees> select = builder.createQuery(StandardFees.class);
+				Root<StandardFees> root = select.from(StandardFees.class);
+				select.orderBy(builder.desc (root.get("id")));				
+        return session.createQuery(select)
+                      .getResultList();
+				
     }
 
     @Override
     public StandardFees getLatest()
     {
-        Session  session  = sessionFactory.getCurrentSession();
-        Criteria criteria = session.createCriteria(StandardFees.class);
-        criteria.setMaxResults(3);
-        criteria.addOrder(Order.desc("id"));
-        List<StandardFees> list = criteria.list();
-        return list.get(0); // the top
+        List<StandardFees> list = getAll();
+				if(list != null && list.size() > 0){
+						return list.get(0); // the top
+				}
+				else{
+						return new StandardFees();
+				}
     }
 }

@@ -12,6 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import in.bloomington.rental.model.PullHistory;
+import in.bloomington.rental.model.PullHistory_;
+import in.bloomington.rental.model.Rental;
+
+
+
 
 @Repository
 public class PullHistoryDaoImp implements PullHistoryDao
@@ -58,13 +63,13 @@ public class PullHistoryDaoImp implements PullHistoryDao
         Session            session = sessionFactory.getCurrentSession();
         CriteriaBuilder    builder = session.getCriteriaBuilder();
         CriteriaQuery<PullHistory> select = builder.createQuery(PullHistory.class);
-        Root<PullHistory>            root = select.from(PullHistory.class);
-
-        select.where  (builder.equal(root.get("rental_id"), rental_id))
-              .orderBy(builder.desc (root.get("id")));
+        Root<PullHistory> root = select.from(PullHistory.class);
+        select.where (builder.equal(root.get(PullHistory_.rental), rental_id));				
+				select.orderBy(builder.desc (root.get("id")));
 
         return session.createQuery(select)
                       .setMaxResults(limit)
                       .getResultList();
+
     }
 }

@@ -137,6 +137,22 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 										<td>&nbsp;</td>
 									</tr>
 								</c:if>
+								<s:if test="${bill.hasOtherFee()}">
+									<tr>
+										<td align="right">${bill.otherFeeTitle}</td>
+										<td align="right">
+											${bill.otherFee}
+										</td>
+									</tr>
+								</s:if>
+								<s:if test="${bill.hasOtherFee2()}">
+									<tr>
+										<td align="right">${bill.otherFee2Title}</td>
+										<td align="right">
+											${bill.otherFee2}
+										</td>
+									</tr>
+								</s:if>										
 							</c:if>
 							<c:if test="${not empty bill.appeal}">
 								<tr>

@@ -89,7 +89,6 @@ public class PullHistory implements java.io.Serializable
         this.id = id;
     }
 
-
     public PullReason getPullReason()
     {
         return this.pullReason;
@@ -123,7 +122,7 @@ public class PullHistory implements java.io.Serializable
 
     public Date getDate()
     {
-        if (date != null) {
+        if (date == null) {
             date = new Date();
         }
         return this.date;

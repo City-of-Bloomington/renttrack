@@ -177,6 +177,9 @@ public class OwnerController {
 		@PostMapping("/ownersFind")
 		public String ownersFind(@ModelAttribute("owner") @Valid Owner owner,
 														 BindingResult result, Model model) {
+				if(owner.getId() != 0){
+						return "redirect:/owner/"+owner.getId();						
+				}
 				List<Owner> owners = ownerService.search(owner);
 				message = null;
 				if(owners == null || owners.size() == 0){
@@ -202,11 +205,11 @@ class OwnerServiceController {
 		public String ownerService(@RequestParam("term") String term,
 															 Locale locale, Model model) {
 				String json = "";
-				// System.err.println(" term "+term);
+				System.err.println(" term "+term);
 				if(term != null && term.length() > 2){
-						List<Item> owners = ownerService.getList(term);
+						List<Item> owners = ownerService.getList(term);						
 						if(owners != null && owners.size() > 0){
-								json = buildJson(owners);
+								json = buildJson2(owners);
 								System.err.println(json);
 						}
 				}
@@ -217,7 +220,7 @@ class OwnerServiceController {
 															 Locale locale, Model model) {
 				String json = "";
 				if(term != null && term.length() > 2){
-						List<Item> agents = ownerService.getAgentList(term);
+						List<Owner> agents = ownerService.findAgentByName(term);
 						if(agents != null && agents.size() > 0){
 								json = buildJson(agents);
 								System.err.println(json);
@@ -226,7 +229,20 @@ class OwnerServiceController {
 				return json;
 		}
 
-		private String buildJson(List<Item> owners){
+		private String buildJson(List<Owner> owners){
+				String json = "";
+				JSONArray jArr = new JSONArray();
+				for(Owner one:owners){
+						JSONObject jObj = new JSONObject();
+						jObj.put("id",one.getId());
+						jObj.put("value",one.getName());
+						
+						jArr.put(jObj);
+				}
+				json = jArr.toString();
+				return json;
+		}
+		private String buildJson2(List<Item> owners){
 				String json = "";
 				JSONArray jArr = new JSONArray();
 				for(Item one:owners){
@@ -238,5 +254,5 @@ class OwnerServiceController {
 				}
 				json = jArr.toString();
 				return json;
-		}		
+		}				
 }

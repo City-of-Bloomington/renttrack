@@ -134,6 +134,18 @@ public class Bill implements java.io.Serializable
 
     @Column(name = "idl_cnt")
     private Short         idlCnt              = new Short("0");
+
+    @Column(name = "other_fee_title", length = 80)
+		private String otherFeeTitle;
+
+    @Column(name = "other_fee")
+		private BigDecimal  otherFee = new BigDecimal("0");;		
+		
+    @Column(name = "other_fee2_title", length = 80)
+		private String  otherFee2Title;		
+
+    @Column(name = "other_fee2")
+		private BigDecimal  otherFee2 = new BigDecimal("0");;
 		
 		@OneToMany(fetch = FetchType.LAZY, mappedBy = "bill")
     private List<Receipt> receipts            = new ArrayList<>(0);
@@ -166,7 +178,12 @@ public class Bill implements java.io.Serializable
                 Short roomingBuildingCnt, Short unitCnt, Short bathCnt, Short noshowCnt, Short reinspCnt,
                 String reinspDates, String noshowDates, String status, Character appeal, BigDecimal appealFee,
                 BigDecimal credit, BigDecimal summaryRate, BigDecimal idlRate, Character summaryFlag, Character idlFlag,
-                Short summaryCnt, Short idlCnt, List<Receipt> receipts)
+                Short summaryCnt, Short idlCnt,
+								String otherFeeTitle,
+								BigDecimal otherFee,
+								String otherFee2Title,
+								BigDecimal otherFee2,
+								List<Receipt> receipts)
     {
         this.id                  = id;
         this.rental              = rental;
@@ -201,7 +218,12 @@ public class Bill implements java.io.Serializable
         this.idlFlag             = idlFlag;
         this.summaryCnt          = summaryCnt;
         this.idlCnt              = idlCnt;
+				this.otherFeeTitle     = otherFeeTitle;
+				this.otherFee     = otherFee;
+				this.otherFee2Title     = otherFee2Title;
+				this.otherFee2     = otherFee2;				
         this.receipts            = receipts;
+				
     }
 
 
@@ -323,6 +345,44 @@ public class Bill implements java.io.Serializable
         this.multiBuildingRate = val;
     }
 
+		public String getOtherFeeTitle()
+    {
+        return this.otherFeeTitle;
+    }
+
+    public void setOtherFeeTitle(String val)
+    {
+        this.otherFeeTitle = val;
+    }
+		public String getOtherFee2Title()
+    {
+        return this.otherFee2Title;
+    }
+
+    public void setOtherFee2Title(String val)
+    {
+        this.otherFee2Title = val;
+    }		
+		
+    public BigDecimal getOtherFee()
+    {
+        return this.otherFee;
+    }
+
+    public void setOtherFee(BigDecimal val)
+    {
+        this.otherFee = val;
+    }
+		
+    public BigDecimal getOtherFee2()
+    {
+        return this.otherFee2;
+    }
+
+    public void setOtherFee2(BigDecimal val)
+    {
+        this.otherFee2 = val;
+    }		
 
     public BigDecimal getCondoBuildingRate()
     {
@@ -737,7 +797,7 @@ public class Bill implements java.io.Serializable
             inspectionFee += bathRate.doubleValue() * bathCnt;
         }
         // condo multi or single
-        if (unitRate != null && unitRate != null) {
+        if (unitRate != null && unitCnt != null) {
             inspectionFee += unitRate.doubleValue() * unitCnt;
         }
         return inspectionFee;
@@ -805,6 +865,17 @@ public class Bill implements java.io.Serializable
     }
 
     @Transient
+    public boolean hasOtherFee()
+    {
+        return otherFee != null && otherFee.doubleValue() > 0;
+    }
+    @Transient
+    public boolean hasOtherFee2()
+    {
+        return otherFee2 != null && otherFee2.doubleValue() > 0;
+    }				
+
+    @Transient
     public double getSummaryFine()
     {
         double ret = 0;
@@ -844,6 +915,12 @@ public class Bill implements java.io.Serializable
                 if (bhqaFine != null) {
                     total += bhqaFine.doubleValue();
                 }
+								if(otherFee != null){
+                    total += otherFee.doubleValue();
+								}
+								if(otherFee2 != null){
+                    total += otherFee2.doubleValue();
+								}								
                 if (credit != null) {
                     total -= credit.doubleValue();
                 }
