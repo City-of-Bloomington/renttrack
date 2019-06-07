@@ -17,6 +17,7 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 				<th>Text Type</th>
 				<th>First Paragraph</th>
 				<th>Other Paragraphs/List</th>
+				<th>Other Actions </th>
 			</tr>
 			<c:if test="${not empty cans}">
 				<c:forEach items="${cans}" var="one">
@@ -26,6 +27,7 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 						<td>${one.type}</td>
 						<td>${one.item1}</td>
 						<td>${one.other}</td>
+						<td><a href="${uri}settings/canDelete/${one.id}">Delete ${one.id}</a></td>						
 					</tr>
 				</c:forEach>
 			</c:if>

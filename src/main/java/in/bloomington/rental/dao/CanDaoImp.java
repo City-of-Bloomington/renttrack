@@ -74,7 +74,8 @@ public class CanDaoImp implements CanDao
         CriteriaQuery<Can> select = builder.createQuery(Can.class);
         Root<Can>            root = select.from(Can.class);
         
-        select.where(builder.like(root.get(Can_.title), "%" + name + "%"));
+        select.where(builder.like(root.get(Can_.title), name + "%"));
+				select.orderBy(builder.desc(root.get(Can_.title)));
         return session.createQuery(select)
                       .getResultList();
     }

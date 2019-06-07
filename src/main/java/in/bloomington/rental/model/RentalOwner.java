@@ -24,11 +24,11 @@ public class RentalOwner implements java.io.Serializable
 
 		@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "owner_id")
-    private Owner  owner;
+    public Owner  owner;
 		
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "rental_id")		
-    private Rental rental;
+    public Rental rental;
 
     public RentalOwner()
     {

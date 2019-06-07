@@ -22,7 +22,7 @@ public interface OwnerDao
     List<Owner> findAgentByName(String name);
     List<Owner> search(Owner val);
     List<Owner> findOwnersForExpireEmail(String startDate, String endDate);
-    List<Owner> find(String name, String address, String city, String state, String zip, String email);
+    List<Owner> find(String name, String address, String city, String state, String zip, String email, boolean hasNoEmail);
 
     List<RentalOwner> getAllForOwner(int owner_id);
     List<RentalOwner> getAllForRental(int rental_id);

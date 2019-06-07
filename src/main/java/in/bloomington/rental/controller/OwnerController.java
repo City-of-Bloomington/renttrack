@@ -205,11 +205,10 @@ class OwnerServiceController {
 		public String ownerService(@RequestParam("term") String term,
 															 Locale locale, Model model) {
 				String json = "";
-				System.err.println(" term "+term);
 				if(term != null && term.length() > 2){
 						List<Item> owners = ownerService.getList(term);						
 						if(owners != null && owners.size() > 0){
-								json = buildJson2(owners);
+								json = buildJson(owners);
 								System.err.println(json);
 						}
 				}
@@ -220,7 +219,8 @@ class OwnerServiceController {
 															 Locale locale, Model model) {
 				String json = "";
 				if(term != null && term.length() > 2){
-						List<Owner> agents = ownerService.findAgentByName(term);
+						// List<Owner> agents = ownerService.findAgentByName(term);
+						List<Item> agents = ownerService.getAgentList(term);
 						if(agents != null && agents.size() > 0){
 								json = buildJson(agents);
 								System.err.println(json);
@@ -228,21 +228,7 @@ class OwnerServiceController {
 				}
 				return json;
 		}
-
-		private String buildJson(List<Owner> owners){
-				String json = "";
-				JSONArray jArr = new JSONArray();
-				for(Owner one:owners){
-						JSONObject jObj = new JSONObject();
-						jObj.put("id",one.getId());
-						jObj.put("value",one.getName());
-						
-						jArr.put(jObj);
-				}
-				json = jArr.toString();
-				return json;
-		}
-		private String buildJson2(List<Item> owners){
+		private String buildJson(List<Item> owners){
 				String json = "";
 				JSONArray jArr = new JSONArray();
 				for(Item one:owners){

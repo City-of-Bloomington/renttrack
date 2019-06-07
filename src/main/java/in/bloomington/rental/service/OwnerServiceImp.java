@@ -73,8 +73,8 @@ public class OwnerServiceImp implements OwnerService{
 				return ownerDao.findOwnersForExpireEmail(startDate, endDate);
 		}
 		@Transactional(readOnly = true)
-		public List<Owner> find(String name, String address, String city, String state, String zip, String email){
-				return ownerDao.find(name, address, city, state, zip, email);
+		public List<Owner> find(String name, String address, String city, String state, String zip, String email, boolean hasNoEmail){
+				return ownerDao.find(name, address, city, state, zip, email, hasNoEmail);
 		}
 		@Transactional(readOnly = true)
 		public List<RentalOwner> getAllForOwner(int owner_id){

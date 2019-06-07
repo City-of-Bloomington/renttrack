@@ -22,8 +22,7 @@ import in.bloomington.rental.service.CanService;
 @Controller
 public class CanController
 {
-
-    String             message = null;
+    String message = null;
 
     @Autowired
     private CanService canService;
@@ -31,7 +30,6 @@ public class CanController
     @GetMapping("/settings/cans")
     public String canView(Locale locale, Model model)
     {
-
         model.addAttribute("cans", canService.getAll());
         if (message != null) model.addAttribute("message", message);
         return "/settings/cans";
@@ -46,6 +44,15 @@ public class CanController
         return "/settings/can";
     }
 
+    // edit by id
+    @GetMapping("/settings/canDelete/{id}")
+    public String deleteCan(@PathVariable("id") int id, Model model)
+    {
+        canService.delete(id);
+        message = "can deleted successfully";     
+				return "redirect:/settings/cans";
+    }
+		
     // save
     @PostMapping("/settings/canUpdate")
     public String updateCan(@ModelAttribute("can") @Valid Can can, BindingResult result, Model model)
@@ -58,6 +65,7 @@ public class CanController
         message = "can updated successfully";
         return "redirect:/settings/cans";
     }
+		
 
     @GetMapping("/settings/canNew")
     public String canForm(Locale locale, Model model)

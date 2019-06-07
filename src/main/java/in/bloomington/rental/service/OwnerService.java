@@ -21,7 +21,7 @@ public interface OwnerService {
 		public List<Owner> findByName(String name);
 		public List<Owner> findAgentByName(String name);
 		public List<Owner> search(Owner owner);
-		public List<Owner> find(String name, String address, String city, String state, String zip, String email);
+		public List<Owner> find(String name, String address, String city, String state, String zip, String email, boolean hasNoEmail);
 		public List<RentalOwner> getAllForOwner(int owner_id);
 		public List<RentalOwner> getAllForRental(int rental_id);		
 		public List<Owner> findOwnersForExpireEmail(String startDate,
