@@ -18,13 +18,13 @@ import in.bloomington.rental.model.Bill;
 import in.bloomington.rental.model.Receipt;
 import in.bloomington.rental.service.BillService;
 import in.bloomington.rental.service.ReceiptService;
+import in.bloomington.rental.util.CommonParam;
 
 @Controller
 @Scope("session")
 public class ReceiptController {
 
 		String message = null;
-		final static String[] payMethods = {"Cash","Check","Money Order","Credit Card"};		
 		@Autowired
 		private BillService billService;
 		@Autowired
@@ -69,7 +69,7 @@ public class ReceiptController {
 											Model model) {
 				Receipt receipt = receiptService.get(id);
 				model.addAttribute("receipt", receipt);
-				model.addAttribute("payMethods", payMethods);
+				model.addAttribute("payMethods", CommonParam.payMethods);
 			 return "receiptEdit";
 		}
 		// get by id
@@ -104,7 +104,7 @@ public class ReceiptController {
 				receipt.setBill(bill);
 				message = "Receipt updated successfully";
 				model.addAttribute("receipt", receipt);
-				model.addAttribute("payMethods", payMethods);
+				model.addAttribute("payMethods", CommonParam.payMethods);
 				return "receiptEdit"; 
 		}
 		// 
@@ -116,7 +116,7 @@ public class ReceiptController {
 				receipt.setBill(bill);
 				model.addAttribute("receipt", receipt);				
 				model.addAttribute("bill", bill);
-				model.addAttribute("payMethods", payMethods);
+				model.addAttribute("payMethods", CommonParam.payMethods);
 				return "receiptNew";
    }
 		// save
@@ -139,7 +139,7 @@ public class ReceiptController {
 						}
 						receipt.setBill(bill);				
 						model.addAttribute("receipt", receipt);
-						model.addAttribute("payMethods", payMethods);
+						model.addAttribute("payMethods", CommonParam.payMethods);
 						message = "Receipt saved successfully";
 				}catch(Exception ex){
 						System.err.println(" receipt error "+ex);

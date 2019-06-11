@@ -459,7 +459,7 @@ public class Inspection implements java.io.Serializable
         //
         // make sure this path exist, if not create one
         //
-        // System.err.println(" inspect file "+inspectFile);
+        System.err.println(" inspect file "+inspectFile);
         return path + inspectFile;
     }
 

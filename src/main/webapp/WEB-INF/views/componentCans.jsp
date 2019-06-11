@@ -50,7 +50,9 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 			<summary>Instructions</summary>
 			<ul>
 				<li>You can add one or more cans to each component</li>
-				<li>You can add one component at a time </li>
+				<li>You can add one can to each component at a time </li>
+				<li>To add another can to a visited component click on 'Add Another Can' </li>
+				<li>You can edit an already added can by clicking on 'Inspection Cans' in top and look for related component-can</li>
 				<li>Click on the 'Add Can' next to the component</li>
 			</ul>
 		</details>
@@ -66,14 +68,13 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 						<tr>
 							<td>${row.count} - ${one.component}</td>
 							<td>
+								<c:if test="${one.isVisited()}"> 
+									(visited)
+									<input type="button" onclick="window.location='${uri}inspectionCanAdd/${inspection.id}/${one.id}'" value="Add Another Can" />									
+								</c:if>
 								<c:if test="${!one.isVisited()}"> 
 									<input type="button" onclick="window.location='${uri}inspectionCanAdd/${inspection.id}/${one.id}'" value="Add Can" />
 								</c:if>
-								<c:if test="${one.isVisited()}"> 
-									<input type="button" onclick="window.location='${uri}inspectionCan/${one.inspectionCanId}'" value="Edit Can" /> (visited)
-								</c:if>
-
-								
 							</td>
 						</tr>
 					</c:forEach>

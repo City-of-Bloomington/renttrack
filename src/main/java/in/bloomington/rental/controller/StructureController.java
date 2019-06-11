@@ -21,14 +21,12 @@ import in.bloomington.rental.service.BuildingTypeService;
 import in.bloomington.rental.service.PropertyTypeService;
 import in.bloomington.rental.service.RentalService;
 import in.bloomington.rental.service.RentalStructureService;
-
+import in.bloomington.rental.util.CommonParam;
 
 @Controller
 public class StructureController {
 
 		String message = null;
-		final static String[] foundationTypes = {"Basement","Slab","Cellar","Crawl Space","Other"};
-		final static String[] heatSources = {"Electric","Gas","Electric/Gas","Other"};				
 		@Autowired
 		private RentalStructureService structureService;
 		@Autowired
@@ -78,8 +76,8 @@ public class StructureController {
 				if(propertyTypes != null){
 						model.addAttribute("propertyTypes", propertyTypes);
 				}
-				model.addAttribute("foundationTypes", foundationTypes);
-				model.addAttribute("heatSources",heatSources);				
+				model.addAttribute("foundationTypes", CommonParam.foundationTypes);
+				model.addAttribute("heatSources",CommonParam.heatSources);				
 			 return "structureEdit";
 		}
 		// get by id
@@ -125,8 +123,8 @@ public class StructureController {
 				if(propertyTypes != null){
 						model.addAttribute("propertyTypes", propertyTypes);
 				}
-				model.addAttribute("foundationTypes", foundationTypes);
-				model.addAttribute("heatSources",heatSources);				
+				model.addAttribute("foundationTypes", CommonParam.foundationTypes);
+				model.addAttribute("heatSources",CommonParam.heatSources);				
 				return "structureNew";
 		}
 		// save

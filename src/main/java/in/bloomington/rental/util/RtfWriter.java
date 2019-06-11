@@ -91,6 +91,7 @@ public class RtfWriter
     void setRent(Rental val)
     {
         if (val != null) {
+						try{
             rent         = val;
             rentalOwners = rent.getRentalOwners();
             if (rentalOwners != null && rentalOwners.size() > 0) {
@@ -111,7 +112,7 @@ public class RtfWriter
                     if (one.hasEgressInfo()) {
                         structure = one;
                     }
-                    if (occupLoad.equals("")) occupLoad += ",";
+                    if (!occupLoad.equals("")) occupLoad += ",";
                     occupLoad += one.getIdentifier() + ":";
                     String heatSrc = one.getHeatSource();
                     if (heatSrc != null) {
@@ -127,28 +128,39 @@ public class RtfWriter
                             foundation += str;
                         }
                     }
-                    if (one.getStoryCnt() > 0) {
+                    if (one.getStoryCnt() != null && one.getStoryCnt() > 0) {
                         str = "" + one.getStoryCnt();
                         if (!storyCnt.equals("")) storyCnt += ", ";
                         storyCnt += str;
                     }
                     List<RentalUnit> ulist = one.getRentalUnits();
-                    int              jj    = 1;
-                    for (RentalUnit uu : ulist) {
-                        if (uu != null) {
-                            if (jj > 1) occupLoad += "-";
-                            occupLoad += uu.getIdentifier() + "/";
-                            occupLoad += uu.getBedroomCount() + "/";
-                            unitCount++;
-                            occupLoad      += uu.getOccupLoad();
-                            occupLoadCount += uu.getOccupLoad();
-                            if (uu.hasAddress()) {
-                                if (addresses == null) addresses = new ArrayList<>();
-                                addresses.add(uu.getAddress());
-                            }
-                            jj++;
-                        }
-                    }
+										if(ulist != null && ulist.size() > 0){
+												int              jj    = 1;
+												for (RentalUnit uu : ulist) {
+														if (uu != null) {
+																if (jj > 1) occupLoad += "-";
+																str = uu.getIdentifier();
+																if(str != null){
+																		occupLoad += str + "/";
+																}
+																Integer cnt = uu.getBedroomCount();
+																if(cnt != null && cnt > 0){
+																		occupLoad += cnt + "/";
+																}																
+																unitCount++;
+																Short cnt2 = uu.getOccupLoad();
+																if(cnt2 != null && cnt2 > 0){
+																		occupLoad      += cnt2;
+																		occupLoadCount += cnt2;
+																}
+																if (uu.hasAddress()) {
+																		if (addresses == null) addresses = new ArrayList<>();
+																		addresses.add(uu.getAddress());
+																}
+																jj++;
+														}
+												}
+										}
                 }
             }
             if (addresses == null) {
@@ -162,7 +174,10 @@ public class RtfWriter
                     }
                 }
             }
-        }
+						}catch(Exception ex){
+								System.err.println(" set rental "+ex);
+						}
+				}
     }
 
     void setInspection(Inspection val)

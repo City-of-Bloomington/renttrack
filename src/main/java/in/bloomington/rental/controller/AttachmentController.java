@@ -51,8 +51,6 @@ public class AttachmentController
     @Autowired
     private GeneralHelper         ghelper;
 
-    // @Autowired
-    // private RentalService inspectionService;
     //
     @GetMapping("/attachments/{type}/{id}")
     public String attachmentsView(@PathVariable("type") String type,

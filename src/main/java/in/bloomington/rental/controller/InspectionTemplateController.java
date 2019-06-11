@@ -27,6 +27,7 @@ import in.bloomington.rental.model.UnitRoom;
 import in.bloomington.rental.service.InspectionTemplateService;
 import in.bloomington.rental.service.RentalStructureService;
 import in.bloomington.rental.service.TemplateComponentService;
+import in.bloomington.rental.util.CommonParam;
 
 @Controller
 @Scope("session")
@@ -34,13 +35,6 @@ public class InspectionTemplateController
 {
 
     String   message           = null;
-    String[] component1Level   = { "Exterior Components", "Garage", "Unit", "Hallway", "Mechanic Closet", "Other" };
-    String[] component2Level_1 = { "Exterior Components", "Garage", "Unit", "Main Level", "Living Room", "Hallway", "Mechanic Closet", "Other" };
-    String[] component2Level_2 = { "2nd Level", "Living Room", "Hallway", "Mechanic Closet" };
-    String[] component3Level_1 = { "Exterior Components", "Garage", "Unit", "Main Level", "Hallway", "Mechanic Closet", "Other" };
-    String[] component3Level_2 = { "Basement", "Mechanic Closet" };
-    String[] component3Level_3 = { "2nd Leval", "Mechanic Closet", "Hallway" };
-
     @Autowired
     private InspectionTemplateService templateService;
     @Autowired
@@ -233,7 +227,7 @@ public class InspectionTemplateController
             List<String> list = new ArrayList<>();
             if (floorCnt == 1) {
                 floorInfo = " Unit components";
-                for (String str : component1Level) {
+                for (String str : CommonParam.component1Level) {
                     if (str.equals("Unit")) {
                         str += " " + identifier;
                     }
@@ -251,7 +245,7 @@ public class InspectionTemplateController
             else if (floorCnt == 2) {
                 if (fid == 0) {
                     floorInfo = " Unit first floor components, in next screen you will provide the second level components";
-                    for (String str : component2Level_1) {
+                    for (String str : CommonParam.component2Level_1) {
                         if (str.equals("Unit")) {
                             str += " " + identifier;
                         }
@@ -260,7 +254,7 @@ public class InspectionTemplateController
                 }
                 else if (fid == 1) {
                     floorInfo = "Unit second floor components";
-                    for (String str : component2Level_2) {
+                    for (String str : CommonParam.component2Level_2) {
                         list.add(str);
                     }
                 }
@@ -276,7 +270,7 @@ public class InspectionTemplateController
             else if (floorCnt == 3) {
                 if (fid == 0) {
                     floorInfo = "Unit main floor components, in next screen you will provide the other level components";
-                    for (String str : component3Level_1) {
+                    for (String str : CommonParam.component3Level_1) {
                         if (str.equals("Unit")) {
                             str += " " + identifier;
                         }
@@ -285,13 +279,13 @@ public class InspectionTemplateController
                 }
                 else if (fid == 1) {
                     floorInfo = "Unit basement components";
-                    for (String str : component3Level_2) {
+                    for (String str : CommonParam.component3Level_2) {
                         list.add(str);
                     }
                 }
                 else if (fid == 2) {
                     floorInfo = "Unit second level components";
-                    for (String str : component3Level_3) {
+                    for (String str : CommonParam.component3Level_3) {
                         list.add(str);
                     }
                 }

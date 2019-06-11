@@ -87,10 +87,22 @@ public class InspectionDaoImp implements InspectionDao
     @Override
     public int findCountByRentalId(int id)
     {
-        String  qq      = "select count(*) from inspections where rental_id=:id";
         Session session = sessionFactory.getCurrentSession();
+				/*
+        String  qq      = "select count(*) from inspections where rental_id=:id";
         return  session.createQuery(qq, Integer.class)
                        .setParameter("id", id)
                        .getSingleResult();
+				*/
+				CriteriaBuilder builder = session.getCriteriaBuilder();
+				CriteriaQuery<Long> cq = builder.createQuery(Long.class);
+				Root<Inspection> root = cq.from(Inspection.class);
+				cq.select(builder.count(root));
+				cq.where (builder.equal(root.get(Inspection_.rental), id));
+				Long cnt = session.createQuery(cq).getSingleResult();
+				if(cnt  != null){
+						return cnt.intValue();
+				}
+				return 0;
     }
 }

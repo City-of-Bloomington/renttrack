@@ -44,6 +44,7 @@ import in.bloomington.rental.service.UserService;
 import in.bloomington.rental.util.GeneralHelper;
 import in.bloomington.rental.util.Helper;
 import in.bloomington.rental.util.RtfWriter;
+import in.bloomington.rental.util.CommonParam;
 
 @Controller
 @Scope("session")
@@ -51,9 +52,6 @@ public class InspectionController
 {
 
     private String                   message         = null;
-    public final static String[]     foundationTypes = { "Basement", "Slab", "Cellar", "Crawl Space", "Other" };
-    public final static String[]     heatSources     = { "Electric", "Gas", "Electric/Gas", "Other" };
-    
     @Autowired
     private InspectionService        inspectionService;
     @Autowired
@@ -75,7 +73,6 @@ public class InspectionController
     @GetMapping("/inspections/{rental_id}")
     public String inspectionsView(@PathVariable("rental_id") int rental_id, Model model)
     {
-
         model.addAttribute("inspections", inspectionService.findByRentalId(rental_id));
         if (message != null) model.addAttribute("message", message);
         return "inspections";
@@ -122,12 +119,12 @@ public class InspectionController
             inspectors = userService.getActiveInspectors();
         }
         model.addAttribute("inspectors", inspectors);
-        model.addAttribute("foundationTypes", foundationTypes);
-        model.addAttribute("heatSources", heatSources);
+        model.addAttribute("foundationTypes", CommonParam.foundationTypes);
+        model.addAttribute("heatSources", CommonParam.heatSources);
         return "inspectionEdit";
     }
 
-    // edit by id
+    // create file for given inspection id
     @GetMapping("/inspectionCreateFile/{id}")
     public String createFileInspection(@PathVariable("id") int id, Model model)
     {
@@ -138,7 +135,6 @@ public class InspectionController
         if (rid > 0) {
             rental = rentalService.get(rid);
         }
-        // number of inspection + 1
         int       cnt             = inspectionFileLogService.findCountByRentalId(rid) + 1;
         String    path            = ghelper.getInspectionFilePath();
         String    groupName       = ghelper.getGroupName();
@@ -147,9 +143,12 @@ public class InspectionController
         // System.err.println(" image url "+imageUrl);
         // System.err.println(" file and path "+fileNameAndPath);
         // System.err.println(" rtf writing");
-        RtfWriter writer          = new RtfWriter(rental, inspection, imageUrl, fileNameAndPath);
-        String    str             = writer.writeAll();
-        if (!str.equals("")) {
+        RtfWriter writer          = new RtfWriter(rental,
+																									inspection,
+																									imageUrl,
+																									fileNameAndPath);
+				String    str             = writer.writeAll();
+						if (!str.equals("")) {
             System.err.println(" writing error " + str);
         }
         else {
@@ -175,7 +174,7 @@ public class InspectionController
         model.addAttribute("inspectors", inspectors);
         return "inspectionEdit";
     }
-
+		//
     // get by id
     @GetMapping("/inspectionDelete/{id}")
     public String deleteInspection(@PathVariable("id") int id)
@@ -187,7 +186,7 @@ public class InspectionController
         message = "Inspection deleted successfully";
         return "redirect:/view/" + rentalId;
     }
-
+		//
     // save
     @PostMapping("/inspectionUpdate")
     public String updateInspection(@ModelAttribute("inspection") @Valid Inspection inspection, BindingResult result,
@@ -288,13 +287,10 @@ public class InspectionController
         ghelper.populatePaths();
         int rid = inspection.getRental().getId();
         int cnt = inspectionFileLogService.findCountByRentalId(rid) + 1;
-        System.err.println(" cnt " + cnt);
         String insp_path       = ghelper.getInspectionFilePath();
         String groupName       = ghelper.getGroupName();
         String origFileName    = file.getOriginalFilename();
         String fileNameAndPath = inspection.createFileName(insp_path, groupName, cnt);
-        System.err.println(" orig file " + origFileName);
-        System.err.println(" new file " + fileNameAndPath);
         try {
             byte[] bytes = file.getBytes();
             Path   path  = Paths.get(fileNameAndPath);

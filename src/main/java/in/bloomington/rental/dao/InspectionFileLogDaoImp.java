@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import in.bloomington.rental.model.InspectionFileLog;
 import in.bloomington.rental.model.InspectionFileLog_;
+import in.bloomington.rental.model.Rental;
 
 @Repository
 public class InspectionFileLogDaoImp implements InspectionFileLogDao
@@ -52,10 +53,23 @@ public class InspectionFileLogDaoImp implements InspectionFileLogDao
     @Override
     public int findCountByRentalId(int id)
     {
+				/*
         String  qq      = "select count(*) from inspection_file_log where rental_id=:id";
-        Session session = sessionFactory.getCurrentSession();
         return  session.createQuery(qq, Integer.class)
                        .setParameter("id", id)
                        .getSingleResult();
+				*/
+        Session session = sessionFactory.getCurrentSession();
+				CriteriaBuilder builder = session.getCriteriaBuilder();
+				CriteriaQuery<Long> cq = builder.createQuery(Long.class);
+				Root<InspectionFileLog> root = cq.from(InspectionFileLog.class);
+				cq.select(builder.count(root));
+				cq.where (builder.equal(root.get(InspectionFileLog_.rentalId), id));
+				Long cnt = session.createQuery(cq).getSingleResult();
+				if(cnt  != null){
+						return cnt.intValue();
+				}
+				return 0;
+				
     }
 }

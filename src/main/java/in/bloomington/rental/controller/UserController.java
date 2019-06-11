@@ -14,16 +14,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import in.bloomington.rental.model.RentUser;
 import in.bloomington.rental.service.UserService;
+import in.bloomington.rental.util.CommonParam;
 
 
 @Controller
 public class UserController {
 
 		String message = null;
-		final static String[] roles = {"View","Edit","Inspect","Admin"};
 		
 		@Autowired
 		private UserService userService;
@@ -52,7 +51,7 @@ public class UserController {
 				System.err.println(" id "+id);
 				RentUser user = userService.get(id);
 				model.addAttribute("user", user);
-				model.addAttribute("roles", roles);
+				model.addAttribute("roles", CommonParam.roles);
 			 return "/settings/userEdit";
 		}
 		// get by id
@@ -79,7 +78,7 @@ public class UserController {
 		public String userForm(Locale locale, Model model) {
 
 				model.addAttribute("user", new RentUser());
-				model.addAttribute("roles", roles);
+				model.addAttribute("roles", CommonParam.roles);
 				if(message != null)
 						model.addAttribute("message", message);
 				message = null;

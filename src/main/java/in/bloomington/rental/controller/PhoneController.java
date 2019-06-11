@@ -17,12 +17,12 @@ import in.bloomington.rental.model.Owner;
 import in.bloomington.rental.model.OwnerPhone;
 import in.bloomington.rental.service.OwnerPhoneService;
 import in.bloomington.rental.service.OwnerService;
+import in.bloomington.rental.util.CommonParam;
 
 @Controller
 public class PhoneController {
 
 		String message = null;
-		final static String[] phoneTypes = {"Home","Work","Cell"};
 		
 		@Autowired
 		private OwnerPhoneService phoneService;
@@ -84,7 +84,7 @@ public class PhoneController {
 				OwnerPhone phone = new OwnerPhone();
 				phone.setOwner(owner);
 				model.addAttribute("phone", phone);
-				model.addAttribute("phoneTypes",phoneTypes);
+				model.addAttribute("phoneTypes",CommonParam.phoneTypes);
 				return "phoneNew";
    }
 

@@ -19,14 +19,13 @@ import in.bloomington.rental.service.RentalService;
 import in.bloomington.rental.service.RentalStatusService;
 import in.bloomington.rental.service.ZoningService;
 import in.bloomington.rental.util.Search;
-
+import in.bloomington.rental.util.CommonParam;
 
 @Controller
 @Scope("session")
 public class SearchController {
 
 		String message = null;
-		final static int[] nhoods = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
 		static List<Zoning> zonings = null;
 		static List<RentalStatus> statuses = null;
 
@@ -45,7 +44,7 @@ public class SearchController {
 				if(search == null)
 						search = new Search();
 				model.addAttribute("search", search);
-				model.addAttribute("nhoods", nhoods);
+				model.addAttribute("nhoods", CommonParam.nhoods);
 				if(zonings == null){
 						zonings = zoningService.list();
 				}

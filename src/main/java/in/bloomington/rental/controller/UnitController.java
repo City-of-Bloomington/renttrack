@@ -17,12 +17,12 @@ import in.bloomington.rental.model.UnitRoom;
 import in.bloomington.rental.service.RentalStructureService;
 import in.bloomington.rental.service.RentalUnitService;
 import in.bloomington.rental.service.UnitRoomService;
+import in.bloomington.rental.util.CommonParam;
 
 @Controller
 public class UnitController {
 
 		String message = null;
-		String[] roomTypes = {"Bedroom","Kitchen","Living Room","Dining Room"};
 		@Autowired
 		private RentalStructureService structureService;
 		@Autowired
@@ -110,7 +110,7 @@ public class UnitController {
 				room.setIdentifier(""+roomCnt);
 				room.setRentalUnit(unit);
 				model.addAttribute("room", room);
-				model.addAttribute("types",roomTypes);
+				model.addAttribute("types",CommonParam.roomTypes);
 				return "roomNew";
 		}
 		@GetMapping("/roomEdit/{id}")
@@ -118,7 +118,7 @@ public class UnitController {
 											Model model) {
 				UnitRoom room = roomService.get(id);
 				model.addAttribute("room", room);
-				model.addAttribute("types",roomTypes);
+				model.addAttribute("types",CommonParam.roomTypes);
 				return "roomEdit";
 		}
 		// save

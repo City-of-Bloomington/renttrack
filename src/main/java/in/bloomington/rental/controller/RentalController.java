@@ -32,14 +32,13 @@ import in.bloomington.rental.service.RentalService;
 import in.bloomington.rental.service.RentalStatusService;
 import in.bloomington.rental.service.ZoningService;
 import in.bloomington.rental.util.Helper;
-
+import in.bloomington.rental.util.CommonParam;
 
 @Controller
 @Scope("session")
 public class RentalController {
 
 		String message = null;
-		final static int[] nhoods = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
 		static List<Zoning> zonings = null;
 		static List<RentalStatus> statuses = null;
 		List<Inspection> inspections = null;
@@ -92,7 +91,7 @@ public class RentalController {
 		public String editRental(@PathVariable("id") int id,
 											Model model) {
 				Rental rental = rentalService.get(id);
-				model.addAttribute("nhoods", nhoods);
+				model.addAttribute("nhoods", CommonParam.nhoods);
 				inspections = inspectionService.findByRentalId(id);
 				if(inspections != null && inspections.size()> 0){
 						rental.setInspections(inspections);
@@ -148,7 +147,7 @@ public class RentalController {
 		public String rentalForm(Locale locale, Model model) {
 
 				model.addAttribute("rental", new Rental());
-				model.addAttribute("nhoods", nhoods);
+				model.addAttribute("nhoods", CommonParam.nhoods);
 				if(zonings == null){
 						zonings = zoningService.list();
 				}
