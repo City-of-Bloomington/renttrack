@@ -40,10 +40,8 @@ public class LegalItEmailLogDaoImp implements LegalItEmailLogDao
         CriteriaBuilder               builder = session.getCriteriaBuilder();
         CriteriaQuery<LegalItEmailLog> select = builder.createQuery(LegalItEmailLog.class);
         Root<LegalItEmailLog>            root = select.from(LegalItEmailLog.class);
-        
         select.where  (builder.equal(root.get("rental_id"), rentalId));
         select.orderBy(builder.desc (root.get("id")));
-        
         return session.createQuery(select)
                       .setMaxResults(limit)
                       .getResultList();

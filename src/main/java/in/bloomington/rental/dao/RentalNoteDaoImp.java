@@ -3,8 +3,10 @@ package in.bloomington.rental.dao;
 import java.util.List;
 import java.util.Date;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import in.bloomington.rental.model.Rental;
 import in.bloomington.rental.model.RentalNote;
-
+import in.bloomington.rental.model.RentalNote_;
 @Repository
 public class RentalNoteDaoImp implements RentalNoteDao
 {
@@ -56,20 +58,28 @@ public class RentalNoteDaoImp implements RentalNoteDao
     @Override
     public List<RentalNote> list()
     {
-        @SuppressWarnings("unchecked")
-        TypedQuery<RentalNote> query = sessionFactory.getCurrentSession()
-                                                     .createQuery("from RentalNote");
-        return query.getResultList();
+				Session session = sessionFactory.getCurrentSession();				
+				CriteriaBuilder          builder = session.getCriteriaBuilder();
+        CriteriaQuery<RentalNote> select = builder.createQuery(RentalNote.class);
+        Root<RentalNote>            root = select.from(RentalNote.class);
+        
+        select.orderBy(builder.desc (root.get(RentalNote_.id)));
+        return session.createQuery(select)
+                      .getResultList();
+				
     }
 
     @Override
     public List<RentalNote> findByRentalId(int rental_id)
     {
-        String  qq      = "from rental_notes rn where rn.rental_id :rental_id";
-        Session session = sessionFactory.getCurrentSession();
-        Query   query   = session.createQuery(qq);
-        query.setParameter("rental_id", rental_id);
-        List<RentalNote> notes = query.list();
-        return notes;
+				Session session = sessionFactory.getCurrentSession();
+				CriteriaBuilder          builder = session.getCriteriaBuilder();
+        CriteriaQuery<RentalNote> select = builder.createQuery(RentalNote.class);
+        Root<RentalNote>            root = select.from(RentalNote.class);
+        select.where  (builder.equal(root.get(RentalNote_.rental), rental_id));
+        select.orderBy(builder.desc (root.get(RentalNote_.id)));
+        return session.createQuery(select)
+                      .getResultList();
+				
     }
 }

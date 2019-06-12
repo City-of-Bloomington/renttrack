@@ -65,4 +65,22 @@ public class Item implements java.io.Serializable
         return name;
     }
 
+		    @Override
+    public int hashCode()
+    {
+        int ret = 29;
+        if (id > 0) ret += 37 * id;
+        return ret;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (!(o instanceof Item)) {
+            return false;
+        }
+        Item item = (Item) o;
+        return (item.getId() == id);
+    }		
+
 }

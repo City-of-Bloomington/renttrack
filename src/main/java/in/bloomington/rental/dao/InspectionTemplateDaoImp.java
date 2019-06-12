@@ -62,9 +62,7 @@ public class InspectionTemplateDaoImp implements InspectionTemplateDao
         CriteriaBuilder                  builder = session.getCriteriaBuilder();
         CriteriaQuery<InspectionTemplate> select = builder.createQuery(InspectionTemplate.class);
         Root<InspectionTemplate>            root = select.from(InspectionTemplate.class);
-        
         select.where  (builder.equal(root.get(InspectionTemplate_.rentalId), id));
-        
         return session.createQuery(select)
                       .getResultList();
 

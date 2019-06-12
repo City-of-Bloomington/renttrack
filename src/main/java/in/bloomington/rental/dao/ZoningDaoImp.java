@@ -3,12 +3,16 @@ package in.bloomington.rental.dao;
 import java.util.List;
 
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import in.bloomington.rental.model.Zoning;
+import in.bloomington.rental.model.Zoning_;
 
 @Repository
 public class ZoningDaoImp implements ZoningDao
@@ -49,9 +53,17 @@ public class ZoningDaoImp implements ZoningDao
     @Override
     public List<Zoning> list()
     {
-        @SuppressWarnings("unchecked")
-        TypedQuery<Zoning> query = sessionFactory.getCurrentSession()
-                                                 .createQuery("from Zoning");
-        return query.getResultList();
+        Session  session  = sessionFactory.getCurrentSession();
+        CriteriaBuilder       builder = session.getCriteriaBuilder();
+        CriteriaQuery<Zoning> select = builder.createQuery(Zoning.class);
+        Root<Zoning>            root = select.from(Zoning.class);
+        select.orderBy(builder.asc(root.get(Zoning_.name)));
+        return session.createQuery(select)
+						.getResultList();
+
+				
     }
+
+
+		
 }

@@ -3,6 +3,9 @@ package in.bloomington.rental.dao;
 import java.util.List;
 
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.Session;
@@ -49,9 +52,12 @@ public class RentalStatusDaoImp implements RentalStatusDao
     @Override
     public List<RentalStatus> list()
     {
-        @SuppressWarnings("unchecked")
-        TypedQuery<RentalStatus> query = sessionFactory.getCurrentSession()
-                                                       .createQuery("from RentalStatus");
-        return query.getResultList();
+				Session session = sessionFactory.getCurrentSession();				
+				CriteriaBuilder          builder = session.getCriteriaBuilder();
+        CriteriaQuery<RentalStatus> select = builder.createQuery(RentalStatus.class);
+        Root<RentalStatus>     root = select.from(RentalStatus.class);
+        return session.createQuery(select)
+                      .getResultList();
+				
     }
 }

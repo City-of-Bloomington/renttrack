@@ -1,10 +1,11 @@
 package in.bloomington.rental.dao;
 
 import java.util.List;
-
+import java.util.ArrayList;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Path;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.Session;
@@ -68,9 +69,7 @@ public class AddressDaoImp implements AddressDao
         CriteriaBuilder builder       = session.getCriteriaBuilder();
         CriteriaQuery<Address> select = builder.createQuery(Address.class);
         Root<Address> root            = select.from(Address.class);
-
         select.where(builder.equal(root.get(Address_.rentalId), id));
-
         return session.createQuery(select).getResultList();
     }
 
@@ -81,7 +80,6 @@ public class AddressDaoImp implements AddressDao
         CriteriaBuilder builder       = session.getCriteriaBuilder();
         CriteriaQuery<Address> select = builder.createQuery(Address.class);
         Root<Address> root            = select.from(Address.class);
-
         if (address != null && !address.equals("")) {
             select.where(builder.equal(root.get(Address_.streetAddress), address));
         }
@@ -106,15 +104,29 @@ public class AddressDaoImp implements AddressDao
                       .getResultList();
     }
 
+		/**
+		 * used for auto complete
+		 */
     @Override
     public List<Item> getList(String address)
     {
         Session    session = sessionFactory.getCurrentSession();
-        String     qq      = "select id, street_address as namefrom addresses"
-                           + " from addresses"
-                           + " where  street_address like :address";
-        return session.createNativeQuery(qq, Item.class)
-                      .setParameter("address", "%" + address + "%")
-                      .list();
+        CriteriaBuilder builder = session.getCriteriaBuilder();				
+				CriteriaQuery<Object[]> criteria = builder.createQuery( Object[].class );
+				Root<Address> root = criteria.from( Address.class );
+				Path<Integer> idPath = root.get( Address_.id );
+				Path<String> namePath = root.get( Address_.streetAddress );
+				criteria.select(builder.array( idPath, namePath ));
+				criteria.where( builder.like( root.get(Address_.streetAddress ), "%"+address+"%"));
+				List<Object[]> valueArray = session.createQuery(criteria).getResultList();
+				List<Item> items = new ArrayList<>();
+				for ( Object[] values : valueArray ) {
+						final Integer id = (Integer) values[0];
+						final String str = (String) values[1];
+						Item item = new Item(id, str);
+						if(!items.contains(item))
+								items.add(item);
+				}
+				return items;
     }
 }

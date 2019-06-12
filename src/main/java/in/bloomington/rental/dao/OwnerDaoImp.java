@@ -195,7 +195,7 @@ public class OwnerDaoImp implements OwnerDao
 																		 root2.get(Owner_.id));
 				Predicate p1 = builder.isNotNull(join1.get(Owner_.email));
 				Predicate p2 = builder.isNotNull(join2.get(Rental_.inactive));
-				Predicate p3 = builder.between(join2.get(Rental_.permitExpires), dfrom,dto);
+				Predicate p3 = builder.between(join2.get(Rental_.permitExpires).as(Date.class), dfrom,dto);
 				List<Predicate> preds = new ArrayList<>();
 				preds.add(p0);
 				preds.add(p1);
@@ -361,7 +361,8 @@ public class OwnerDaoImp implements OwnerDao
 						final Integer id = (Integer) values[0];
 						final String str = (String) values[1];
 						Item item = new Item(id, str);
-						items.add(item);
+						if(!items.contains(item))						
+								items.add(item);
 				}
 				return items;
     }
@@ -385,9 +386,9 @@ public class OwnerDaoImp implements OwnerDao
 				for ( Object[] values : valueArray ) {
 						final Integer id = (Integer) values[0];
 						final String str = (String) values[1];
-						System.err.println(id+" "+str);
 						Item item = new Item(id, str);
-						items.add(item);
+						if(!items.contains(item))
+								items.add(item);
 				}
 				return items;				
     }

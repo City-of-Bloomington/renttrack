@@ -1,17 +1,18 @@
 package in.bloomington.rental.dao;
 
 import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
-import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import in.bloomington.rental.model.Address;
 import in.bloomington.rental.model.RentalUnit;
+import in.bloomington.rental.model.RentalUnit_;
 
 @Repository
 public class RentalUnitDaoImp implements RentalUnitDao
@@ -69,6 +70,7 @@ public class RentalUnitDaoImp implements RentalUnitDao
     @Override
     public List<RentalUnit> getAll()
     {
+				/*
         Session  session  = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(RentalUnit.class);
         criteria.setMaxResults(limit);
@@ -76,6 +78,8 @@ public class RentalUnitDaoImp implements RentalUnitDao
         // remove dups
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         return criteria.list();
+				*/
+				return null;
 
     }
 
@@ -85,11 +89,13 @@ public class RentalUnitDaoImp implements RentalUnitDao
      */
     public List<RentalUnit> findByStructureId(Integer structureId)
     {
-        String  qq      = "from RentalUnit where rentalStructure.id=:structureId ";
         Session session = sessionFactory.getCurrentSession();
-        Query   query   = session.createQuery(qq);
-        query.setParameter("structureId", structureId);
-        List<RentalUnit> rentalUnits = query.list();
-        return rentalUnits;
+        CriteriaBuilder          builder = session.getCriteriaBuilder();
+        CriteriaQuery<RentalUnit> select = builder.createQuery(RentalUnit.class);
+        Root<RentalUnit>            root = select.from(RentalUnit.class);
+        select.where  (builder.equal(root.get(RentalUnit_.rentalStructure), structureId));
+        return session.createQuery(select)
+                      .getResultList();
+				
     }
 }

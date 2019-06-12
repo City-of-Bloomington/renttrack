@@ -69,12 +69,19 @@ public class StandardFeesDaoImp implements StandardFeesDao
     @Override
     public StandardFees getLatest()
     {
-        List<StandardFees> list = getAll();
-				if(list != null && list.size() > 0){
-						return list.get(0); // the top
+				Session session = sessionFactory.getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<StandardFees> select = builder.createQuery(StandardFees.class);
+				Root<StandardFees> root = select.from(StandardFees.class);
+				select.orderBy(builder.desc (root.get("id")));				
+        StandardFees ret = session.createQuery(select)
+						.getSingleResult();
+				if(ret != null){
+						return ret;
 				}
 				else{
 						return new StandardFees();
 				}
+						
     }
 }

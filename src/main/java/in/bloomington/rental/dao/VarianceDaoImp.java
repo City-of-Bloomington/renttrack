@@ -3,6 +3,9 @@ package in.bloomington.rental.dao;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import in.bloomington.rental.model.Variance;
+import in.bloomington.rental.model.Variance_;
 
 @Repository
 public class VarianceDaoImp implements VarianceDao
@@ -64,24 +68,28 @@ public class VarianceDaoImp implements VarianceDao
     public List<Variance> getAll()
     {
         Session  session  = sessionFactory.getCurrentSession();
-        Criteria criteria = session.createCriteria(Variance.class);
-        criteria.setMaxResults(limit);
-        criteria.addOrder(Order.desc("id"));
-        // remove dups
-        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-        return criteria.list();
-
+        CriteriaBuilder       builder = session.getCriteriaBuilder();
+        CriteriaQuery<Variance> select = builder.createQuery(Variance.class);
+        Root<Variance>            root = select.from(Variance.class);
+        select.orderBy(builder.desc(root.get(Variance_.id)));
+        return session.createQuery(select)
+                      .setMaxResults(limit)
+                      .getResultList();
+				
     }
 
     //
     public List<Variance> findByText(String name)
     {
-        String  qq      = "from variances o where o.variance like :name";
-        Session session = sessionFactory.getCurrentSession();
-        Query   query   = session.createQuery(qq);
-        query.setParameter("name", name);
-        List<Variance> variances = query.list();
-        return variances;
+        Session  session  = sessionFactory.getCurrentSession();
+        CriteriaBuilder       builder = session.getCriteriaBuilder();
+        CriteriaQuery<Variance> select = builder.createQuery(Variance.class);
+        Root<Variance>            root = select.from(Variance.class);
+				select.where(builder.like(root.get(Variance_.variance), "%"+name+"%"));
+        return session.createQuery(select)
+                      .setMaxResults(limit)
+                      .getResultList();
+
     }
 
     //

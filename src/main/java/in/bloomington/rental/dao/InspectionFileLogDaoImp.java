@@ -53,12 +53,6 @@ public class InspectionFileLogDaoImp implements InspectionFileLogDao
     @Override
     public int findCountByRentalId(int id)
     {
-				/*
-        String  qq      = "select count(*) from inspection_file_log where rental_id=:id";
-        return  session.createQuery(qq, Integer.class)
-                       .setParameter("id", id)
-                       .getSingleResult();
-				*/
         Session session = sessionFactory.getCurrentSession();
 				CriteriaBuilder builder = session.getCriteriaBuilder();
 				CriteriaQuery<Long> cq = builder.createQuery(Long.class);

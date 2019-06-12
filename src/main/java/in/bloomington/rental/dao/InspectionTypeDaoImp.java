@@ -57,9 +57,7 @@ public class InspectionTypeDaoImp implements InspectionTypeDao
         CriteriaBuilder   builder = session.getCriteriaBuilder();
         CriteriaQuery<InspectionType> select = builder.createQuery(InspectionType.class);
         Root<InspectionType>  root = select.from(InspectionType.class);
-        
         select.orderBy(builder.asc(root.get("id")));				
-        
         return session.createQuery(select)
                       .getResultList();
     }

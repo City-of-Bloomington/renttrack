@@ -3,6 +3,15 @@ package in.bloomington.rental.dao;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.ArrayList;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Path;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -14,7 +23,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import in.bloomington.rental.model.Rental;
+import in.bloomington.rental.model.Rental_;
+import in.bloomington.rental.model.Owner;
+import in.bloomington.rental.model.Owner_;
+import in.bloomington.rental.model.Address;
+import in.bloomington.rental.model.Address_;
+import in.bloomington.rental.model.RentalOwner;
+import in.bloomington.rental.model.RentalOwner_;
 import in.bloomington.rental.util.Search;
+import in.bloomington.rental.util.Helper;
 
 @Repository
 public class RentalDaoImp implements RentalDao
@@ -68,11 +85,15 @@ public class RentalDaoImp implements RentalDao
     @Override
     public List<Rental> getAll()
     {
-        Session  session  = sessionFactory.getCurrentSession();
-        Criteria criteria = session.createCriteria(Rental.class);
-        criteria.setMaxResults(limit);
-        criteria.addOrder(Order.desc("id"));
-        return criteria.list();
+				Session  session  = sessionFactory.getCurrentSession();
+        CriteriaBuilder       builder = session.getCriteriaBuilder();
+        CriteriaQuery<Rental> select = builder.createQuery(Rental.class);
+        Root<Rental>            root = select.from(Rental.class);
+        select.orderBy(builder.desc(root.get(Rental_.id)));
+        return session.createQuery(select)
+                      .setMaxResults(limit)
+                      .getResultList();
+				
     }
 
     @Override
@@ -88,34 +109,30 @@ public class RentalDaoImp implements RentalDao
     public List<Rental> findExpireDate(String dateFrom, String dateTo)
     {
         Session session = sessionFactory.getCurrentSession();
-        String  qq      = "from Rental r  where r.inactive is null ";
-        if (dateFrom != null && !dateFrom.equals("")) {
-            qq += "and r.permitExpires >=:dateFrom";
-        }
-        if (dateTo != null && !dateTo.equals("")) {
-            qq += " and r.permitExpires <=:dateTo";
-        }
-        Query query = session.createQuery(qq);
-        if (dateFrom != null && !dateFrom.equals("")) {
-            try {
-                Date date = dtf.parse(dateFrom);
-                query.setParameter("dateFrom", date);
-            }
-            catch (Exception ex) {
-                System.err.println(ex);
-            }
-        }
-        if (dateTo != null && !dateTo.equals("")) {
-            try {
-                Date date = dtf.parse(dateTo);
-                query.setParameter("dateTo", date);
-            }
-            catch (Exception ex) {
-                System.err.println(ex);
-            }
-        }
-        List<Rental> rentals = query.list();
-        return rentals;
+				Date date_f = null, date_t = null;
+				if(dateFrom == null || dateFrom.equals("")){
+						dateFrom = Helper.getToday();
+				}
+				try {
+						if(dateFrom != null)
+								date_f = dtf.parse(dateFrom);
+						if(dateTo != null)
+								date_t = dtf.parse(dateTo);
+				}catch(Exception ex){
+						System.err.println(ex);
+				}
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Rental> select = builder.createQuery(Rental.class);
+        Root<Rental> root = select.from(Rental.class);
+				if(date_t == null){
+						select.where(builder.and(builder.greaterThan(root.get(Rental_.permitExpires).as(Date.class), date_f), builder.isNull(root.get(Rental_.inactive))));
+				}
+				else{
+						select.where(builder.and(builder.between(root.get(Rental_.permitExpires).as(Date.class), date_f, date_t),																		 
+																		 builder.isNull(root.get(Rental_.inactive))));
+				}
+        return session.createQuery(select)
+						.getResultList();
     }
 
     //
@@ -136,51 +153,150 @@ public class RentalDaoImp implements RentalDao
         String  dateTo    = search.getDateTo();
         boolean in        = false;
         if (id != null && id > 0) {
-            in  = true;
-            qw += " r.id=:id";
+						Rental one = get(id);
+						if(one != null){
+								List<Rental> ones = new ArrayList<>();
+								ones.add(one);
+								return ones;
+						}
+						else{
+								return null;
+						}
         }
         else if (ownerId != null && ownerId > 0) {
-            qq  = "select r.* from rentals r "
-                + ", rental_owners ro where ro.rental_id=r.id and ro.owner_id=" + ownerId;
+						Session session = sessionFactory.getCurrentSession();			
+						CriteriaBuilder builder = session.getCriteriaBuilder();
+						CriteriaQuery<RentalOwner> criteria = builder.createQuery(RentalOwner.class);
+						Root<RentalOwner> root = criteria.from(RentalOwner.class);
+						Join<RentalOwner, Owner> theJoin = root.join(RentalOwner_.owner);
+						Predicate pred = builder.equal(theJoin.get(Owner_.id),ownerId);
+						criteria.where(pred);
+						List<RentalOwner> list = session.createQuery(criteria)
+								.getResultList();
+						List<Rental> rentals = null;
+						if(list != null && list.size() > 0){
+								rentals = new ArrayList<>();
+								for(RentalOwner ro:list){
+										Rental one = ro.getRental();
+										if(one != null && !rentals.contains(one)){
+												rentals.add(one);
+										}
+								}
+						}
+						return rentals;
         }
         else if (addressId != null && addressId > 0) {
-            qq  = "select r.* from rentals r, "
-                + "rental_structures s, rental_units u "
-                + " where s.rental_id=r.id and u.structure_id=s.id "
-                + " and u.address_id=" + addressId;
+						Session session = sessionFactory.getCurrentSession();			
+						CriteriaBuilder builder = session.getCriteriaBuilder();
+						CriteriaQuery<Long> criteria = builder.createQuery(Long.class);
+						Root<Address> root = criteria.from(Address.class);
+						Predicate pp = builder.equal(root.get(Address_.id), addressId);
+						criteria.where(pp);
+						criteria.select(builder.construct(Long.class, root.get(Address_.rentalId).as(Long.class)));
+						List<Long> ids =  session.createQuery(criteria).getResultList();
+						if(ids != null && ids.size() > 0){
+								List<Rental> rentals = new ArrayList<>();
+								for(Long idd:ids){
+										Rental one = session.byId(Rental.class).load(idd.intValue());
+										if(one != null && !rentals.contains(one)){
+												rentals.add(one);
+										}
+								}
+								return rentals;
+						}
         }
         else {
+						Date dfrom = null, dto = null;
+						try{
+								if(dateFrom != null && !dateFrom.equals(""))
+										dfrom = dtf.parse(dateFrom);
+								if(dateTo != null && !dateTo.equals(""))
+										dto = dtf.parse(dateTo);
+						}catch(Exception ex){
+								System.err.println(ex);
+						}
+						Session session = sessionFactory.getCurrentSession();			
+						CriteriaBuilder builder = session.getCriteriaBuilder();
+						CriteriaQuery<Rental> criteria = builder.createQuery(Rental.class);
+						Root<Rental> root = criteria.from(Rental.class);
+						List<Predicate> preds = new ArrayList<>();						
             if (agentId != null && agentId > 0) {
-                if (in) qw += " and ";
-                in  = true;
-                qw += " r.agent.id=:agentId";
+								Predicate pp = builder.equal(root.get(Rental_.agent), agentId);
+								preds.add(pp);
             }
             if (zoningId != null && zoningId > 0) {
+								Predicate pp = builder.equal(root.get(Rental_.zoning), zoningId);
+								preds.add(pp);								
+								/*
                 if (in) qw += " and ";
                 in  = true;
                 qw += " r.zoning.id=:zoningId";
+								*/
             }
             if (statusId != null && statusId > 0) {
+								Predicate pp = builder.equal(root.get(Rental_.rentalStatus), statusId);
+								preds.add(pp);										
+								/*
                 if (in) qw += " and ";
                 in  = true;
                 qw += " r.rentalStatus.id=:statusId";
+								*/
             }
             if (NHood != null && NHood > 0) {
+								Predicate pp = builder.equal(root.get(Rental_.NHood), NHood);
+								preds.add(pp);
+								/*
                 if (in) qw += " and ";
                 in  = true;
                 qw += " r.NHood=:NHood";
+								*/
             }
-            if (dateFrom != null && !dateFrom.equals("")) {
-                if (in) qw += " and ";
-                in  = true;
-                qw += "r." + dateType + ">=:dateFrom";
+            if (dfrom != null) {
+								Predicate pp = null;
+								if(dateType.indexOf("register") >  -1){
+										pp = builder.greaterThan(root.get(Rental_.registeredDate).as(Date.class), dfrom);
+								}
+								else if(dateType.indexOf("cycle") > -1){ 
+										pp = builder.greaterThan(root.get(Rental_.lastCycleDate).as(Date.class), dfrom);
+								}
+								else if(dateType.indexOf("issue") > -1){ 
+										pp = builder.greaterThan(root.get(Rental_.permitIssued).as(Date.class), dfrom);
+								}
+								else if(dateType.indexOf("expire") > -1){ 
+										pp = builder.greaterThan(root.get(Rental_.permitExpires).as(Date.class), dfrom);
+								}
+								if(pp != null)
+										preds.add(pp);										
             }
-            if (dateTo != null && !dateTo.equals("")) {
-                if (in) qw += " and ";
-                in  = true;
-                qw += "r." + dateType + "<=:dateTo";
+            if (dto != null && !dto.equals("")) {
+								Predicate pp = null;
+								if(dateType.indexOf("register") >  -1){
+										pp = builder.lessThan(root.get(Rental_.registeredDate).as(Date.class), dto);
+								}
+								else if(dateType.indexOf("cycle") > -1){ 
+										pp = builder.lessThan(root.get(Rental_.lastCycleDate).as(Date.class), dto);
+								}
+								else if(dateType.indexOf("issue") > -1){ 
+										pp = builder.lessThan(root.get(Rental_.permitIssued).as(Date.class), dto);
+								}
+								else if(dateType.indexOf("expire") > -1){ 
+										pp = builder.lessThan(root.get(Rental_.permitExpires).as(Date.class), dto);
+								}
+								if(pp != null)
+										preds.add(pp);								
+
             }
+						if(preds.size() > 1){
+								criteria.where(builder.and(preds.toArray(new Predicate[0])));
+								return session.createQuery(criteria).getResultList();
+						}
+						else if(preds.size() == 1){
+								criteria.where(preds.get(0));
+								return session.createQuery(criteria).getResultList();
+						}
         }
+				return null;
+				/*
         if (!qw.equals("")) {
             qq += " where " + qw;
         }
@@ -233,5 +349,6 @@ public class RentalDaoImp implements RentalDao
             rentals = query.list();
         }
         return rentals;
+				*/
     }
 }

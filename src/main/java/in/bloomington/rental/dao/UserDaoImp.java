@@ -3,14 +3,17 @@ package in.bloomington.rental.dao;
 import java.util.List;
 
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import in.bloomington.rental.model.RentUser;
+import in.bloomington.rental.model.RentUser_;
 
 @Repository
 public class UserDaoImp implements UserDao
@@ -33,16 +36,15 @@ public class UserDaoImp implements UserDao
     @Override
     public RentUser findByUsername(String username)
     {
-        String  qq      = "from RentUser s where s.username like :username";
-        Session session = sessionFactory.getCurrentSession();
-        Query   query   = session.createQuery(qq);
-        query.setParameter("username", username);
-        List<RentUser> users = query.list();
-        if (users != null && users.size() > 0) {
-            RentUser user = users.get(0);
-            return user;
-        }
-        return null;
+        Session  session  = sessionFactory.getCurrentSession();
+        CriteriaBuilder       builder = session.getCriteriaBuilder();
+        CriteriaQuery<RentUser> select = builder.createQuery(RentUser.class);
+        Root<RentUser>            root = select.from(RentUser.class);
+				select.where(builder.like(root.get(RentUser_.username),username));
+        return session.createQuery(select)
+						.getSingleResult();
+
+				
     }
 
     @Override
@@ -67,41 +69,49 @@ public class UserDaoImp implements UserDao
     @Override
     public List<RentUser> list()
     {
-        @SuppressWarnings("unchecked")
-        TypedQuery<RentUser> query = sessionFactory.getCurrentSession()
-                                                   .createQuery("from RentUser");
-        return query.getResultList();
+        Session  session  = sessionFactory.getCurrentSession();
+        CriteriaBuilder       builder = session.getCriteriaBuilder();
+        CriteriaQuery<RentUser> select = builder.createQuery(RentUser.class);
+        Root<RentUser>            root = select.from(RentUser.class);
+        return session.createQuery(select)
+						.getResultList();				
     }
 
     @Override
     public List<RentUser> getInspectors()
     {
-        String  qq      = "from RentUser u where u.role like :role and u.inactive is null";
-        Session session = sessionFactory.getCurrentSession();
-        Query   query   = session.createQuery(qq);
-        query.setParameter("role", "Inspect");
-        List<RentUser> users = query.list();
-        return users;
+        Session  session  = sessionFactory.getCurrentSession();
+        CriteriaBuilder       builder = session.getCriteriaBuilder();
+        CriteriaQuery<RentUser> select = builder.createQuery(RentUser.class);
+        Root<RentUser>            root = select.from(RentUser.class);
+				select.where(builder.like(root.get(RentUser_.role),"Inspect"));
+        return session.createQuery(select)
+						.getResultList();
+				
     }
 
     @Override
     public List<RentUser> getAllInspectors()
     {
-        String  qq      = "from RentUser u where u.role like :role";
-        Session session = sessionFactory.getCurrentSession();
-        Query   query   = session.createQuery(qq);
-        query.setParameter("role", "Inspect");
-        List<RentUser> users = query.list();
-        return users;
+        Session  session  = sessionFactory.getCurrentSession();
+        CriteriaBuilder       builder = session.getCriteriaBuilder();
+        CriteriaQuery<RentUser> select = builder.createQuery(RentUser.class);
+        Root<RentUser>            root = select.from(RentUser.class);
+				select.where(builder.like(root.get(RentUser_.role),"Inspect"));
+        return session.createQuery(select)
+						.getResultList();
     }
     @Override
     public List<RentUser> getActiveInspectors()
     {
-        String  qq      = "from RentUser u where u.inactive is null and u.role like :role";
-        Session session = sessionFactory.getCurrentSession();
-        Query   query   = session.createQuery(qq);
-        query.setParameter("role", "Inspect");
-        List<RentUser> users = query.list();
-        return users;
+				Session  session  = sessionFactory.getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<RentUser> select = builder.createQuery(RentUser.class);
+        Root<RentUser> root = select.from(RentUser.class);
+				select.where(builder.and(builder.like(root.get(RentUser_.role),"Inspect"), builder.isNull(root.get(RentUser_.inactive))));
+        return session.createQuery(select)
+						.getResultList();
+
+				
     }		
 }

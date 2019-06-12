@@ -1,11 +1,13 @@
 package in.bloomington.rental.dao;
 
 import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Order;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -47,15 +49,17 @@ public class ReceiptDaoImp implements ReceiptDao
     public int getNextReceiptNo()
     {
         Session  session = sessionFactory.getCurrentSession();
-        Criteria c       = session.createCriteria(Receipt.class);
-        c.addOrder(Order.desc("receiptNo"));
-        c.setMaxResults(1);
-        Receipt one = (Receipt) c.uniqueResult();
-        int     ret = 1;
-        if (one != null) {
-            ret = one.getReceiptNo() + 1;
-        }
-        return ret;
+				CriteriaBuilder builder = session.getCriteriaBuilder();
+				CriteriaQuery<Long> select = builder.createQuery(Long.class);
+				Root<Receipt> root = select.from(Receipt.class);
+				select.select(builder.max(root.<Long>get("receiptNo")));
+				Long ret = session.createQuery(select)
+						.getSingleResult();
+				int nextVal = 1;
+				if(ret != null){
+						nextVal = ret.intValue()+1;
+				}
+				return nextVal;
     }
 
     @Override
@@ -71,10 +75,14 @@ public class ReceiptDaoImp implements ReceiptDao
     @Override
     public List<Receipt> getAll()
     {
-        Session  session  = sessionFactory.getCurrentSession();
-        Criteria criteria = session.createCriteria(Receipt.class);
-        criteria.setMaxResults(limit);
-        criteria.addOrder(Order.desc("id"));
-        return criteria.list();
+        Session                  session = sessionFactory.getCurrentSession();
+        CriteriaBuilder          builder = session.getCriteriaBuilder();
+        CriteriaQuery<Receipt> select = builder.createQuery(Receipt.class);
+        Root<Receipt>            root = select.from(Receipt.class);
+        select.orderBy(builder.desc(root.get("id")));
+        return session.createQuery(select)
+                      .setMaxResults(limit)
+                      .getResultList();
+				
     }
 }

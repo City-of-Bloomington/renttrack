@@ -68,9 +68,7 @@ public class OwnerPhoneDaoImp implements OwnerPhoneDao
         CriteriaBuilder          builder = session.getCriteriaBuilder();
         CriteriaQuery<OwnerPhone> select = builder.createQuery(OwnerPhone.class);
         Root<OwnerPhone>            root = select.from(OwnerPhone.class);
-        
         select.where(builder.equal(root.get("owner_id"), owner_id));
-        
         return session.createQuery(select)
                       .getResultList();
     }

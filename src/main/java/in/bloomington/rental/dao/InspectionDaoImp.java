@@ -82,6 +82,7 @@ public class InspectionDaoImp implements InspectionDao
         
         return session.createQuery(select)
                       .getResultList();
+				
     }
 
     @Override

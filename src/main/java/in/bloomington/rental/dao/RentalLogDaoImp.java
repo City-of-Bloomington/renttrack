@@ -1,14 +1,17 @@
 package in.bloomington.rental.dao;
 
 import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import in.bloomington.rental.model.RentalLog;
+import in.bloomington.rental.model.RentalLog_;
 
 @Repository
 public class RentalLogDaoImp implements RentalLogDao
@@ -37,12 +40,17 @@ public class RentalLogDaoImp implements RentalLogDao
     @Override
     public List<RentalLog> findByRentalId(Integer rentalId)
     {
-        String  qq      = "from RentalLog l where l.rentalId =:rentalId order by l.id";
         Session session = sessionFactory.getCurrentSession();
-        Query   query   = session.createQuery(qq);
-        // query.setFirstResult(0); // for paging
-        query.setMaxResults(limit);
-        query.setParameter("rentalId", rentalId);
-        return query.list();
+				CriteriaBuilder          builder = session.getCriteriaBuilder();
+        CriteriaQuery<RentalLog> select = builder.createQuery(RentalLog.class);
+        Root<RentalLog>         root = select.from(RentalLog.class);
+        
+        select.where  (builder.equal(root.get(RentalLog_.rental), rentalId));
+        select.orderBy(builder.desc (root.get(RentalLog_.id)));
+        return session.createQuery(select)
+						.setMaxResults(limit)
+						.getResultList();
+
+				
     }
 }
