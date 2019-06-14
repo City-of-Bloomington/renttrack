@@ -69,7 +69,8 @@ public class SearchController {
 				List<Rental> rentals = rentalService.search(search);
 				if(rentals == null){
 						message = "No match found";
-						return "redirect:/search";
+						model.addAttribute("message", message);						
+						return "search";
 				}
 				else if(rentals.size() == 1){
 						int rentalId = rentals.get(0).getId();

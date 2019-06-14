@@ -120,6 +120,32 @@ public class RentalController {
 				rentalService.delete(id);
 				message = "Rental deleted successfully";
 			 return "redirect:/rentals";
+		}
+		// delete agent from the rental given rental id
+		@GetMapping("/removeAgent/{id}")
+		public String removeAgent(@PathVariable("id") int id, Model model) {
+				Rental rental = rentalService.get(id);
+				rental.setAgent(null);
+				rentalService.update(id, rental);
+				RentUser user = null;
+				if(session != null){
+						user = (RentUser)session.getAttribute("user");
+				}
+				RentalLog log = new RentalLog();
+				log.setRental(rental);
+				log.setUser(user);
+				log.setActionTaken("Del Agent");
+				log.setDate(new Date());
+				logService.save(log);
+				message = "Agent removed from this rental successfully";
+				inspections = inspectionService.findByRentalId(id);
+				if(inspections != null && inspections.size()> 0){
+						rental.setInspections(inspections);
+				}
+				model.addAttribute("rental", rental);
+				if(message != null)
+						model.addAttribute("message", message);
+				return "rentalView";
 		}		
 		// save
 		@PostMapping("/update")

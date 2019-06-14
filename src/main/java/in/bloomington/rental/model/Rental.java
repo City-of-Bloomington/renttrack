@@ -125,7 +125,9 @@ public class Rental implements java.io.Serializable
     private List<RentalLegal>     rentalLegals     = new ArrayList<RentalLegal>();
     @Transient
     private List<Owner>           owners           = new ArrayList<Owner>();
-
+    @Transient
+		private String agentName; // needed for auto complete
+		
     public Rental()
     {
     }
@@ -232,6 +234,11 @@ public class Rental implements java.io.Serializable
     {
         // needed for auto_complete
     }
+    @Transient
+    public String getAgent_name()
+    {
+				return ""; // for auto_oomplete
+    }		
 
     @Transient
     public boolean hasAgent()

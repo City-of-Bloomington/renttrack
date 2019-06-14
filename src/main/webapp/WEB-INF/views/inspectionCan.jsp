@@ -16,6 +16,9 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 		}
 	}
 	</script>
+	<c:if test="${not empty message}">
+		<p>${message}</p>
+	</c:if>		
   <form:form action="${uri}inspectionCanUpdate" method="post" modelAttribute="inspectionCan">
 		<form:hidden path="id" />
 		<form:hidden path="inspection.id" />

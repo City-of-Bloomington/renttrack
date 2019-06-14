@@ -6,6 +6,9 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <jsp:include page="header.jsp" />		
 <form:form action="${uri}update" method="post" modelAttribute="rental">
 	<form:hidden path="id" />
+	<c:if test="${not empty message}">
+		<p>${message}</p>
+	</c:if>		
 	<c:if test="${rental.hasAgent()}">
 		<form:hidden path="agent.id" />
 	</c:if>			
@@ -42,7 +45,16 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 			</tr>
 			<tr>
 				<th>Agent</th>
-				<td>${rental.agent}</td>
+				<td>
+					<c:if test="${rental.hasAgent()}">
+						${rental.agent} (${rental.agent.address}) (${rental.agent.phonesInfo}) <input type="button" value="Remove Agent" onclick="window.location='${uri}removeAgent/${rental.id}'" />
+					</c:if>
+					<c:if test="${!rental.hasAgent()}">
+						Name
+						<form:input path="agent_name" size="30" id="owner_name" />Agent ID:
+						<form:input path="agentId" size="10" maxlength="10" id="owner_id" />
+					</c:if>
+				</td>
 			</tr>
 			<tr>
 				<th>Registered Date</th>
@@ -178,5 +190,5 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 </c:if>
 <br />
 <br />
-</body>
-</html>
+<jsp:include page="footer.jsp" />
+

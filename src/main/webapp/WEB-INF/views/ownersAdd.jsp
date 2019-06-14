@@ -9,6 +9,9 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 	<li>You can add one owner at a time</li>
 	<li>If this is a new owner, click on 'New Owner'.</li>
 </ul>
+	<c:if test="${not empty message}">
+		<p>${message}</p>
+	</c:if>		
   <fieldset>
     <legend>Add Existing Owners To Rental</legend>
     <form:form action="${uri}rentalOwnerSave" method="post" modelAttribute="rentalOwner">

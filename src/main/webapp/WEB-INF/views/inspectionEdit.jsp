@@ -5,6 +5,9 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <jsp:include page="header.jsp" />
 <body>
+	<c:if test="${not empty message}">
+		<p>${message}</p>
+	</c:if>		
   <form:form action="${uri}inspectionUpdate" method="post" modelAttribute="inspection">
 		<form:hidden path="rental.id" />
 		<form:hidden path="id" />			

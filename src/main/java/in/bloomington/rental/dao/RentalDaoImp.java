@@ -45,10 +45,15 @@ public class RentalDaoImp implements RentalDao
     public Rental get(int id)
     {
         Session session = sessionFactory.getCurrentSession();
-        Rental  rental  = session.byId(Rental.class).load(id);
-        rental.getRentalNotes().size(); // to start lazy initialize
-        session.flush();
-        return rental;
+				Rental rental = null;
+				try{
+						rental  = session.byId(Rental.class).load(id);
+						rental.getRentalNotes().size(); // to start lazy initialize
+						session.flush();
+				}catch(Exception ex){
+						System.err.println(" Not found ");
+				}
+				return rental;
     }
 
     @Override

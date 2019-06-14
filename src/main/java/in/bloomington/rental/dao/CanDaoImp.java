@@ -79,4 +79,20 @@ public class CanDaoImp implements CanDao
         return session.createQuery(select)
                       .getResultList();
     }
+		/*
+		 *
+		 select u.fullname fullname,t.dt date,c.name,c.nws_name,
+		 ((out_hour+out_minute/60) - (in_hour+in_minute/60)) hours 
+		 from timeinterval t
+		 join categories c on t.category_id=c.id
+		 join users u on u.id = t.user_id
+		 where c.name like 'FMLA%' and dt >='2018-01-01'
+		 order by name,date
+		 
+		 select u.fullname fullname,t.dt date,c.name,c.nws_name,(out_hour+out_minute/60) - (in_hour+in_minute/60) from timeinterval t join categories c on t.category_id=c.id join users u on u.id = t.user_id where c.name like 'FMLA%' and dt >='2009-01-01' order by fullname,date INTO OUTFILE '/var/lib/mysql-files/fmla_times2.csv' FIELDS ENCLOSED BY '"' TERMINATED BY ',' ESCAPED BY '"' LINES TERMINATED BY '\r\n';
+		 
+
+
+		 */
+		
 }

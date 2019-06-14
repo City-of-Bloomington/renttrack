@@ -12,6 +12,9 @@ function refreshParent() {
 }
 </script>
 <body>
+	<c:if test="${not empty message}">
+		<p>${message}</p>
+	</c:if>			
 	<details>
 		<summary>Instructions</summary>
 		<ul>

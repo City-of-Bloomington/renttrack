@@ -165,8 +165,8 @@ th { text-align:center;
 		<tr>
 			<th><b>Owner(s):</b> 
 				<c:if test="${rental.hasOwners()}">
-					<c:forEach items="${rental.owners}" var="owner">
-						${owner.name}&nbsp;&nbsp;${owner.address}&nbsp;&nbsp;${owner.cityStateZip} <br />
+					<c:forEach items="${rental.rentalOwners}" var="one">
+						${one.owner.name}&nbsp;&nbsp;${one.owner.address}&nbsp;&nbsp;${one.owner.cityStateZip} <br />
 					</c:forEach>
 				</c:if>
 			</th>
@@ -273,12 +273,13 @@ th { text-align:center;
 	</c:if>
 	<p class="permit">
 		The permit certifies compliance with the provision of Title 16 of the Bloomington Municipal Code, \"Bloomington Residential Rental Unit and Lodging Establishment Inspection Program\", and does not represent compliance with any other Title of the Bloomington Municipal Code or other relevant statutes or ordinances, particularly in regards to laws which regulate the zoning of this property. No change of use shall be made in this location without the prior approval of the applicable departments.
+		
 	</p>
 	<table class="wideNoBorder">
 		<tr>
 			<td>Date Inspected: ${inspection.inspectionDateFr}</td>
 			<td>Date Complied: ${inspection.complianceDateFr}</td>
-			<td>PERMIT EXPIRES: ${rental.permitExpires}</td>
+			<td>PERMIT EXPIRES: ${rental.permitExpiresFr}</td>
 		</tr>
 	</table>
 	<table class="wideNoBorder">
@@ -294,7 +295,9 @@ th { text-align:center;
 	<br />
 	<center>
 		<p class="permit"><b>A copy of the permit must be displayed on the inside of the main entrance of the rental units</b><br />
+			
 		Reminder: Each residential rental unit shall be scheduled to receive a cycle inspection at least sixty days prior to the expiration of its permit. Don't forget to call HAND before this time. (16.03.040)
+
 	</p>
 	</center>
 </body>

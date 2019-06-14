@@ -5,6 +5,9 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 	<jsp:include page="header.jsp" />
 <form:form action="${uri}pullUpdate" method="post" modelAttribute="pull">
+	<c:if test="${not empty message}">
+		<p>${message}</p>
+	</c:if>		
 	<form:hidden path="id" />
 	<c:if test="${not empty pull.user}">			
 		<form:hidden path="user.id" />

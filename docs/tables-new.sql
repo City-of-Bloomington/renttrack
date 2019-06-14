@@ -331,3 +331,11 @@ alter table inspections alter column time_status type varchar(15);
  alter table rental.inspection_cans alter column item6 type varchar(1024);
  alter table rental.inspection_cans alter column item7 type varchar(1024);
  alter table rental.inspection_cans alter column item8 type varchar(1024);		
+
+ ;;
+ ;; change all rental records that has 'No Agent' as agent to null
+ ;; agent_id=0, need to be changed to null
+ ;;
+update rentals set agent_id=null where agent_id=0;
+alter table rental_logs alter column action_taken type varchar(30);
+;;

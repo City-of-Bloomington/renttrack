@@ -6,6 +6,9 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 	<jsp:include page="header.jsp" />
 <form:form action="${uri}addressUpdate" method="post" modelAttribute="address">
 	<form:hidden path="id" />
+	<c:if test="${not empty message}">
+		<p>${message}</p>
+	</c:if>			
 	<c:if test="${address.hasLatLong()}">
 		<form:hidden path="latitude" />
 		<form:hidden path="longitude" />

@@ -5,6 +5,9 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <jsp:include page="header.jsp" />
 <body>
+	<c:if test="${not empty message}">
+		<p>${message}</p>
+	</c:if>		
   <form:form action="${uri}receiptSave" method="post" modelAttribute="receipt">
 		<form:hidden path="bill.id" />			
   <fieldset>

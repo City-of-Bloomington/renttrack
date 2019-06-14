@@ -3,7 +3,10 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
-<jsp:include page="header.jsp" />	
+<jsp:include page="header.jsp" />
+	<c:if test="${not empty message}">
+		<p>${message}</p>
+	</c:if>		
   <fieldset>
     <legend>Rental Details</legend>
     <table class="vertaTable">
@@ -29,12 +32,17 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 				<th>Status</th>
 				<td>${rental.rentalStatus}</td>
 			</tr>
-			<c:if test="${rental.hasAgent()}">
-				<tr>
-					<th>Agent</th>
-					<td>${rental.agent} (${rental.agent.address}) (${rental.agent.phonesInfo})</td>
-				</tr>
-			</c:if>
+			<tr>
+				<th>Agent</th>
+				<td>
+					<c:if test="${rental.hasAgent()}">
+						${rental.agent} (${rental.agent.address}) (${rental.agent.phonesInfo})
+					</c:if>
+					<c:if test="${!rental.hasAgent()}">
+						No Agent
+					</c:if>
+				</td>
+			</tr>
 			<tr>
 				<th>Registered Date</th>
 				<td>${rental.registeredDateFr}</td>

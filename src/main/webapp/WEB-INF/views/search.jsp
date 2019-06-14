@@ -5,7 +5,10 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <jsp:include page="header.jsp" />
 <body>
-  <form:form action="${uri}rentalSearch" method="post" modelAttribute="search">	
+  <form:form action="${uri}rentalSearch" method="post" modelAttribute="search">
+		<c:if test="${not empty message}">
+			<p>${message}</p>
+		</c:if>		
 		<fieldset>
 			<legend>Search Rentals</legend>
 			<table>
