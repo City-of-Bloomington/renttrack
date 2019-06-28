@@ -5,13 +5,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletContext;
 import javax.servlet.Filter;
 
-/*
-import org.springframework.web.multipart.support.StandardServletMultipartResolver;
-import javax.servlet.ServletRegistration;
-import org.springframework.web.context.support.GenericWebApplicationContext;
-import org.springframework.web.servlet.DispatcherServlet;
-import javax.servlet.MultipartConfigElement;
-*/
 public class MyWebAppInitializer
       extends AbstractAnnotationConfigDispatcherServletInitializer {
 
@@ -41,6 +34,7 @@ public class MyWebAppInitializer
 		@Override
 		protected Filter[] getServletFilters() {
 				return new Filter[]{new UserRequestFilter()};
+				// new CorsFilter()};
 		}		
 
 		@Override

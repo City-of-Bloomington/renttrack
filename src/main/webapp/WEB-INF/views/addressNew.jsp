@@ -11,7 +11,7 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 		</c:if>
 		<c:if test="${not empty address.unitId}">
 			<form:hidden path="unitId" />
-		</c:if>			
+		</c:if>
 		<fieldset>
     <legend>New Address</legend>
     <table class="vertaTable">
@@ -26,22 +26,62 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 					<th>Related Unit</th>
 					<td>${address.unitId}</td>
 				</tr>
-			</c:if>			
+			</c:if>
 			<tr>
         <th>Street Address</th>
         <td>
-          <form:input path="streetAddress" id="address_text" size="50" />Addr ID:
-					<input type="text" name="addressId" value="" id="address_id" />
-          <form:errors path="streetAddress" cssClass="error" />
+          <form:input path="streetAddress" id="addr_id" size="30" />
+					<button  id="address_id-chooserButton" type="button" class="choose"
+            onclick="ADDRESS_CHOOSER.start(handleChoice)">Look up address</button>
 				</td>
 			</tr>
 			<tr>
-        <th>City</th>
-        <td>
-          <form:input path="city" size="30" /> 
-          <form:errors path="city" cssClass="error" />
+				<th>Master Address Id </th>
+				<td><form:input path="addressId" id="address_id" disabled="true" />
 				</td>
 			</tr>
+			<tr>
+				<th>location Id </th>
+				<td>
+					<form:input path="maLocationId" id="location_id" disabled="true" />
+				</td>
+			</tr>
+			<tr>
+				<th>Subunit Id</th>
+				<td>
+					<form:input path="maSubunitId" id="subunit_id" disabled="true" />
+				</td>
+			</tr>
+			<tr>
+				<th>Lat </th>
+				<td>
+					<form:input path="latitude" id="latitude" disabled="true" />
+				</td>
+			</tr>
+			<tr>
+				<th>Long</th>
+				<td>
+					<form:input path="longitude" id="longitude" disabled="true" />
+				</td>
+			</tr>
+			<tr>
+				<th>City</th>
+				<td>
+					<form:input path="city" size="30" id="city" /> 
+				</td>
+			</tr>
+			<tr>
+        <th>State</th>
+        <td>
+          <form:input path="state" size="2" id="state" /> 
+				</td>
+			</tr>
+			<tr>
+        <th>Zip</th>
+        <td>
+          <form:input path="zip" size="10" id="zip" /> 
+				</td>
+			</tr>			
 		</table>
 		</fieldset>
 		<fieldset>
@@ -53,4 +93,5 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
   </fieldset>			
   </form:form>
 <jsp:include page="footer.jsp" />
+
 

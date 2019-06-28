@@ -63,8 +63,122 @@ public class AddressCheck{
 		}
 		/* 
 		 * given certain address, find similar addresses in master_address app
+		 * we are going to use Cliff js addressCchooser to pick the right address
 		 */
 		public String findSimilarAddr(){
+				//
+				String back = "";
+				String urlStr = "";
+				// String query="format=json;queryType=address;query=";
+				String query="url"+"/addresses?address=401+n+morton+st;format=json";
+						
+				if(url.equals("")){
+						if(env != null){
+								url = env.getProperty("addressCheckUrl");
+						}
+				}
+				urlStr = url+"/?";
+				System.err.println(" addr url "+urlStr);
+				if(address == null){
+						back = " No address set ";
+						return back;
+				}				
+				String addr = address.getStreetAddress();
+				if(addr == null || addr.equals("")){
+						back = " No address set ";
+						return back;
+				}
+				DefaultHttpClient httpclient = new DefaultHttpClient();		
+				ResponseHandler<String> responseHandler = new BasicResponseHandler();
+				try{
+						query += java.net.URLEncoder.encode(addr, "UTF-8");
+						query +="+Bloomington;";
+						urlStr += query;
+						HttpGet httpget = new HttpGet(urlStr);
+						System.err.println(urlStr);
+						logger.debug(urlStr);
+            String responseBody = httpclient.execute(httpget, responseHandler);
+						System.err.println(" response "+responseBody);
+            logger.debug("----------------------------------------");
+            logger.debug(responseBody);
+            logger.debug("----------------------------------------");
+						JSONArray jArray = new JSONArray(responseBody);
+						addresses = new ArrayList<>();
+						for (int i = 0; i < jArray.length(); i++) {
+								JSONObject jObj = jArray.getJSONObject(i);
+								if(jObj.has("id")){
+										String master_address_id = jObj.getString("id");
+										String location_id = jObj.getString("location_id");
+										//
+										//
+										String latVal = jObj.getString("latitude");
+										String lngVal = jObj.getString("longitude");
+										if(latVal != null){
+												address.setLatitude(new Double(latVal));
+										}
+										if(lngVal != null){
+												address.setLongitude(new Double(lngVal));
+										}
+										String street = "";
+										String full_addr="";
+										if(!jObj.isNull("streetAddress")){
+												street = jObj.getString("streetAddress");
+												address.setStreetAddress(street);
+												full_addr = street;
+										}
+										if(!jObj.isNull("subunit_count")){
+												JSONArray jArr2 = jObj.getJSONArray("subunits");
+												if(jArr2 != null){
+														for(int j=0;j<jArr2.length();j++){
+																JSONObject jObj2 = jArr2.getJSONObject(j);
+																if(!jObj2.isNull("id")){
+																		full_addr = street;
+																		Address one = new Address();
+																		one.setAddressId(new Integer(master_address_id));
+																		one.setMaSubunitId(new Integer(jObj2.getString("id")));
+																		// one.setMaLocationId(new Integer(location_id));
+																		String type = jObj2.getString("type_code");
+																		String ident = jObj2.getString("identifier");
+																		full_addr += " "+type;
+																		full_addr += " "+ident;
+																		one.setStreetAddress(full_addr);
+																		addresses.add(one);
+																}
+														}
+												}
+										}
+										else{ // no subunit
+												Address one = new Address();
+												if(latVal != null){
+														one.setLatitude(new Double(latVal));
+														address.setLatitude(new Double(latVal));
+												}
+												if(lngVal != null){
+														one.setLongitude(new Double(lngVal));
+														address.setLongitude(new Double(lngVal));
+												}												
+												one.setStreetAddress(full_addr);
+												one.setAddressId(new Integer(master_address_id));
+												address.setAddressId(new Integer(master_address_id));
+												addresses.add(one);
+										}
+								}
+						}
+				}
+				catch(Exception ex){
+						back = ex+" "+urlStr;
+						logger.error(back);
+				}
+				finally{
+						// 
+						httpclient.getConnectionManager().shutdown();
+				}
+				return back;
+    }
+		/* 
+		 * given certain address, find similar addresses in master_address app
+		 */
+		public String findSimilarAddrOld(){
 				//
 				String back = "";
 				String urlStr = "";
@@ -173,7 +287,7 @@ public class AddressCheck{
 						httpclient.getConnectionManager().shutdown();
 				}
 				return back;
-    }
+    }		
 		
 }
 

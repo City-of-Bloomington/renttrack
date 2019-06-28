@@ -54,7 +54,7 @@ create table rental_structures(                                                 
 ;; 
 ;; in the following rental_id is redundant
 ;; address should be linked to a unit
-create table addresses(                                                           id serial primary key,                                                          street_address varchar(70) not null,                                            city  varchar(30),                                                              rental_id         int,                                                          ma_street_id int,                                                               ma_subunit_id        int,                                                       invalid           char(1),                                                      longitude  double precision,                                                    latitude double precision,                                                      foreign key(rental_id) references rentals(id)                                   );
+create table addresses(                                                           id serial primary key,                                                          street_address varchar(70) not null,                                            city  varchar(30),                                                              rental_id         int,                                                          ma_street_id int,                                                               ma_subunit_id        int,                                                       invalid           char(1),                                                      longitude  double precision,                                                    latitude double precision,                                                      state varchar(2),                                                               zip   varchar(10),                                                              foreign key(rental_id) references rentals(id)                                   );
 
  create index on addresses (street_address);
  
@@ -339,3 +339,8 @@ alter table inspections alter column time_status type varchar(15);
 update rentals set agent_id=null where agent_id=0;
 alter table rental_logs alter column action_taken type varchar(30);
 ;;
+;; added the following two fields to addresses table
+;;
+ alter table rental.addresses add column state varchar(2);	
+ alter table rental.addresses add column zip varchar(10);	
+ update adddresses set state='IN';

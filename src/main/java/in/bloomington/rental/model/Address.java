@@ -26,9 +26,16 @@ public class Address implements java.io.Serializable
 
     @Column(name = "street_address")
     private String    streetAddress;
-    
+
+		@Column(name = "city")
     private String    city = "Bloomington"; // default
-    
+
+		@Column(name = "zip")
+    private String    zip;
+
+		@Column(name = "state")
+    private String    state = "IN";		
+		
     @Column(name = "ma_address_id")
     private Integer   address_id;
     
@@ -37,7 +44,8 @@ public class Address implements java.io.Serializable
     
     @Column(name = "ma_location_id")
     private Integer   maLocationId;
-    
+
+		@Column(name = "invalid")
     private Character invalid;
 
     @Column(columnDefinition="numeric(10,8)")
@@ -51,6 +59,7 @@ public class Address implements java.io.Serializable
     @Transient
     private Integer   unitId;               // needed for a new address
 
+		
     public Address()
     {
     }
@@ -66,20 +75,25 @@ public class Address implements java.io.Serializable
         this.streetAddress = streetAddress;
     }
 
-    public Address(int id, Integer   rentalId,
-                           String    streetAddress,
-                           String    city,
-                           Integer   address_id,
-                           Integer   maSubunitId,
-                           Integer   maLocationId,
-                           Character invalid,
-                           Double    longitude,
-                           Double    latitude)
+    public Address(int id,
+									 Integer   rentalId,
+									 String    streetAddress,
+									 String    city,
+									 String    state,
+									 String    zip,
+									 Integer   address_id,
+									 Integer   maSubunitId,
+									 Integer   maLocationId,
+									 Character invalid,
+									 Double    longitude,
+									 Double    latitude)
     {
         this.id            = id;
         this.rentalId      = rentalId;
         this.streetAddress = streetAddress;
         this.city          = city;
+				this.state         = state;
+				this.zip          = zip;
         this.address_id    = address_id;
         this.maSubunitId   = maSubunitId;
         this.maLocationId  = maLocationId;
@@ -95,6 +109,8 @@ public class Address implements java.io.Serializable
     public Integer   getRentalId     () { return this.rentalId;      }
     public String    getStreetAddress() { return this.streetAddress; }
     public String    getCity         () { return this.city;          }
+		public String    getZip          () { return this.zip;          }
+		public String    getState        () { return this.state;          }		
     public Integer   getAddressId    () { return this.address_id;    }
     public Integer   getMaSubunitId  () { return this.maSubunitId;   }
     public Integer   getMaLocationId () { return this.maLocationId;  }
@@ -106,6 +122,8 @@ public class Address implements java.io.Serializable
     public void setRentalId     (Integer   i) { this.rentalId      = i; }
     public void setStreetAddress(String    s) { this.streetAddress = s; }
     public void setCity         (String    s) { this.city          = s; }
+		public void setZip          (String    s) { this.zip           = s; }
+		public void setState        (String    s) { this.state         = s; }		
     public void setAddressId    (Integer   i) { this.address_id    = i; }
     public void setMaSubunitId  (Integer   i) { this.maSubunitId   = i; }
     public void setMaLocationId (Integer   i) { this.maLocationId  = i; }

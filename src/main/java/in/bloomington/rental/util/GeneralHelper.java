@@ -27,10 +27,12 @@ public class GeneralHelper
     @Autowired
     private Environment         env;
 
-    String  file_path            = "",
-            inspection_file_path = "",
-            legal_type_service   = "",
-            ldap_host            = "";
+    String
+				file_path            = "",
+				inspection_file_path = "",
+				legal_type_service   = "",
+				address_check_url    = "",
+				ldap_host            = "";
     boolean isSet                = false;
 
     public GeneralHelper()
@@ -65,16 +67,15 @@ public class GeneralHelper
             if (str != null) {
                 ldap_host = str;
             }
+            str = env.getProperty("address_check_url");
+            if (str != null) {
+                address_check_url = str;
+            }						
         }
     }
 
     /*
-     * public String populateRates(){ String str = null, back="";
-     * System.err.println(" reading env "); if(env != null){ str =
-     * env.getProperty("file_path"); if(str != null){ file_path = str; }
-     * System.err.println(" file_path "+file_path); str =
-     * env.getProperty("ldap_host"); if(str != null){ ldap_host = str; } } else{
-     * back = "Could not set rates "; } return back; }
+		 * getters
      */
     public String getFilePath()
     {
@@ -105,7 +106,11 @@ public class GeneralHelper
     {
         return ldap_host;
     }
-
+    public String getAddressCheckUrl()
+    {
+        return address_check_url;
+    }
+		
     public boolean isSet()
     {
         return isSet();
