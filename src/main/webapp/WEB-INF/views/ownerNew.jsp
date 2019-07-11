@@ -5,9 +5,9 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <jsp:include page="header.jsp" />
 <body>
-  <fieldset>
-    <legend>New Owner</legend>
-    <form:form action="${uri}ownerSave" method="post" modelAttribute="owner">
+  <form:form action="${uri}ownerSave" method="post" modelAttribute="owner">	
+		<fieldset>
+			<legend>New Owner</legend>
       <table class="vertaTable">
         <tr>
           <th>Name</th>
@@ -62,12 +62,11 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
             <form:errors path="notes" cssClass="error" />
 					</td>
 				</tr>				
-				<tr>
-          <td><button type="submit">Save</button></td>
-        </tr>
       </table>
-    </form:form>
-  </fieldset>
-
+		</fieldset>
+		<fieldset>
+			<button type="submit">Save</button>
+		</fieldset>
+	</form:form>
 </body>
 </html>

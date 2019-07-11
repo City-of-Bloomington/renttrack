@@ -134,7 +134,7 @@ public class AddressCheck{
 																if(!jObj2.isNull("id")){
 																		full_addr = street;
 																		Address one = new Address();
-																		one.setAddressId(new Integer(master_address_id));
+																		one.setMaAddressId(new Integer(master_address_id));
 																		one.setMaSubunitId(new Integer(jObj2.getString("id")));
 																		// one.setMaLocationId(new Integer(location_id));
 																		String type = jObj2.getString("type_code");
@@ -158,8 +158,8 @@ public class AddressCheck{
 														address.setLongitude(new Double(lngVal));
 												}												
 												one.setStreetAddress(full_addr);
-												one.setAddressId(new Integer(master_address_id));
-												address.setAddressId(new Integer(master_address_id));
+												one.setMaAddressId(new Integer(master_address_id));
+												address.setMaAddressId(new Integer(master_address_id));
 												addresses.add(one);
 										}
 								}
@@ -246,7 +246,7 @@ public class AddressCheck{
 																if(!jObj2.isNull("id")){
 																		full_addr = street;
 																		Address one = new Address();
-																		one.setAddressId(new Integer(street_id));
+																		one.setMaAddressId(new Integer(street_id));
 																		one.setMaSubunitId(new Integer(jObj2.getString("id")));
 																		// one.setMaLocationId(new Integer(location_id));
 																		String type = jObj2.getString("type");;
@@ -270,8 +270,8 @@ public class AddressCheck{
 														address.setLongitude(new Double(lngVal));
 												}												
 												one.setStreetAddress(full_addr);
-												one.setAddressId(new Integer(street_id));
-												address.setAddressId(new Integer(street_id));
+												one.setMaAddressId(new Integer(street_id));
+												address.setMaAddressId(new Integer(street_id));
 												// one.setMaLocationId(new Integer(location_id));
 												addresses.add(one);
 										}

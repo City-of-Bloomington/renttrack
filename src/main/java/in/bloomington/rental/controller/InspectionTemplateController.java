@@ -142,7 +142,8 @@ public class InspectionTemplateController
     }
 
     /**
-     * tid template id bid building id
+     * tid template id
+		 * bid building id
      */
     @GetMapping("/componentNew/{tid}/{bid}")
     public String componentNew(@PathVariable("tid") int tid, @PathVariable("bid") int bid, Locale locale, Model model)
@@ -161,7 +162,9 @@ public class InspectionTemplateController
             if (structures != null && structures.size() > 0) {
                 structure = structures.get(bid);
                 if (structure != null) {
+										//
                     floorCnt = structure.getStoryCnt();
+										//
                     if (structure.hasUnits()) {
                         unitCnt = structure.getRentalUnits().size();
                     }
@@ -179,7 +182,10 @@ public class InspectionTemplateController
     }
 
     /**
-     * rid:rentalId bid:buildingId uid:unitId fid:floorId
+     * rid:rentalId
+		 * bid:buildingId
+		 * uid:unitId
+		 * fid:floorId
      */
     @GetMapping("/templateNext/{rid}/{bid}/{uid}/{fid}/{id}")
     public String templateNext(@PathVariable("rid") int rid,
@@ -392,18 +398,20 @@ public class InspectionTemplateController
             if (fid + 1 < floorCnt) { // next will be the next floor
                 int nextFid = fid + 1;
                 retStr = "redirect:/templateNext/" + rid
-                       + "/0/0/" + nextFid
+                       + "/"+bid+"/"+uid+"/" + nextFid
                        + "/" + id;
             }
             else if (uid + 1 < unitCnt) { // next will be next unit
                 int nextUid = uid + 1;
+								fid=0;
                 retStr = "redirect:/templateNext/" + rid
-                       + "/0/" + nextUid
+                       + "/"+bid+"/" + nextUid
                        + "/" + fid
                        + "/" + id;
             }
             else if (bid + 1 < buildingCnt) { // next building
                 int nextBid = bid + 1;
+								fid=0;uid=0;
                 retStr = "redirect:/templateNext/" + rid
                        + "/" + nextBid
                        + "/" + uid

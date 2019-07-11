@@ -7,51 +7,54 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <body>
   <fieldset>
     <legend>Bill ${bill.id}</legend>
-      <table border="1">
-				<caption>Standard Fees</caption>
-				<tr>
-					<td>Related Rental</td>
-					<td>${bill.rental.id}</td>
-				</tr>
-				<tr>
-          <td>Single Family House Rate:</td>
-          <td>
-            $${bill.singleBuildingRate}  
-          </td>
-          <td>Multi Building Rate:</td>
-          <td>
-            $${bill.multiBuildingRate}  
-          </td>
-				</tr>
-				<tr>
-          <td>Condo Building Rate:</td>
-          <td>
-            $${bill.condoBuildingRate}  
-          </td>
-          <td>Rooming Building Rate:</td>
-          <td>
-            $${bill.roomingBuildingRate}  
-          </td>
-				</tr>
-				<tr>					
-          <td>Unit Rate:</td>
-          <td>
-            $${bill.unitRate} 
-          </td>					
-          <td>Rooming House per bathroom Rate:</td>
-          <td>
-            $${bill.bathRate}
-          </td>
-				</tr>
-				<tr>
-          <td>Reinspection Fee:</td>
-          <td>
-            $${bill.reinspRate} 
-          </td>					
-          <td>No Show Fee:</td>
-          <td>
-            $${bill.noshowRate} 
-          </td>
+		<ul>
+			<li> <a href="${uri}view/${bill.rental.id}">Related Rental ${bill.rental.id}</a></li>			
+		</ul>		
+    <table border="1">
+			<caption>Standard Fees</caption>
+			<tr>
+				<td>Related Rental</td>
+				<td>${bill.rental.id}</td>
+			</tr>
+			<tr>
+        <td>Single Family House Rate:</td>
+        <td>
+          $${bill.singleBuildingRate}  
+        </td>
+        <td>Multi Building Rate:</td>
+        <td>
+          $${bill.multiBuildingRate}  
+        </td>
+			</tr>
+			<tr>
+        <td>Condo Building Rate:</td>
+        <td>
+          $${bill.condoBuildingRate}  
+        </td>
+        <td>Rooming Building Rate:</td>
+        <td>
+          $${bill.roomingBuildingRate}  
+        </td>
+			</tr>
+			<tr>					
+        <td>Unit Rate:</td>
+        <td>
+          $${bill.unitRate} 
+        </td>					
+        <td>Rooming House per bathroom Rate:</td>
+        <td>
+          $${bill.bathRate}
+        </td>
+			</tr>
+			<tr>
+        <td>Reinspection Fee:</td>
+        <td>
+          $${bill.reinspRate} 
+        </td>					
+        <td>No Show Fee:</td>
+        <td>
+          $${bill.noshowRate} 
+        </td>
 				</tr>
 				<tr>
           <td>Appeal Fee:</td>

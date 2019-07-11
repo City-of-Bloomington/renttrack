@@ -43,7 +43,7 @@ function refreshParent() {
 			</c:if>			
 			<table>
 				<tr>
-					<th>Component Title</th>
+					<td><b>Component Title</b></td>
 				</tr>
 				<tr>
 					<td>
@@ -63,7 +63,7 @@ function refreshParent() {
 				</c:if>
 				<c:if test="${floorCnt > 1}">
 					<tr>
-						<th><b>Floor:</b>
+						<td><b>Floor:</b>
 							<select name="floorNum">
 								<c:forEach begin="0" end="${floorCnt-1}" varStatus="loop">
 									<option value="${loop.index}">${loop.count}</option>

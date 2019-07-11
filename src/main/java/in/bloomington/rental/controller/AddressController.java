@@ -34,8 +34,8 @@ public class AddressController
     private AddressService    addressService;
     @Autowired
     private RentalUnitService unitService;
-    @Autowired
-    private AddressCheck      check;
+    // @Autowired
+    // private AddressCheck      check;
 
     @GetMapping("/addresss")
     public String addresssView(Locale locale, Model model)
@@ -128,6 +128,7 @@ public class AddressController
         if (result.hasErrors()) {
             return "popAddress";
         }
+				/*
         List<Address> addresses    = null;
         Address       foundAddress = null;
         if (check != null) {
@@ -157,6 +158,7 @@ public class AddressController
             return "pickAddress";
         }
         model.addAttribute("address", address);
+				*/
         return "popAddress";
     }
 
@@ -191,19 +193,18 @@ public class AddressController
             System.err.println(result);
             return "redirect:/newAddress";
         }
+				/*
         boolean newFlag = false;
         if (address.isNew()) {
             newFlag = true;
             check.setAddress(address);
             String back = check.findSimilarAddr();
-            if (back.equals("")) {
-                addressService.save(address);
-                message = "Address saved successfully";
-            }
-            else {
+            if (!back.equals("")) {
                 message += "error " + back;
-            }
-        }
+						}
+				*/
+				addressService.save(address);
+				message = "Address saved successfully";
         Integer unitId = address.getUnitId();
         if (unitId != null) {
             RentalUnit unit = unitService.get(unitId);
@@ -213,15 +214,11 @@ public class AddressController
             }
             return "redirect:/unit/" + unitId;
         }
-        else {
-            Integer rentalId = address.getRentalId();
-            if (newFlag) {
-                // we save when new only so that we do not
-                // override the old rental id
-                addressService.update(address.getId(), address);
-            }
-            return "redirect:/view/" + rentalId;
-        }
+				Integer rentalId = address.getRentalId();
+				// we save when new only so that we do not
+				// override the old rental id
+				addressService.update(address.getId(), address);
+				return "redirect:/view/" + rentalId;
     }
 
 }

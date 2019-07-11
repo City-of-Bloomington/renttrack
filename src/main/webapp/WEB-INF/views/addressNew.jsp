@@ -15,16 +15,16 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 		<fieldset>
     <legend>New Address</legend>
     <table class="vertaTable">
-			<c:if test="${not empty address.rentalId}">				
-				<tr>
-					<th>Related Rental</th>
-					<td>${address.rentalId}</td>
-				</tr>
-			</c:if>
+			<c:if test="${not empty address.rentalId}">
 			<c:if test="${not empty address.unitId}">				
 				<tr>
 					<th>Related Unit</th>
-					<td>${address.unitId}</td>
+					<td><a href="${uri}unit/${address.unitId}">Back to ${address.unitId}</a></td>					
+				</tr>
+			</c:if>
+				<tr>
+					<th>Related Rental</th>
+					<td><a href="${uri}view/${address.rentalId}">Back to ${address.rentalId}</a></td>							
 				</tr>
 			</c:if>
 			<tr>
@@ -32,36 +32,36 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
         <td>
           <form:input path="streetAddress" id="addr_id" size="30" />
 					<button  id="address_id-chooserButton" type="button" class="choose"
-            onclick="ADDRESS_CHOOSER.start(handleChoice)">Look up address</button>
+            onclick="ADDRESS_CHOOSER.start(handleChoice, {addressQuery:document.getElementById('addr_id').value})">Look up address</button>
 				</td>
 			</tr>
 			<tr>
 				<th>Master Address Id </th>
-				<td><form:input path="addressId" id="address_id" disabled="true" />
+				<td><form:input path="maAddressId" id="address_id" readonly="true"/>
 				</td>
 			</tr>
 			<tr>
 				<th>location Id </th>
 				<td>
-					<form:input path="maLocationId" id="location_id" disabled="true" />
+					<form:input path="maLocationId" id="location_id" readonly="true" />
 				</td>
 			</tr>
 			<tr>
 				<th>Subunit Id</th>
 				<td>
-					<form:input path="maSubunitId" id="subunit_id" disabled="true" />
+					<form:input path="maSubunitId" id="subunit_id" readonly="true" />
 				</td>
 			</tr>
 			<tr>
-				<th>Lat </th>
+				<th>Latitude </th>
 				<td>
-					<form:input path="latitude" id="latitude" disabled="true" />
+					<form:input path="latitude" id="latitude" readonly="true" />
 				</td>
 			</tr>
 			<tr>
-				<th>Long</th>
+				<th>Longitude</th>
 				<td>
-					<form:input path="longitude" id="longitude" disabled="true" />
+					<form:input path="longitude" id="longitude" readonly="true" />
 				</td>
 			</tr>
 			<tr>

@@ -5,11 +5,11 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <jsp:include page="header.jsp" />
 <body>
-  <fieldset>
-    <legend>New Owner</legend>
-    <form:form action="${uri}ownerSaveWithLink" method="post" modelAttribute="owner">
+  <form:form action="${uri}ownerSaveWithLink" method="post" modelAttribute="owner">	
+		<fieldset>
+			<legend>New Owner</legend>
 			<input type="hidden" name="rentalId" value="${rentalId}" />
-      <table class="vertaTable">
+			<table class="vertaTable">
 				<tr>
 					<th>Related Rental</th>
 					<td><a href="${uri}view/${rentalId}">${rentalId}</a>
@@ -49,7 +49,11 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 						<form:input path="zip" /> 
             <form:errors path="zip" cssClass="error" />						
           </td>
-				</tr>				
+				</tr>
+				<tr>
+					<th></th>
+					<td><b>Note:</b> multiple emails should be separated by a comma</td>
+				</tr>
 				<tr>
           <th>Email</th>
           <td>
@@ -64,12 +68,11 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
             <form:errors path="notes" cssClass="error" />
 					</td>
 				</tr>				
-				<tr>
-          <td><button type="submit">Save</button></td>
-        </tr>
       </table>
-    </form:form>
-  </fieldset>
-
+		</fieldset>
+		<fieldset>
+			<button type="submit">Save</button>
+		</fieldset>
+  </form:form>
 </body>
 </html>

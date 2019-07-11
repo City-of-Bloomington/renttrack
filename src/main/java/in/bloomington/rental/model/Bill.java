@@ -40,12 +40,12 @@ public class Bill implements java.io.Serializable
 		
     @Temporal(TemporalType.DATE)
     @Column(name = "issue_date", length = 13)
-    @DateTimeFormat(pattern = "mm/dd/yyyy")
+    // @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date          issueDate;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "due_date", length = 13)
-    @DateTimeFormat(pattern = "mm/dd/yyyy")		
+    // @DateTimeFormat(pattern = "MM/dd/yyyy")		
     private Date          dueDate;
 
     @Column(name = "single_building_rate", precision = 6)		
@@ -247,10 +247,9 @@ public class Bill implements java.io.Serializable
         this.rental = rental;
     }
 
-
     public Date getIssueDate()
     {
-        if (issueDate == null) issueDate = new Date();
+        if (issueDate == null && id == 0) issueDate = new Date();
         return this.issueDate;
     }
 
@@ -262,7 +261,7 @@ public class Bill implements java.io.Serializable
     @Transient
     public String getIssueDateFr()
     {
-        if (issueDate == null) {
+        if (issueDate == null && id == 0) {
             issueDate = new Date();// today
         }
         if (issueDate != null) {
@@ -286,7 +285,7 @@ public class Bill implements java.io.Serializable
 
     public Date getDueDate()
     {
-        if (dueDate == null) {
+        if (dueDate == null && id == 0) {
             dueDate = getIssueDate();
             Calendar cal = Calendar.getInstance();
             cal.setTime(dueDate);
@@ -304,7 +303,7 @@ public class Bill implements java.io.Serializable
     @Transient
     public String getDueDateFr()
     {
-        getDueDate();
+				getDueDate();
         if (dueDate != null) {
             return dtf.format(dueDate);
         }

@@ -37,7 +37,7 @@ public class Address implements java.io.Serializable
     private String    state = "IN";		
 		
     @Column(name = "ma_address_id")
-    private Integer   address_id;
+    private Integer   maAddressId;
     
     @Column(name = "ma_subunit_id")
     private Integer   maSubunitId;
@@ -81,7 +81,7 @@ public class Address implements java.io.Serializable
 									 String    city,
 									 String    state,
 									 String    zip,
-									 Integer   address_id,
+									 Integer   maAddressId,
 									 Integer   maSubunitId,
 									 Integer   maLocationId,
 									 Character invalid,
@@ -93,8 +93,8 @@ public class Address implements java.io.Serializable
         this.streetAddress = streetAddress;
         this.city          = city;
 				this.state         = state;
-				this.zip          = zip;
-        this.address_id    = address_id;
+				this.zip           = zip;
+        this.maAddressId   = maAddressId;
         this.maSubunitId   = maSubunitId;
         this.maLocationId  = maLocationId;
         this.invalid       = invalid;
@@ -111,7 +111,7 @@ public class Address implements java.io.Serializable
     public String    getCity         () { return this.city;          }
 		public String    getZip          () { return this.zip;          }
 		public String    getState        () { return this.state;          }		
-    public Integer   getAddressId    () { return this.address_id;    }
+    public Integer   getMaAddressId  () { return this.maAddressId;    }
     public Integer   getMaSubunitId  () { return this.maSubunitId;   }
     public Integer   getMaLocationId () { return this.maLocationId;  }
     public Double    getLatitude     () { return this.latitude;      }
@@ -124,7 +124,7 @@ public class Address implements java.io.Serializable
     public void setCity         (String    s) { this.city          = s; }
 		public void setZip          (String    s) { this.zip           = s; }
 		public void setState        (String    s) { this.state         = s; }		
-    public void setAddressId    (Integer   i) { this.address_id    = i; }
+    public void setMaAddressId  (Integer   i) { this.maAddressId    = i; }
     public void setMaSubunitId  (Integer   i) { this.maSubunitId   = i; }
     public void setMaLocationId (Integer   i) { this.maLocationId  = i; }
     public void setLatitude     (Double    d) { this.latitude      = d; }
@@ -170,6 +170,29 @@ public class Address implements java.io.Serializable
         return isNotEmpty() && id == 0;
     }
 
+		@Transient
+    public boolean hasMasterAddressInfo()
+    {
+        return maAddressId != null && maLocationId != null;
+    }
+
+		@Transient
+    public String getMasterAddressInfo()
+    {
+				String ret = "";
+				if(maAddressId != null)
+						ret = "ID: "+maAddressId;
+				if(maLocationId != null){
+						if(!ret.equals("")) ret += ", ";
+						ret += "Location ID: "+maLocationId;
+				}
+				if(maSubunitId != null){
+						if(!ret.equals("")) ret += ", ";
+						ret += "Subunit ID: "+maSubunitId;
+				}
+        return ret;
+    }		
+
     @Override
     public String toString()
     {
@@ -183,6 +206,7 @@ public class Address implements java.io.Serializable
             ret += 17 * streetAddress.hashCode();
         return ret;
     }
+		
 
     @Override
     public boolean equals(Object o)
@@ -192,7 +216,7 @@ public class Address implements java.io.Serializable
         }
         Address addr = (Address) o;
         if (!streetAddress.equals(addr.getStreetAddress())) return false;
-        if (address_id  != null && address_id  != addr.getAddressId())  return false;
+        if (maAddressId  != null && maAddressId  != addr.getMaAddressId())  return false;
         if (maSubunitId != null && maSubunitId != addr.getMaSubunitId()) return false;
         return true;
     }
@@ -204,12 +228,12 @@ public class Address implements java.io.Serializable
             String[] vals = val.split("_");
             if (vals != null) {
                 if (vals.length == 3) {
-                    address_id    = Integer.valueOf(vals[0]);
+                    maAddressId    = Integer.valueOf(vals[0]);
                     maSubunitId   = Integer.valueOf(vals[1]);
                     streetAddress = vals[2];
                 }
                 if (vals.length == 2) {
-                    address_id    = Integer.valueOf(vals[0]);
+                    maAddressId    = Integer.valueOf(vals[0]);
                     streetAddress = vals[1];
                 }
             }
@@ -219,7 +243,9 @@ public class Address implements java.io.Serializable
     @Transient
     public String getAddrCombo()
     {
-        String ret = address_id + "_" + maSubunitId + "_" + streetAddress;
-        return ret;
+				if(maSubunitId != null)
+						return maAddressId + "_" + maSubunitId + "_" + streetAddress;
+				else
+						return maAddressId + "_" + streetAddress;
     }
 }

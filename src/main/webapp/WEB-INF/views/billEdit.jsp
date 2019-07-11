@@ -10,6 +10,9 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 		<form:hidden path="id" />				
   <fieldset>
     <legend>Edit Bill</legend>
+		<ul>
+			<li> <a href="${uri}view/${bill.rental.id}">Related Rental ${bill.rental.id}</a></li>			
+		</ul>				
     <table border="1">
 			<caption>Standard Fees</caption>
 			<tr>
