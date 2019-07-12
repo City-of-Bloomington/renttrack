@@ -232,29 +232,14 @@ public class RentalDaoImp implements RentalDao
             if (zoningId != null && zoningId > 0) {
 								Predicate pp = builder.equal(root.get(Rental_.zoning), zoningId);
 								preds.add(pp);								
-								/*
-                if (in) qw += " and ";
-                in  = true;
-                qw += " r.zoning.id=:zoningId";
-								*/
             }
             if (statusId != null && statusId > 0) {
 								Predicate pp = builder.equal(root.get(Rental_.rentalStatus), statusId);
 								preds.add(pp);										
-								/*
-                if (in) qw += " and ";
-                in  = true;
-                qw += " r.rentalStatus.id=:statusId";
-								*/
             }
             if (NHood != null && NHood > 0) {
 								Predicate pp = builder.equal(root.get(Rental_.NHood), NHood);
 								preds.add(pp);
-								/*
-                if (in) qw += " and ";
-                in  = true;
-                qw += " r.NHood=:NHood";
-								*/
             }
             if (dfrom != null) {
 								Predicate pp = null;

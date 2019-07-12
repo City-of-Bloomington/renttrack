@@ -30,6 +30,10 @@ public class CommonParam
     public final static String[] component3Level_3 = { "2nd Leval", "Mechanic Closet", "Hallway" };
 		public final static String[] phoneTypes = {"Home","Work","Cell"};
 		public final static String[] payMethods = {"Cash","Check","Money Order","Credit Card"};		
-
+		public final static String[] inspectionParams = {"start_date",
+																										 "end_date",
+																										 "violations",
+																										 "building_type_id",
+																										 "inspection_type_id"};
 		
 }
