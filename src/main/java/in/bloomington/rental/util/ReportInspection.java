@@ -11,18 +11,30 @@ public class ReportInspection
 
     SimpleDateFormat dtf       = new SimpleDateFormat("MM/dd/yyyy");
 		String dateFrom="", dateTo="";
-		Integer violations, buildingTypeId, inspectionTypeId;
+		String violations="";
+		Integer buildingTypeId, inspectionTypeId;
 
+		public ReportInspection(String dateFrom,
+														String dateTo,
+														String violations,
+														Integer buildingTypeId,
+														Integer inspectionTypeId){
+				this.dateFrom = dateFrom;
+				this.dateTo = dateTo;
+				this.violations = violations;
+				this.buildingTypeId = buildingTypeId;
+				this.inspectionTypeId = inspectionTypeId;
+		}
     public ReportInspection()
     {
     }
 
-    public Integer getViolations()
+    public String getViolations()
     {
         return violations;
     }
 
-    public void setViolations(Integer val)
+    public void setViolations(String val)
     {
         violations = val;
     }

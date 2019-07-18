@@ -15,9 +15,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import in.bloomington.rental.model.Rental;
 import in.bloomington.rental.model.RentalStatus;
 import in.bloomington.rental.model.Zoning;
+import in.bloomington.rental.model.BuildingType;
+import in.bloomington.rental.model.PropertyType;
+import in.bloomington.rental.model.PullReason;
 import in.bloomington.rental.service.RentalService;
 import in.bloomington.rental.service.RentalStatusService;
 import in.bloomington.rental.service.ZoningService;
+import in.bloomington.rental.service.PropertyTypeService;
+import in.bloomington.rental.service.PullReasonService;
+
 import in.bloomington.rental.util.Search;
 import in.bloomington.rental.util.CommonParam;
 

@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
  
 import in.bloomington.rental.model.Owner;
+import in.bloomington.rental.util.ReportInspection;
+import in.bloomington.rental.util.ReportRental;
 import in.bloomington.rental.dao.ReportDao;
 
 @Service
@@ -19,5 +21,14 @@ public class ReportServiceImp implements ReportService{
 				System.err.println(" service impl called ");
         return reportDao.getAll();
     }
+
+		@Transactional(readOnly = true)
+		public List<Object[]> getInspectionReport(ReportInspection report){		
+        return reportDao.getInspectionReport(report);
+    }
+		@Transactional(readOnly = true)
+		public List<Object[]> getRentalReport(ReportRental report){		
+        return reportDao.getRentalReport(report);
+    }		
 
 }

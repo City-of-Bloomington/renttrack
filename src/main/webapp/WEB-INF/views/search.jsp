@@ -30,14 +30,14 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 				<tr>
 					<th>Rental Agent</th>
 					<td>
-						<form:input path="agentName" id="agent_name" size="30" />
-						<input type="text" name="agentId" id="agent_id" value="" size="10" /> 
+						<form:input path="agentName" id="agent_name" size="30" /> Agent ID:
+						<form:input path="agentId" id="agent_id" value="" size="10" /> 
 					</td>
 				</tr>
 				<tr>
 					<th>Rental Owner</th>
 					<td>
-						<form:input path="ownerName" id="owner_name" size="30" />
+						<form:input path="ownerName" id="owner_name" size="30" /> Owner ID:
 						<form:input path="ownerId" id="owner_id" size="10" /> 
 					</td>
 				</tr>
@@ -77,8 +77,8 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 				<tr>
 					<th>Date Range:</th>
 					<td>
-						from:<form:input path="dateFrom" cssClass="date" /> -
-						to:<form:input path="dateTo" cssClass="date" />
+						from:<form:input path="dateFrom" cssClass="date" size="10" /> -
+						to:<form:input path="dateTo" cssClass="date" size="10" />
 					</td>
 				</tr>
 			</table>
