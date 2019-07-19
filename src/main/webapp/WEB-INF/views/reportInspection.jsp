@@ -25,10 +25,20 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 					<td>
 						<form:select path="inspectionTypeId"> 
 						<form:option value="0" label="All" />
-						<form:options items="${inspectionTypes}" itemValue="id" itemName="name" />
+						<form:options items="${inspectionTypes}" itemValue="id" itemLabel="name" />
 					</form:select>									
 					</td>
-				</tr>				
+				</tr>
+				<tr>
+          <th>Inspected By</th>
+          <td>
+            <form:select path="inspectedBy">
+							<form:option value="0" label="All" />
+							<form:options items="${inspectors}" itemValue="id" itemLabel="fullName" />
+						</form:select>
+          </td>
+				</tr>
+				
 				<tr>
 					<th>Has More Than </th>
 					<td>

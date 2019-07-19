@@ -2,33 +2,27 @@ package in.bloomington.rental.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
+import java.util.Calendar;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ReportInspection
+public class Report
 {
 
     SimpleDateFormat dtf       = new SimpleDateFormat("MM/dd/yyyy");
 		String dateFrom="", dateTo="";
+		String dateType = "", outputType="";
 		String violations="";
-		Integer buildingTypeId, inspectionTypeId;
-
-		public ReportInspection(String dateFrom,
-														String dateTo,
-														String violations,
-														Integer buildingTypeId,
-														Integer inspectionTypeId){
-				this.dateFrom = dateFrom;
-				this.dateTo = dateTo;
-				this.violations = violations;
-				this.buildingTypeId = buildingTypeId;
-				this.inspectionTypeId = inspectionTypeId;
-		}
-    public ReportInspection()
+		Integer buildingTypeId,
+				propertyTypeId,
+				inspectionTypeId,
+				inspectedBy,
+				pullReasonId;
+		String unitsFrom="", bedroomsFrom="";
+		
+    public Report()
     {
     }
-
     public String getViolations()
     {
         return violations;
@@ -49,6 +43,13 @@ public class ReportInspection
         buildingTypeId = val;
     }
 
+
+    public Integer getPropertyTypeId()
+    {
+        return propertyTypeId;
+    }
+		
+
     public Integer getInspectionTypeId()
     {
         return inspectionTypeId;
@@ -58,8 +59,46 @@ public class ReportInspection
     {
         inspectionTypeId = val;
     }
+    public Integer getInspectedBy()
+    {
+        return inspectedBy;
+    }
 
+    public void setInspectedBy(Integer val)
+    {
+        inspectedBy = val;
+    }		
+    public Integer getPullReasonId()
+    {
+        return pullReasonId;
+    }
 
+    public void setPullReasonId(Integer val)
+    {
+        pullReasonId = val;
+    }
+
+		
+    public String getOutputType()
+    {
+        return outputType;
+    }
+
+    public void setOutputType(String val)
+    {
+        outputType = val;
+    }
+		
+    public String getDateType()
+    {
+        return dateType;
+    }
+
+    public void setDateType(String val)
+    {
+        dateType = val;
+    }		
+		
     public String getDateFrom()
     {
         return dateFrom;
@@ -69,6 +108,7 @@ public class ReportInspection
     {
         dateFrom = val;
     }
+		
 
     public Date getDateFromTime()
     {
@@ -107,5 +147,29 @@ public class ReportInspection
         }
         return date;
     }
+    public String getUnitsFrom()
+    {
+        return unitsFrom;
+    }
 
+    public void setUnitsFrom(String val)
+    {
+        unitsFrom = val;
+    }
+    public String getBedroomsFrom()
+    {
+        return bedroomsFrom;
+    }
+
+    public void setBedroomsFrom(String val)
+    {
+        bedroomsFrom = val;
+    }
+
+		public Date findTwoYearsAgoDate(){
+				Calendar cal = Calendar.getInstance();
+				cal.add(Calendar.YEAR, -2);
+				Date date = cal.getTime();
+				return date;
+		}
 }

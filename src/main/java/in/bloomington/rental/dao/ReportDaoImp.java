@@ -15,8 +15,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import in.bloomington.rental.model.Owner;
-import in.bloomington.rental.util.ReportInspection;
-import in.bloomington.rental.util.ReportRental;
+import in.bloomington.rental.util.Report;
 
 @Repository
 public class ReportDaoImp implements ReportDao
@@ -26,7 +25,7 @@ public class ReportDaoImp implements ReportDao
 
     private int            limit = 30;
 
-		// need visit 
+		// used for testing only
     @Override
     public List<Owner> getAll()
     {
@@ -51,45 +50,8 @@ public class ReportDaoImp implements ReportDao
 				return null;				
 
     }
-		/**
-			 String inspTitles[] = {
-			 "Inspection",
-			 "Rental ID",
-			 "Address",
-			 "Building type",
-			 "Inspection Date",
-			 "Inspection Type",
-			 "Compliance Date",
-			 "Violations",
-			 "Smoke Detectors",
-			 "Life Safety",
-			 "Inspected by"
-			 };
-								String qy = "select insp.insp_id,insp.id,"+
-													 " initcap(ad.street_num||' '||ad.street_dir||' '"+
-										"||ad.street_name"+
-										"||' '||ad.street_type||' '||ad.sud_type||' '||"+
-										"ad.sud_num),"+
-										" pd.building_type,"+ 
-										"to_char(insp.inspection_date,'mm/dd/yyyy'),"+
-										"it.insp_desc,to_char(insp.compliance_date,'mm/dd/yyyy'),"+
-										"insp.violations,insp.smook_detectors,insp.life_safety,"+ // 7
-										"initcap(ds.name)";
-								String qf = " from inspections insp,registr pd,inspection_types it,"+
-										" inspectors ds,address2 ad ";
-								String qw =" where insp.id=pd.id and pd.id=ad.registr_id and "+
-										"it.insp_type=insp.inspection_type and ds.initials=insp.inspected_by";
-								if(!violations.equals("")){
-										qw += " and insp.violations > "+violations;
-								}
-								if(!building_type.equals("")){
-										qw += " and pd.building_type like '"+building_type+"'";
-								}
-								qs = " order by insp.id,insp.inspection_date "+sortby;
-
-		 */
 		@Override
-		public List<Object[]> getInspectionReport(ReportInspection report){
+		public List<Object[]> getInspectionReport(Report report){
 
 				String qq = "SELECT i.id, i.rental_id,a.street_address,bt.name building_type,i.inspection_date,it.name inspection_type,i.compliance_date,i.violations,i.smoke_detectors,i.life_safety,u.full_name ";
 				String qf = " FROM inspections i";
@@ -105,7 +67,8 @@ public class ReportDaoImp implements ReportDao
 				String dateTo = report.getDateTo();
 				String violations = report.getViolations();
 				Integer buildingTypeId = report.getBuildingTypeId();
-				Integer inspectionTypeId = report.getInspectionTypeId();				
+				Integer inspectionTypeId = report.getInspectionTypeId();
+				Integer inspectedBy = report.getInspectedBy();
 				if(dateFrom != null && !dateFrom.equals("")){
 						if(!qw.equals("")) qw += " and ";												
 						qw += " i.inspection_date >= ? ";
@@ -126,6 +89,10 @@ public class ReportDaoImp implements ReportDao
 						if(!qw.equals("")) qw += " and ";
 						qw += " i.inspection_type_id = ? ";
 				}
+				if(inspectedBy != null && inspectedBy > 0){
+						if(!qw.equals("")) qw += " and ";
+						qw += " i.inspected_by = ? ";
+				}				
 				if(!qw.equals("")){
 						qw = " where "+qw;
 				}
@@ -149,21 +116,24 @@ public class ReportDaoImp implements ReportDao
 				}
 				if(inspectionTypeId != null && inspectionTypeId > 0){
 						q.setParameter(jj++, inspectionTypeId);
-				}				
+				}
+				if(inspectedBy != null && inspectedBy > 0){
+						q.setParameter(jj++, inspectedBy);
+				}
 				List<Object[]> results = q.getResultList(); // for multiple
 				return results;
 		}
 		@Override
-		public List<Object[]> getRentalReport(ReportRental report){
+		public List<Object[]> getRentalReport(Report report){
 				Integer buildingTypeId = report.getBuildingTypeId();
 				Integer propertyTypeId = report.getPropertyTypeId();	
-				Integer pullReasonId = report.getPullReasonId();
 				String dateFrom = report.getDateFrom();
 				String dateTo = report.getDateTo();
 				String unitsFrom = report.getUnitsFrom();
 				String bedroomsFrom = report.getBedroomsFrom();
 				String dateType = report.getDateType();
 				boolean active_only = false;
+				
 				if(dateType != null && !dateType.equals("")){
 						if(dateType.equals("registered")){
 								dateType = "r.registered_date ";
@@ -174,6 +144,14 @@ public class ReportDaoImp implements ReportDao
 						else if(dateType.equals("cycle")){
 								dateType = "r.last_cycle_date ";
 						}
+				}
+				else if((dateFrom != null && !dateFrom.equals(""))
+								|| (dateTo != null &&  !dateTo.equals(""))){
+						//
+						// if dateFrom or dateTo were set but not dateType
+						// then we set it to default
+						//
+						dateType = "r.registered_date ";
 				}
 				else{ // valid rentals
 						// this means inactive is null and permit_expirss greter than
@@ -227,7 +205,6 @@ public class ReportDaoImp implements ReportDao
 						qw = " where "+qw;
 				}
 				qq += qf + qw;
-				System.err.println(qq);
 				Query q = em.createNativeQuery(qq);
 				int jj=1;
 				if(buildingTypeId != null && buildingTypeId > 0){
@@ -248,4 +225,56 @@ public class ReportDaoImp implements ReportDao
 				List<Object[]> results = q.getResultList(); 
 				return results;
 		}
+		@Override
+		public List<Object[]> getPullReport(Report report){
+				Integer pullReasonId = report.getPullReasonId();
+				String dateFrom = report.getDateFrom();
+				String dateTo = report.getDateTo();
+				//
+				String qq = "SELECT r.id,pl.date pull_date,pr.reason pull_reason,";
+				qq += " a.street_address, ";
+				qq += " o.name owner_name,o.address owner_address,";
+				qq += " o.city owner_city,o.state owner_state,o.zip owner_zip,"; 
+				qq += " ag.name agent_name,ag.address agent_address,ag.zip agent_zip"; 
+				//
+				String qf =" FROM rentals r LEFT JOIN addresses a on a.rental_id=r.id ";
+				qf += " LEFT JOIN owners ag on r.agent_id= ag.id ";
+				qf += " LEFT JOIN rental_owners ro on ro.rental_id=r.id ";
+				qf += " LEFT JOIN owners o on ro.owner_id=o.id ";
+				qf += " JOIN pull_history pl on pl.rental_id=r.id ";
+				qf += " JOIN pull_reasons pr on pl.pull_reason_id=pr.id ";
+				String qw = "";
+				if(pullReasonId != null && pullReasonId > 0){
+						if(!qw.equals("")) qw += " and ";
+						qw += " pr.id = ? ";
+				}				
+				if(dateFrom != null && !dateFrom.equals("")){
+						if(!qw.equals("")) qw += " and ";
+						qw += " pl.date >= ? ";
+				}
+				if(dateTo != null && !dateTo.equals("")){
+						if(!qw.equals("")) qw += " and ";
+						qw += " pl.date <= ? ";
+				}
+				if(!qw.equals("")){
+						qw = " where "+qw;
+				}
+				qq += qf + qw;
+				Query q = em.createNativeQuery(qq);
+				int jj=1;
+				if(pullReasonId != null && pullReasonId > 0){
+						q.setParameter(jj++, pullReasonId);
+				}
+				if(dateFrom != null && !dateFrom.equals("")){						
+						q.setParameter(jj++, report.getDateFromTime());
+				}
+				if(dateTo != null && !dateTo.equals("")){
+						q.setParameter(jj++, report.getDateToTime());
+				}
+				List<Object[]> results = q.getResultList(); 
+				return results;
+		}
+
+		
+		
 }

@@ -6,8 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
  
 import in.bloomington.rental.model.Owner;
-import in.bloomington.rental.util.ReportInspection;
-import in.bloomington.rental.util.ReportRental;
+import in.bloomington.rental.util.Report;
 import in.bloomington.rental.dao.ReportDao;
 
 @Service
@@ -23,12 +22,16 @@ public class ReportServiceImp implements ReportService{
     }
 
 		@Transactional(readOnly = true)
-		public List<Object[]> getInspectionReport(ReportInspection report){		
+		public List<Object[]> getInspectionReport(Report report){		
         return reportDao.getInspectionReport(report);
     }
 		@Transactional(readOnly = true)
-		public List<Object[]> getRentalReport(ReportRental report){		
+		public List<Object[]> getRentalReport(Report report){		
         return reportDao.getRentalReport(report);
-    }		
+    }
+		@Transactional(readOnly = true)
+		public List<Object[]> getPullReport(Report report){		
+        return reportDao.getPullReport(report);
+    }				
 
 }

@@ -9,10 +9,11 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 </c:if>
 <fieldset>
   <legend>Reports</legend>
-	<p>Reports include the following options </p>
+	<p>Pick from the following options </p>
 	<ul>
 		<li><a href="${uri}reportInspection">Inspection Report</a></li>
-		<li><a href="${uri}reportRental">All rentals with address, Owner, Agent, buildings, etc </a></li>
+		<li><a href="${uri}reportPull">Pull Report</a></li>
+		<li><a href="${uri}reportRental">Rentals with address, Owner, Agent, buildings, etc </a></li>
 	</ul>
 </fieldset>
 </body>
