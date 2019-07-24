@@ -128,7 +128,7 @@ create table addresses(                                                         
  
  pay_status ('Paid','Unpaid'); 
 
-create table rental_bills(                                                         id serial primary key,                                                          rental_id int,                                                                  issue_date date,                                                                due_date  date,                                                                 single_building_rate  decimal(6,2),                                             multi_building_rate decimal(6,2),                                               condo_building_rate decimal(6,2),                                               rooming_building_rate decimal(6,2),                                             unit_rate decimal(6,2),                                                         bath_rate decimal(6,2),                                                         reinsp_rate decimal(6,2),                                                       noshow_rate decimal(6,2),                                                       bhqa_fine   decimal(6,2),                                                       single_building_cnt  smallint,                                                  multi_building_cnt   smallint,                                                  condo_building_cnt   smallint,                                                  rooming_building_cnt smallint,                                                  unit_cnt smallint,                                                              bath_cnt smallint,                                                              noshow_cnt smallint,                                                            reinsp_cnt smallint,                                                            reinsp_dates varchar(80),                                                       noshow_dates varchar(80),                                                       status varchar(15),                                                             appeal char(1),                                                                 appeal_fee decimal(6,2),                                                        credit decimal(6,2),                                                            summary_rate decimal(6,2),                                                      idl_rate decimal(6,2),                                                          summary_flag char(1),                                                           idl_flag char(1),                                                               summary_cnt smallint,                                                           idl_cnt smallint,                                                               foreign key(rental_id) references rentals(id)                                  );
+create table rental_bills(                                                         id serial primary key,                                                          rental_id int,                                                                  issue_date date,                                                                due_date  date,                                                                 single_building_rate  decimal(6,2) default 0,                                   multi_building_rate decimal(6,2) default 0,                                     condo_building_rate decimal(6,2) default 0,                                     rooming_building_rate decimal(6,2) default 0,                                   unit_rate decimal(6,2) default 0,                                               bath_rate decimal(6,2) default 0,                                               reinsp_rate decimal(6,2) default 0,                                             noshow_rate decimal(6,2) default 0,                                             bhqa_fine   decimal(6,2) default 0,                                             single_building_cnt  smallint default 0,                                        multi_building_cnt   smallint default 0,                                        condo_building_cnt   smallint default 0,                                        rooming_building_cnt smallint default 0,                                        unit_cnt smallint default 0,                                                    bath_cnt smallint default 0,                                                    noshow_cnt smallint default 0,                                                  reinsp_cnt smallint default 0,                                                  reinsp_dates varchar(80),                                                       noshow_dates varchar(80),                                                       status varchar(15),                                                             appeal char(1),                                                                 appeal_fee decimal(6,2) default 0,                                              credit decimal(6,2) default 0,                                                  summary_rate decimal(6,2) default 0,                                            idl_rate decimal(6,2) default 0,                                                summary_flag char(1),                                                           idl_flag char(1),                                                               summary_cnt smallint default 0,                                                 idl_cnt smallint default 0,                                                     foreign key(rental_id) references rentals(id)                                  );
 	 
  paid_by_types ('Cash','Check','Money Order','Credit Card');
 
@@ -344,3 +344,222 @@ alter table rental_logs alter column action_taken type varchar(30);
  alter table rental.addresses add column state varchar(2);	
  alter table rental.addresses add column zip varchar(10);	
  update adddresses set state='IN';
+;;
+;; 7/22/2019
+;;
+;; we need to set default values for null values for numeric fields
+
+alter table rental_bills alter column single_building_rate  set default 0;
+alter table rental_bills alter column	 multi_building_rate  set default 0;
+alter table rental_bills alter column	 condo_building_rate  set default 0;
+alter table rental_bills alter column	 rooming_building_rate  set default 0;
+alter table rental_bills alter column	 unit_rate  set default 0;
+	 
+alter table rental_bills alter column	 bath_rate  set default 0;
+alter table rental_bills alter column	 reinsp_rate  set default 0;
+alter table rental_bills alter column	 noshow_rate  set default 0;
+alter table rental_bills alter column	 bhqa_fine  set default 0;
+alter table rental_bills alter column	 single_building_cnt  set default 0;
+	 
+alter table rental_bills alter column	 multi_building_cnt  set default 0;
+alter table rental_bills alter column	 condo_building_cnt  set default 0;
+alter table rental_bills alter column	 rooming_building_cnt  set default 0;
+
+alter table rental_bills alter column	 unit_cnt  set default 0;
+alter table rental_bills alter column	 bath_cnt  set default 0;
+alter table rental_bills alter column	 noshow_cnt  set default 0;
+	 
+alter table rental_bills alter column	 reinsp_cnt  set default 0;
+alter table rental_bills alter column	 appeal_fee  set default 0;
+alter table rental_bills alter column	 credit  set default 0;
+alter table rental_bills alter column	 summary_rate  set default 0;
+	 
+alter table rental_bills alter column	 idl_rate  set default 0;
+alter table rental_bills alter column	 summary_cnt  set default 0;
+alter table rental_bills alter column	 idl_cnt  set default 0;
+	 
+alter table rental_bills alter column	 other_fee  set default 0;
+alter table rental_bills alter column	 other_fee2  set default 0;
+;;
+update rental_bills set single_building_rate=0 where single_building_rate is null;
+update rental_bills set multi_building_rate=0 where multi_building_rate is null;
+update rental_bills set condo_building_rate=0 where condo_building_rate is null;
+update rental_bills set rooming_building_rate=0 where rooming_building_rate is null;
+update rental_bills set unit_rate=0 where unit_rate is null;
+update rental_bills set bath_rate=0 where bath_rate is null;
+update rental_bills set reinsp_rate=0 where reinsp_rate is null;
+update rental_bills set noshow_rate=0  where noshow_rate is null;
+update rental_bills set bhqa_fine=0 where bhqa_fine is null;
+update rental_bills set single_building_cnt=0 where single_building_cnt is null;
+update rental_bills set multi_building_cnt=0 where multi_building_cnt is null;
+update rental_bills set condo_building_cnt=0 where condo_building_cnt is null;
+update rental_bills set rooming_building_cnt=0 where rooming_building_cnt is null;
+update rental_bills set unit_cnt=0 where unit_cnt is null;
+update rental_bills set bath_cnt=0 where bath_cnt is null;
+update rental_bills set noshow_cnt=0 where noshow_cnt is null;
+update rental_bills set reinsp_cnt=0 where reinsp_cnt is null;
+update rental_bills set appeal_fee=0 where appeal_fee is null;
+update rental_bills set credit=0 where credit is null;
+update rental_bills set summary_rate=0 where summary_rate is null;
+update rental_bills set idl_rate=0 where  idl_rate  is null;
+update rental_bills set summary_cnt=0 where summary_cnt is null;
+update rental_bills set idl_cnt=0 where idl_cnt is null;
+update rental_bills set  other_fee=0 where other_fee is null;
+update rental_bills set  other_fee2=0 where other_fee2 is null;
+
+;;
+;; a procedure to calculate the amount due on the bill
+;;
+CREATE OR REPLACE FUNCTION get_bill_balance(bid int)
+RETURNS numeric AS $$
+DECLARE
+   single_rate numeric(6,2):=0;
+	 multi_rate numeric(6,2):=0;
+	 condo_rate numeric(6,2):=0;
+	 rooming_rate numeric(6,2):=0;
+	 unit_rate numeric(6,2):=0;
+	 bath_rate numeric(6,2):=0;
+	 reinsp_rate numeric(6,2):=0;
+	 noshow_rate numeric(6,2):=0;
+	 bhqa_fine numeric(6,2):=0;
+	 single_cnt int:=0;
+	 multi_cnt int:=0;
+	 condo_cnt int:=0;
+	 rooming_cnt int:=0;
+	 unit_cnt int:=0;
+	 bath_cnt int:=0;
+	 noshow_cnt int:=0;
+	 reinsp_cnt int:=0;
+	 appeal character(1);
+	 appeal_fee numeric(6,2):=0;
+	 credit numeric(6,2):=0;
+	 summary_rate numeric(6,2):=0;
+	 summary_cnt int:=0;
+	 idl_cnt int:=0;
+	 idl_rate numeric(6,2):=0;			
+	 other_fee numeric(6,2):=0;
+	 other_fee2 numeric(6,2):=0;
+	 summary_flag character(1):=null;
+	 idl_flag character(1):=null;
+	 balance numeric:=0;
+BEGIN
+	 SELECT
+	 b.single_building_rate,
+	 b.multi_building_rate,
+	 b.condo_building_rate,
+	 b.rooming_building_rate,
+	 b.unit_rate,
+	 
+	 b.bath_rate,
+	 b.reinsp_rate,
+	 b.noshow_rate,
+	 b.bhqa_fine,
+	 b.single_building_cnt,
+	 
+	 b.multi_building_cnt,
+	 b.condo_building_cnt,
+	 b.unit_cnt,
+	 b.bath_cnt,
+	 b.noshow_cnt,
+	 
+	 b.reinsp_cnt,
+	 b.appeal,
+	 b.appeal_fee,
+	 b.credit,
+	 b.summary_rate,
+	 
+	 b.idl_rate,
+	 b.summary_flag,
+	 b.idl_flag,
+	 b.summary_cnt,
+	 b.idl_cnt,
+	 
+	 b.other_fee,
+	 b.other_fee2
+	 into
+	 single_rate,
+	 multi_rate,
+	 condo_rate,
+	 rooming_rate,
+	 unit_rate,
+	 
+	 bath_rate,
+	 reinsp_rate,
+	 noshow_rate,
+	 bhqa_fine,
+	 single_cnt,
+	 
+	 multi_cnt,
+	 condo_cnt,
+	 unit_cnt,
+	 bath_cnt,
+	 noshow_cnt,
+	 
+	 reinsp_cnt,
+	 appeal,
+	 appeal_fee,
+	 credit,
+	 summary_rate,
+	 
+	 idl_rate,
+	 summary_flag,
+	 idl_flag,
+	 summary_cnt,
+	 idl_cnt,
+	 
+	 other_fee,
+	 other_fee2
+	 FROM rental.rental_bills AS b
+	 WHERE b.id=bid;
+
+	 IF appeal is not null
+	 THEN
+			balance = appeal_fee;
+	 ELSE
+		   balance = single_rate*single_cnt+multi_rate*multi_cnt+
+			 condo_rate*condo_cnt+rooming_rate*rooming_cnt+unit_rate*unit_cnt+
+			 bath_cnt*bath_rate+reinsp_cnt*reinsp_rate+noshow_rate*noshow_cnt+
+			 idl_rate*idl_cnt+bhqa_fine+other_fee+other_fee2;
+	 END IF;
+	 
+	 IF summary_flag is not null THEN
+	   IF summary_cnt > 0 THEN
+	     balance = balance + summary_cnt*summary_rate;
+		 ELSE
+		   balance = balance + unit_cnt*summary_rate;
+		 END IF;
+		END IF;
+	 if credit > 0 THEN
+	  if balance > credit THEN
+		 balance = balance - credit;
+		ELSE
+		 balance = 0;
+	  END IF;
+	 END IF;
+	 RETURN balance;
+END;
+$$ language PLpgSQL;
+
+
+;;
+;; for testing
+;;
+CREATE OR REPLACE FUNCTION get_bill_balance(IN bid int) RETURNS numeric AS $$ DECLARE single_rate numeric(6,2):=0;multi_rate numeric(6,2):=0;balance numeric:=0; BEGIN SELECT single_building_rate, multi_building_rate into single_rate,multi_rate    FROM rental_bills WHERE id=bid;balance:=single_rate+multi_rate; RETURN balance; END;$$ language PLpgSQL;
+
+
+DO
+$$
+DECLARE
+  rec record;
+BEGIN
+  FOR rec IN
+  SELECT table_schema,table_name,column_name
+  FROM information_schema.columns
+  WHERE table_name = 'rental_bills' and table_schema='rental'
+  LOOP
+    EXECUTE format('ALTER TABLE %I.%I DROP %I;',
+                   rec.table_schema, rec.table_name, rec.column_name);
+  END LOOP;
+END;
+$$
+LANGUAGE plpgsql

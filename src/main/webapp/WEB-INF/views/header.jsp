@@ -4,7 +4,7 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:if test="${empty uri}">
 	<c:set var="uri" value="/renttrack/" scope="application" />
-	<c:set var="ADDRESS_CHECK_URL" value="https://aoi.bloomington.in.gov" scope="application" />
+	<c:set var="ADDRESS_CHECK_URL" value="https://bloomington.in.gov" scope="application" />
 </c:if>
 <html>
 	<head>

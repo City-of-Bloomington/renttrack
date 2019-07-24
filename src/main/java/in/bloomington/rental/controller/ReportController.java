@@ -181,6 +181,124 @@ public class ReportController {
 						return "reportPull";
 				}
 		}
+		@GetMapping("/reportOverdue")
+		public String reportOverdue(Locale locale,
+															 Model model){
+				if(message != null)
+						model.addAttribute("message", message);
+				Report report = new Report();
+				model.addAttribute("report", report);
+				return "reportOverdue";
+		}		
+		
+		@PostMapping("/reportOverdue")
+		public String reportOverdueRun(@ModelAttribute("report") @Valid Report report, Model model) {
+				String[] resultTitles = {"Rental ID","Address","Bill ID","Bulled Sum","Issue Date","Due Date","Owners","Owner Address","Owner City","Owner State","Owner Zip","Agent","Agent Address","Agent Zip"};
+				List<Object[]> results = reportService.getOverDueBillsReport(report);
+				if(results != null && results.size() > 0){
+						model.addAttribute("results", results);
+						model.addAttribute("reportTitle", "Overdue Bills");
+						model.addAttribute("resultTitles", resultTitles);
+						return "reportResults";
+				}
+				else{
+						message = "No match found";						
+						model.addAttribute("message", message);						
+						return "reportOverdue";
+				}
+		}		
 
+		@GetMapping("/reportNoPull")
+		public String reportNoPull(Locale locale,
+															 Model model){
+				if(message != null)
+						model.addAttribute("message", message);
+				return "reportNoPull";
+		}		
+		@PostMapping("/reportNoPull")
+		public String reportNoPullRun(Model model) {
+				String[] resultTitles = {"ID","Address","Owners","Owner Address","Owner City","Owner State","Owner Zip","Agent","Agent Address","Agent Zip"};
+				List<Object[]> results = reportService.getNoPullReport();
+				if(results != null && results.size() > 0){
+						model.addAttribute("results", results);
+						model.addAttribute("reportTitle", "No Pull History Report");
+						model.addAttribute("resultTitles", resultTitles);
+						return "reportResults";
+				}
+				else{
+						message = "No match found";						
+						model.addAttribute("message", message);						
+						return "reportNoPull";
+				}				
+		}
+		@GetMapping("/reportWVariance")
+		public String reportVariance(Locale locale,
+															 Model model){
+				if(message != null)
+						model.addAttribute("message", message);
+				return "reportWVariance";
+		}		
+		@PostMapping("/reportWVariance")
+		public String reportVarianceRun(Model model) {
+				String[] resultTitles = {"ID","Address","Variance","Variance Date","Owners","Owner Address","Owner City","Owner State","Owner Zip","Agent","Agent Address","Agent Zip"};
+				List<Object[]> results = reportService.getVarianceReport();
+				if(results != null && results.size() > 0){
+						model.addAttribute("results", results);
+						model.addAttribute("reportTitle", "Rental with Variance Report");
+						model.addAttribute("resultTitles", resultTitles);
+						return "reportResults";
+				}
+				else{
+						message = "No match found";						
+						model.addAttribute("message", message);						
+						return "reportWVariance";
+				}				
+		}
+		@GetMapping("/reportOwnerWithNoEmail")
+		public String reportOwnerNoEmail(Locale locale,
+															 Model model){
+				if(message != null)
+						model.addAttribute("message", message);
+				return "reportOwnersWithNoEmail";
+		}		
+		@PostMapping("/reportOwnerWithNoEmail")
+		public String reportOwnerWithNoEmailRun(Model model) {
+				String[] resultTitles = {"ID","Owner","Address","City","State","Zip"};				
+				List<Object[]> results = reportService.getOwnerWithNoEmail();
+				if(results != null && results.size() > 0){
+						model.addAttribute("results", results);
+						model.addAttribute("reportTitle", "Owners without Email Report");
+						model.addAttribute("resultTitles", resultTitles);						
+						return "reportResults";
+				}
+				else{
+						message = "No match found";						
+						model.addAttribute("message", message);						
+						return "reportOwnersWithNoEmail";
+				}				
+		}
+		@GetMapping("/reportAgentWithNoEmail")
+		public String reportAgentNoEmail(Locale locale,
+															 Model model){
+				if(message != null)
+						model.addAttribute("message", message);
+				return "reportAgentsWithNoEmail";
+		}		
+		@PostMapping("/reportAgentWithNoEmail")
+		public String reportAgentWithNoEmailRun(Model model) {
+				String[] resultTitles = {"ID","Agent","Address","City","State","Zip"};				
+				List<Object[]> results = reportService.getAgentWithNoEmail();
+				if(results != null && results.size() > 0){
+						model.addAttribute("results", results);
+						model.addAttribute("reportTitle", "Agents without Email Report");
+						model.addAttribute("resultTitles", resultTitles);						
+						return "reportResults";
+				}
+				else{
+						message = "No match found";						
+						model.addAttribute("message", message);						
+						return "reportAgentsWithNoEmail";
+				}				
+		}				
 		
 }

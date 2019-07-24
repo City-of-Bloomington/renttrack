@@ -50,6 +50,45 @@ public class ReportDaoImp implements ReportDao
 				return null;				
 
     }
+    @Override
+    public List<Object[]> getOwnerWithNoEmail()
+    {
+				String qq = "SELECT distinct(o.id),o.name,o.address,o.city,o.state,o.zip from owners o where o.email is null and o.id in (select ro.owner_id from rental_owners ro left join rentals r on r.id=ro.rental_id and r.inactive is null and r.permit_expires > ?) order by o.name";
+				Report report = new Report();
+				try{
+						List<Object[]> results = em.createNativeQuery(qq)
+								.setParameter(1, report.findTwoYearsAgoDate())
+								// .setParameter(2, report.findTwoYearsAgoDate())
+								.setMaxResults(30)
+								.getResultList();
+						if(results != null && results.size() > 0){
+								return results;
+						}
+				}catch(Exception ex){
+						System.err.println(ex);
+				}
+				return null;				
+
+    }
+    @Override
+    public List<Object[]> getAgentWithNoEmail()
+    {
+				String qq = "SELECT distinct(o.id),o.name,o.address,o.city,o.state,o.zip from owners o JOIN rentals r on r.agent_id=o.id WHERE o.email is null and r.inactive is null and r.permit_expires > ? order by o.name";
+				Report report = new Report();
+				try{
+						List<Object[]> results = em.createNativeQuery(qq)
+								.setParameter(1, report.findTwoYearsAgoDate())
+								.setMaxResults(30)
+								.getResultList();
+						if(results != null && results.size() > 0){
+								return results;
+						}
+				}catch(Exception ex){
+						System.err.println(ex);
+				}
+				return null;				
+
+    }				
 		@Override
 		public List<Object[]> getInspectionReport(Report report){
 
@@ -274,7 +313,77 @@ public class ReportDaoImp implements ReportDao
 				List<Object[]> results = q.getResultList(); 
 				return results;
 		}
-
+		@Override
+		public List<Object[]> getNoPullReport(){
+				//
+				String qq = "SELECT r.id,";
+				qq += " a.street_address, ";
+				qq += " o.name owner_name,o.address owner_address,";
+				qq += " o.city owner_city,o.state owner_state,o.zip owner_zip,"; 
+				qq += " ag.name agent_name,ag.address agent_address,ag.zip agent_zip"; 
+				//
+				String qf =" FROM rentals r LEFT JOIN addresses a on a.rental_id=r.id ";
+				qf += " LEFT JOIN owners ag on r.agent_id= ag.id ";
+				qf += " LEFT JOIN rental_owners ro on ro.rental_id=r.id ";
+				qf += " LEFT JOIN owners o on ro.owner_id=o.id ";
+				String qw = "WHERE r.inactive is null ";
+						qw += " and r.id not in (select rental_id from pull_history) ";
+				qq += qf + qw;
+				Query q = em.createNativeQuery(qq);
+				List<Object[]> results = q.getResultList(); 
+				return results;
+		}
+		@Override
+		public List<Object[]> getVarianceReport(){
+				//
+				String qq = "SELECT r.id,a.street_address, ";
+				qq += " v.variance,v.date varinace_date,";
+				qq += " o.name owner_name,o.address owner_address,";
+				qq += " o.city owner_city,o.state owner_state,o.zip owner_zip,"; 
+				qq += " ag.name agent_name,ag.address agent_address,ag.zip agent_zip"; 
+				//
+				String qf =" FROM rentals r LEFT JOIN addresses a on a.rental_id=r.id ";
+				qf += " LEFT JOIN owners ag on r.agent_id= ag.id ";
+				qf += " LEFT JOIN rental_owners ro on ro.rental_id=r.id ";
+				qf += " LEFT JOIN owners o on ro.owner_id=o.id ";
+				qf += " JOIN variances v on v.rental_id=r.id ";
+				String qw = " where r.inactive is null";
+				qq += qf + qw;
+				Query q = em.createNativeQuery(qq);
+				List<Object[]> results = q.getResultList(); 
+				return results;
+		}
+		public List<Object[]> getOverDueBillsReport(Report report){
+				//
+				String dateFrom = report.getDateFrom();
+				String dateTo = report.getDateTo();				
+				String qq = "SELECT distinct r.id rental_id,a.street_address, b.id bill_id,get_bill_balance(b.id) balance,b.issue_date, ";
+				qq += " b.due_date,";
+				qq += " o.name owner_name,o.address owner_address,";
+				qq += " o.city owner_city,o.state owner_state,o.zip owner_zip,"; 
+				qq += " ag.name agent_name,ag.address agent_address,ag.zip agent_zip"; 
+				//
+				String qf =" FROM rentals r LEFT JOIN addresses a on a.rental_id=r.id ";
+				qf += " LEFT JOIN owners ag on r.agent_id= ag.id ";
+				qf += " JOIN rental_owners ro on ro.rental_id=r.id ";
+				qf += " JOIN owners o on ro.owner_id=o.id ";
+				qf += " JOIN rental_bills b on b.rental_id=r.id ";
+				String qw = " where r.inactive is null and b.status like 'Unpaid'";
+				if(dateFrom != null && !dateFrom.equals(""))
+						qw += " and b.due_date >= ? ";
+				if(dateTo != null && !dateTo.equals(""))
+						qw += " and b.due_date <= ? ";				
+				qq += qf + qw;
+				Query q = em.createNativeQuery(qq);
+				int jj=1;
+				if(dateFrom != null && !dateFrom.equals(""))				
+						q.setParameter(jj++, report.getDateFromTime());
+				if(dateTo != null && !dateTo.equals(""))
+						q.setParameter(jj++, report.getDateToTime());
+				List<Object[]> results = q.getResultList(); 
+				return results;
+		}		
+		
 		
 		
 }

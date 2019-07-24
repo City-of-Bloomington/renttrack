@@ -9,11 +9,17 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 </c:if>
 <fieldset>
   <legend>Reports</legend>
-	<p>Pick from the following options </p>
+	<p>Pick from the following report options </p>
 	<ul>
-		<li><a href="${uri}reportInspection">Inspection Report</a></li>
-		<li><a href="${uri}reportPull">Pull Report</a></li>
+		<li><a href="${uri}reportInspection">Inspection</a></li>
+		<li><a href="${uri}reportPull">Pull History</a></li>
+		<li><a href="${uri}reportNoPull">Rental without Pull History</a></li>
+		<li><a href="${uri}reportWVariance">Rental with Variance</a></li>
+		<li><a href="${uri}reportOverdue">Overdue Bills</a></li>		
+		<li><a href="${uri}reportOwnerWithNoEmail">Owners without Email</a></li>
+		<li><a href="${uri}reportAgentWithNoEmail">Agents without Email</a></li>		
 		<li><a href="${uri}reportRental">Rentals with address, Owner, Agent, buildings, etc </a></li>
+		
 	</ul>
 </fieldset>
 </body>

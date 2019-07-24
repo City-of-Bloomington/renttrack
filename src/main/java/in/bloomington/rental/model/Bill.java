@@ -115,7 +115,7 @@ public class Bill implements java.io.Serializable
     private BigDecimal    appealFee           = new BigDecimal("0");
 		
 		@Column(name = "credit", precision = 6)
-    private BigDecimal    credit              = new BigDecimal(0.0);
+    private BigDecimal    credit              = new BigDecimal("0");
 		
 		@Column(name = "summary_rate", precision = 6)
     private BigDecimal    summaryRate         = new BigDecimal("0");;
@@ -171,14 +171,38 @@ public class Bill implements java.io.Serializable
         this.id = id;
     }
 
-    public Bill(int id, Rental rental, Date issueDate, Date dueDate, BigDecimal singleBuildingRate,
-                BigDecimal multiBuildingRate, BigDecimal condoBuildingRate, BigDecimal roomingBuildingRate,
-                BigDecimal unitRate, BigDecimal bathRate, BigDecimal reinspRate, BigDecimal noshowRate,
-                BigDecimal bhqaFine, Short singleBuildingCnt, Short multiBuildingCnt, Short condoBuildingCnt,
-                Short roomingBuildingCnt, Short unitCnt, Short bathCnt, Short noshowCnt, Short reinspCnt,
-                String reinspDates, String noshowDates, String status, Character appeal, BigDecimal appealFee,
-                BigDecimal credit, BigDecimal summaryRate, BigDecimal idlRate, Character summaryFlag, Character idlFlag,
-                Short summaryCnt, Short idlCnt,
+    public Bill(int id, Rental rental,
+								Date issueDate,
+								Date dueDate,
+								BigDecimal singleBuildingRate,
+                BigDecimal multiBuildingRate,
+								BigDecimal condoBuildingRate,
+								BigDecimal roomingBuildingRate,
+                BigDecimal unitRate,
+								BigDecimal bathRate,
+								BigDecimal reinspRate,
+								BigDecimal noshowRate,
+                BigDecimal bhqaFine,
+								Short singleBuildingCnt,
+								Short multiBuildingCnt,
+								Short condoBuildingCnt,
+                Short roomingBuildingCnt,
+								Short unitCnt,
+								Short bathCnt,
+								Short noshowCnt,
+								Short reinspCnt,
+                String reinspDates,
+								String noshowDates,
+								String status,
+								Character appeal,
+								BigDecimal appealFee,
+                BigDecimal credit,
+								BigDecimal summaryRate,
+								BigDecimal idlRate,
+								Character summaryFlag,
+								Character idlFlag,
+                Short summaryCnt,
+								Short idlCnt,
 								String otherFeeTitle,
 								BigDecimal otherFee,
 								String otherFee2Title,
@@ -189,43 +213,42 @@ public class Bill implements java.io.Serializable
         this.rental              = rental;
         this.issueDate           = issueDate;
         this.dueDate             = dueDate;
-        this.singleBuildingRate  = singleBuildingRate;
-        this.multiBuildingRate   = multiBuildingRate;
-        this.condoBuildingRate   = condoBuildingRate;
-        this.roomingBuildingRate = roomingBuildingRate;
-        this.unitRate            = unitRate;
-        this.bathRate            = bathRate;
-        this.reinspRate          = reinspRate;
-        this.noshowRate          = noshowRate;
-        this.bhqaFine            = bhqaFine;
-        this.singleBuildingCnt   = singleBuildingCnt;
-        this.multiBuildingCnt    = multiBuildingCnt;
-        this.condoBuildingCnt    = condoBuildingCnt;
-        this.roomingBuildingCnt  = roomingBuildingCnt;
-        this.unitCnt             = unitCnt;
-        this.bathCnt             = bathCnt;
-        this.noshowCnt           = noshowCnt;
-        this.reinspCnt           = reinspCnt;
         this.reinspDates         = reinspDates;
         this.noshowDates         = noshowDates;
         this.status              = status;
         this.appeal              = appeal;
-        this.appealFee           = appealFee;
-        this.credit              = credit;
-        this.summaryRate         = summaryRate;
-        this.idlRate             = idlRate;
         this.summaryFlag         = summaryFlag;
         this.idlFlag             = idlFlag;
-        this.summaryCnt          = summaryCnt;
-        this.idlCnt              = idlCnt;
-				this.otherFeeTitle     = otherFeeTitle;
-				this.otherFee     = otherFee;
-				this.otherFee2Title     = otherFee2Title;
-				this.otherFee2     = otherFee2;				
+				this.otherFeeTitle       = otherFeeTitle;
+				this.otherFee2Title      = otherFee2Title;
         this.receipts            = receipts;
-				
-    }
-
+				//
+        setSingleBuildingRate(singleBuildingRate);
+        setMultiBuildingRate(multiBuildingRate);
+        setCondoBuildingRate(condoBuildingRate);
+        setRoomingBuildingRate(roomingBuildingRate);
+        setUnitRate(unitRate);
+        setBathRate(bathRate);
+        setReinspRate(reinspRate);
+        setNoshowRate(noshowRate);
+        setSummaryRate(summaryRate);
+        setIdlRate(idlRate);
+        setAppealFee(appealFee);
+        setBhqaFine(bhqaFine);
+        setSingleBuildingCnt(singleBuildingCnt);
+        setMultiBuildingCnt(multiBuildingCnt);
+        setCondoBuildingCnt(condoBuildingCnt);
+        setRoomingBuildingCnt(roomingBuildingCnt);
+        setUnitCnt(unitCnt);
+        setBathCnt(bathCnt);
+        setNoshowCnt(noshowCnt);
+        setCredit(credit);				
+        setReinspCnt(reinspCnt);
+        setSummaryCnt(summaryCnt);
+        setIdlCnt(idlCnt);
+				setOtherFee(otherFee);
+				setOtherFee2(otherFee2);								
+		}
 
     public int getId()
     {
@@ -282,7 +305,6 @@ public class Bill implements java.io.Serializable
         }
     }
 
-
     public Date getDueDate()
     {
         if (dueDate == null && id == 0) {
@@ -322,7 +344,6 @@ public class Bill implements java.io.Serializable
         }
     }
 
-
     public BigDecimal getSingleBuildingRate()
     {
         return this.singleBuildingRate;
@@ -330,9 +351,9 @@ public class Bill implements java.io.Serializable
 
     public void setSingleBuildingRate(BigDecimal val)
     {
-        this.singleBuildingRate = val;
+				if(val != null)
+						this.singleBuildingRate = val;
     }
-
 
     public BigDecimal getMultiBuildingRate()
     {
@@ -341,7 +362,8 @@ public class Bill implements java.io.Serializable
 
     public void setMultiBuildingRate(BigDecimal val)
     {
-        this.multiBuildingRate = val;
+				if(val != null)
+						this.multiBuildingRate = val;
     }
 
 		public String getOtherFeeTitle()
@@ -351,7 +373,7 @@ public class Bill implements java.io.Serializable
 
     public void setOtherFeeTitle(String val)
     {
-        this.otherFeeTitle = val;
+						this.otherFeeTitle = val;
     }
 		public String getOtherFee2Title()
     {
@@ -370,7 +392,8 @@ public class Bill implements java.io.Serializable
 
     public void setOtherFee(BigDecimal val)
     {
-        this.otherFee = val;
+				if(val != null)
+						this.otherFee = val;
     }
 		
     public BigDecimal getOtherFee2()
@@ -380,7 +403,8 @@ public class Bill implements java.io.Serializable
 
     public void setOtherFee2(BigDecimal val)
     {
-        this.otherFee2 = val;
+				if(val != null)				
+						this.otherFee2 = val;
     }		
 
     public BigDecimal getCondoBuildingRate()
@@ -390,6 +414,7 @@ public class Bill implements java.io.Serializable
 
     public void setCondoBuildingRate(BigDecimal val)
     {
+				if(val != null)								
         this.condoBuildingRate = val;
     }
 
@@ -400,7 +425,8 @@ public class Bill implements java.io.Serializable
 
     public void setRoomingBuildingRate(BigDecimal val)
     {
-        this.roomingBuildingRate = val;
+				if(val != null)				
+						this.roomingBuildingRate = val;
     }
 
     public BigDecimal getUnitRate()
@@ -408,9 +434,10 @@ public class Bill implements java.io.Serializable
         return this.unitRate;
     }
 
-    public void setUnitRate(BigDecimal unitRate)
+    public void setUnitRate(BigDecimal val)
     {
-        this.unitRate = unitRate;
+				if(val != null)				
+						this.unitRate = val;
     }
 
     public BigDecimal getBathRate()
@@ -418,9 +445,10 @@ public class Bill implements java.io.Serializable
         return this.bathRate;
     }
 
-    public void setBathRate(BigDecimal bathRate)
+    public void setBathRate(BigDecimal val)
     {
-        this.bathRate = bathRate;
+				if(val != null)				
+						this.bathRate = val;
     }
 
     public BigDecimal getReinspRate()
@@ -428,20 +456,21 @@ public class Bill implements java.io.Serializable
         return this.reinspRate;
     }
 
-    public void setReinspRate(BigDecimal reinspRate)
+    public void setReinspRate(BigDecimal val)
     {
-        this.reinspRate = reinspRate;
+				if(val != null)				
+						this.reinspRate = val;
     }
-
 
     public BigDecimal getNoshowRate()
     {
         return this.noshowRate;
     }
 
-    public void setNoshowRate(BigDecimal noshowRate)
+    public void setNoshowRate(BigDecimal val)
     {
-        this.noshowRate = noshowRate;
+				if(val != null)				
+						this.noshowRate = noshowRate;
     }
 
     public BigDecimal getBhqaFine()
@@ -449,9 +478,9 @@ public class Bill implements java.io.Serializable
         return this.bhqaFine;
     }
 
-    public void setBhqaFine(BigDecimal bhqaFine)
+    public void setBhqaFine(BigDecimal val)
     {
-        this.bhqaFine = bhqaFine;
+        this.bhqaFine = val;
     }
 
     public Short getSingleBuildingCnt()
@@ -461,9 +490,9 @@ public class Bill implements java.io.Serializable
 
     public void setSingleBuildingCnt(Short val)
     {
-        this.singleBuildingCnt = val;
+				if(val != null)				
+						this.singleBuildingCnt = val;
     }
-
 
     public Short getMultiBuildingCnt()
     {
@@ -472,9 +501,9 @@ public class Bill implements java.io.Serializable
 
     public void setMultiBuildingCnt(Short val)
     {
-        this.multiBuildingCnt = val;
+				if(val != null)				
+						this.multiBuildingCnt = val;
     }
-
 
     public Short getCondoBuildingCnt()
     {
@@ -483,9 +512,9 @@ public class Bill implements java.io.Serializable
 
     public void setCondoBuildingCnt(Short val)
     {
+				if(val != null)				
         this.condoBuildingCnt = val;
     }
-
 
     public Short getRoomingBuildingCnt()
     {
@@ -494,6 +523,7 @@ public class Bill implements java.io.Serializable
 
     public void setRoomingBuildingCnt(Short val)
     {
+				if(val != null)				
         this.roomingBuildingCnt = val;
     }
 
@@ -503,9 +533,10 @@ public class Bill implements java.io.Serializable
         return this.unitCnt;
     }
 
-    public void setUnitCnt(Short unitCnt)
+    public void setUnitCnt(Short val)
     {
-        this.unitCnt = unitCnt;
+				if(val != null)				
+						this.unitCnt = val;
     }
 
     public Short getBathCnt()
@@ -513,9 +544,10 @@ public class Bill implements java.io.Serializable
         return this.bathCnt;
     }
 
-    public void setBathCnt(Short bathCnt)
+    public void setBathCnt(Short val)
     {
-        this.bathCnt = bathCnt;
+				if(val != null)				
+        this.bathCnt = val;
     }
 
     @Transient
@@ -542,15 +574,15 @@ public class Bill implements java.io.Serializable
         return condoBuildingCnt != null && condoBuildingCnt > 0;
     }
 
-
     public Short getNoshowCnt()
     {
         return this.noshowCnt;
     }
 
-    public void setNoshowCnt(Short noshowCnt)
+    public void setNoshowCnt(Short val)
     {
-        this.noshowCnt = noshowCnt;
+				if(val != null)				
+        this.noshowCnt = val;
     }
 
     public Short getReinspCnt()
@@ -558,9 +590,9 @@ public class Bill implements java.io.Serializable
         return this.reinspCnt;
     }
 
-    public void setReinspCnt(Short reinspCnt)
+    public void setReinspCnt(Short val)
     {
-        this.reinspCnt = reinspCnt;
+        this.reinspCnt = val;
     }
 
 
@@ -574,7 +606,6 @@ public class Bill implements java.io.Serializable
         this.reinspDates = reinspDates;
     }
 
-
     public String getNoshowDates()
     {
         return this.noshowDates;
@@ -584,7 +615,6 @@ public class Bill implements java.io.Serializable
     {
         this.noshowDates = noshowDates;
     }
-
 
     public String getStatus()
     {
@@ -622,9 +652,10 @@ public class Bill implements java.io.Serializable
         return this.appealFee;
     }
 
-    public void setAppealFee(BigDecimal appealFee)
+    public void setAppealFee(BigDecimal val)
     {
-        this.appealFee = appealFee;
+				if(val != null)				
+						this.appealFee = val;
     }
 
 
@@ -633,9 +664,10 @@ public class Bill implements java.io.Serializable
         return this.credit;
     }
 
-    public void setCredit(BigDecimal credit)
+    public void setCredit(BigDecimal val)
     {
-        this.credit = credit;
+				if(val != null)				
+						this.credit = credit;
     }
 
     @Transient
@@ -662,9 +694,10 @@ public class Bill implements java.io.Serializable
         return this.summaryRate;
     }
 
-    public void setSummaryRate(BigDecimal summaryRate)
+    public void setSummaryRate(BigDecimal val)
     {
-        this.summaryRate = summaryRate;
+				if(val != null)				
+						this.summaryRate = val;
     }
 
     public BigDecimal getIdlRate()
@@ -672,9 +705,10 @@ public class Bill implements java.io.Serializable
         return this.idlRate;
     }
 
-    public void setIdlRate(BigDecimal idlRate)
+    public void setIdlRate(BigDecimal val)
     {
-        this.idlRate = idlRate;
+				if(val != null)				
+						this.idlRate = val;
     }
 
     public Character getSummaryFlag()
@@ -702,9 +736,10 @@ public class Bill implements java.io.Serializable
         return this.summaryCnt;
     }
 
-    public void setSummaryCnt(Short summaryCnt)
+    public void setSummaryCnt(Short val)
     {
-        this.summaryCnt = summaryCnt;
+				if(val != null)				
+						this.summaryCnt = val;
     }
 
     public Short getIdlCnt()
@@ -712,9 +747,10 @@ public class Bill implements java.io.Serializable
         return this.idlCnt;
     }
 
-    public void setIdlCnt(Short idlCnt)
+    public void setIdlCnt(Short val)
     {
-        this.idlCnt = idlCnt;
+				if(val != null)				
+						this.idlCnt = idlCnt;
     }
 
     public List<Receipt> getReceipts()
@@ -984,7 +1020,7 @@ public class Bill implements java.io.Serializable
                         propertyTypes += type_name;
                         if (type_name.equals("House")) {
                             single_cnt += 1;
-                            // unit_cnt += 1; // normally one unit
+                            unit_cnt = 1; // normally one unit
                         }
                         else if (type_name.startsWith("Rooming")) {
                             rooming_cnt += 1;

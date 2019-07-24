@@ -159,22 +159,22 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
             ${bill.reinspDates}
           </td>
 				</tr>
-				<s:if test="${bill.hasOtherFee()}">
+				<c:if test="${bill.hasOtherFee()}">
 					<tr>
 						<td colspan="2">${bill.otherFeeTitle}</td>
 						<td>
-							${bill.otherFee}
+							$${bill.otherFee}
 						</td>
 					</tr>
-				</s:if>
-				<s:if test="${bill.hasOtherFee2()}">
+				</c:if>
+				<c:if test="${bill.hasOtherFee2()}">
 					<tr>
 						<td colspan="2">${bill.otherFee2Title}</td>
 						<td>
-							${bill.otherFee2}
+							$${bill.otherFee2}
 						</td>
 					</tr>
-				</s:if>				
+				</c:if>				
 				<tr>
           <td>Bill Issue Date:</td>
           <td>
@@ -209,7 +209,7 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 			<table class="submitTable">
 				<tr>
 					<td>
-						<input type="button" onlick="window.location='${uri}billEdit/${bill.id}'" value="Edit" />
+						<input type="button" onclick="window.location='${uri}billEdit/${bill.id}'" value="Edit" />
 					</td>
 					<td>
 						<input type="button" onclick="window.location='${uri}billPrint/${bill.id}'" value="Printable" />

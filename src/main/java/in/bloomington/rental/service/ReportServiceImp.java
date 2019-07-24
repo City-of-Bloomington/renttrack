@@ -20,7 +20,14 @@ public class ReportServiceImp implements ReportService{
 				System.err.println(" service impl called ");
         return reportDao.getAll();
     }
-
+		@Transactional(readOnly = true)				
+		public List<Object[]> getOwnerWithNoEmail(){
+				return reportDao.getOwnerWithNoEmail();
+		}
+		@Transactional(readOnly = true)				
+		public List<Object[]> getAgentWithNoEmail(){
+				return reportDao.getAgentWithNoEmail();
+		}		
 		@Transactional(readOnly = true)
 		public List<Object[]> getInspectionReport(Report report){		
         return reportDao.getInspectionReport(report);
@@ -32,6 +39,18 @@ public class ReportServiceImp implements ReportService{
 		@Transactional(readOnly = true)
 		public List<Object[]> getPullReport(Report report){		
         return reportDao.getPullReport(report);
-    }				
-
+    }
+		@Transactional(readOnly = true)		
+		public List<Object[]> getNoPullReport(){
+				return reportDao.getNoPullReport();
+		}
+		@Transactional(readOnly = true)		
+		public List<Object[]> getVarianceReport(){
+				return reportDao.getVarianceReport();
+		}
+		@Transactional(readOnly = true)		
+		public List<Object[]> getOverDueBillsReport(Report report){
+				return reportDao.getOverDueBillsReport(report);
+		}
+		
 }
