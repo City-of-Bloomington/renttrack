@@ -15,6 +15,7 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 				<tr>
 					<th class="vertaTable">ID</th>
 					<td><c:out value="${owner.id}" /></td>
+				</tr>
         <tr>
           <th>Name</th>
           <td>

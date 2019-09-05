@@ -11,30 +11,13 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <details>
 	<summary>Inspection Info</summary>
 	<fieldset>
-		<table class="vertaTable">
-			<tr>
-				<th>Related Inspection </th>
-				<td><a href="${uri}inspection/${inspection.id}"> ${inspection.id}</a></td>
-			</tr>				
-			<tr>
-				<th>Related Rental </th>
-				<td><a href="${uri}view/${inspection.rental.id}"> ${inspection.rental.id}</a></td>
-			</tr>
-			<tr>
-				<th>Inspection Type</th>
-				<td>
-					${inspection.inspectionType}
-				</td>
-			</tr>
-			<tr>
-				<th>Inspection By</th>
-				<td>${inspection.inspector}</td>
-			</tr>				
-			<tr>
-				<th>Inspection Date</th>
-				<td>${inspection.inspectionDateFr}  </td>
-			</tr>
-		</table>
+		<ul>
+				<li>Related Inspection: <a href="${uri}inspection/${inspection.id}"> ${inspection.id}</a></li>
+				<li>Related Rental <a href="${uri}view/${inspection.rental.id}"> ${inspection.rental.id}</a></li>
+				<li>Inspection Type ${inspection.inspectionType} </li>
+				<li>Inspection By ${inspection.inspector}</li>
+				<li>Inspection Date ${inspection.inspectionDateFr}  </li>
+		</ul>
 	</fieldset>
 </details>
 <c:if test="${inspection.hasInspectionCans()}">
@@ -56,11 +39,14 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <fieldset>
 	<legend>Components</legend>
 	<c:if test="${not empty inspection.inspectionTemplate}">
-		<table class="vertaTable">
-			<tr>
-				<td><b>Component</b></td>
-				<td><b>Action</b></td>
-			</tr>
+		<table>
+			<thead>
+				<tr>
+					<th scope="col">Component</th>
+					<th scope="col">Action</th>
+				</tr>
+			</thead>
+			<tbody>
 			<c:forEach items="${inspection.inspectionTemplate.templateComponents}" var="one" varStatus="row" >
 				<tr>
 					<td>${row.count} - ${one.component}</td>
@@ -75,6 +61,7 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 					</td>
 				</tr>
 			</c:forEach>
+			</tbody>
 		</table>
 	</c:if>
 </fieldset>

@@ -5,23 +5,27 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <fieldset>
   <legend>Most Recent Email Logs</legend>
 	<c:if test="${not empty emailLogs}">
-		<table class="wideTable">
-			<tr>
-				<th>ID</th>
-				<th>Date</th>
-				<th>Email From</th>
-				<th>User Initiated</th>
-				<th>Category</th>
-			</tr>
-			<c:forEach items="${emailLogs}" var="log">
-				<tr>				
-					<td><a href="${uri}emailLogDetails/${log.id}">More Details</a></td>
-					<td>${log.dateFr}</td>					
-					<td>${log.emailFrom}</td>
-					<td><c:if test="${not empty log.user}">${log.user}</c:if>&nbsp;</td>
-					<td>${log.type}</td>
+		<table>
+			<thead>
+				<tr>
+					<th scope="col">ID</th>
+					<th scope="col">Date</th>
+					<th scope="col">Email From</th>
+					<th scope="col">User Initiated</th>
+					<th scope="col">Category</th>
 				</tr>
-			</c:forEach>
+			</thead>
+			<tbody>
+				<c:forEach items="${emailLogs}" var="log">
+					<tr>				
+						<td><a href="${uri}emailLogDetails/${log.id}">More Details</a></td>
+						<td>${log.dateFr}</td>					
+						<td>${log.emailFrom}</td>
+						<td><c:if test="${not empty log.user}">${log.user}</c:if>&nbsp;</td>
+						<td>${log.type}</td>
+					</tr>
+				</c:forEach>
+			</tbody>
 		</table>
 	</c:if>
   </fieldset>

@@ -44,137 +44,144 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 					</tr>
 				</c:if>
 			</table>
-			<table border="0">
+			<table>
+				<tbody>
 				<tr>
-					<td><b>Rental Property Address(es): </b></td>
+					<th scope="row">Rental Property Address(es): </th>
 					<td>${rental.rentalAddresses}</td>
 				</tr>
 				<c:if test="${bill.hasMultiCount()}">
 					<tr>
-						<td align="right"><b>Number Of Multi Buildings:</b></td>
+						<th scope="row">Number Of Multi Buildings:</th>
 						<td>${bill.multiBuildingCnt}</td>
 					</tr>
 				</c:if>
 				<c:if test="${bill.hasSingleCount()}">
 					<tr>
-						<td align="right"><b>Number Of Single Family Houses:</b></td>
+						<th scope="row">Number Of Single Family Houses:</th>
 						<td>${bill.singleBuildingCnt}</td>
 					</tr>
 				</c:if>
 				<c:if test="${bill.hasBathCount()}">
 					<tr>
-						<td align="right"><b>Number Of Rooming Houses:</b></td>
+						<th scope="row">Number Of Rooming Houses:</th>
 						<td>${bill.roomingBuildingCnt}</td>
 					</tr>
 					<tr>
-						<td align="right"><b>Number Of Bathrooms:</b></td>
+						<th scope="row">Number Of Bathrooms:</th>
 						<td>${bill.bathCnt}</td>
 					</tr>					
 				</c:if>				
 				<c:if test="${bill.hasCondoCount()}">
 					<tr>
-						<td align="right"><b>Number Of Condo Buildings:</b></td>
+						<th scope="row">Number Of Condo Buildings:</th>
 						<td>${bill.condoBuildingCnt}</td>
 					</tr>
 				</c:if>
 				<c:if test="${bill.hasMultiCount() || bill.hasCondoCount()}">				
 					<tr>
-						<td align="right"><b>Number of Units:</b></td>
+						<th scope="row">Number of Units:</th>
 						<td>${bill.unitCnt}</td>
 					</tr>
 				</c:if>
+				</tbody>
 			</table>
 			<br />
 			<b>Assessment</b>
 			<br />
 			<table border="1">
-				<tr>
-					<td>
-						<table border="0">
-							<c:if test="${empty bill.appeal}">
-								<tr>
-									<td align="right"><b>Inspection Fee:</b></td>
-									<td align="right"><fmt:formatNumber type="currency" value="${bill.inspectionFee}" /></td>
-								</tr>
-								<c:if test="${bill.hasReinspFine()}">
+				<tbody>
+					<tr>
+						<td>
+							<table border="0">
+								<tbody>
+									<c:if test="${empty bill.appeal}">
+										<tr>
+											<th scope="row">Inspection Fee:</th>
+											<td align="right"><fmt:formatNumber type="currency" value="${bill.inspectionFee}" /></td>
+										</tr>
+										<c:if test="${bill.hasReinspFine()}">
+											<tr>
+												<th scope="row">Reinspection Fee:</th>
+												<td align="right"><fmt:formatNumber type="currency" value="${bill.reinspFine}" /></td>
+												<td>${bill.reinspDates}</td>
+											</tr>
+										</c:if>
+										<c:if test="${bill.hasNoshowFine()}">				
+											<tr>
+												<th scope="row">No Show Fee:</th>
+												<td align="right"><fmt:formatNumber type="currency" value="${bill.noshowFine}" /></td>
+												<td>${bill.noshowDates}</td>
+											</tr>
+										</c:if>
+										<c:if test="${bill.hasSummaryFine()}">
+											<tr>
+												<th scope="row">Failure to Timely Provide Summary of Rights & Responsibilities:</th>
+												<td valign="bottom" align="right"><fmt:formatNumber type="currency" value="${bill.summaryFine}" /></td>
+												<td>&nbsp;</td>
+											</tr>
+										</c:if>
+										<c:if test="${bill.hasIdlFine()}">
+											<tr>
+												<th scope="row">Failure to Timely Provide Inventory & Damage List:</th>
+												<td valign="bottom" align="right"><fmt:formatNumber type="currency" value="${bill.idlFine}" /></td>
+												<td></td>
+											</tr>
+										</c:if>
+										<c:if test="${bill.hasCredit()}">
+											<tr>
+												<th scope="row">Credits:</th>
+												<td align="right"><fmt:formatNumber type="currency" value="${bill.credit}" /></td>
+												<td></td>
+											</tr>
+										</c:if>
+										<c:if test="${bill.hasBhqaFine()}">				
+											<tr>
+												<th scope="row">Fines:</th>
+												<td align="right"><fmt:formatNumber type="currency" value="${bill.bhqaFine}" /></td>
+												<td>&nbsp;</td>
+											</tr>
+										</c:if>
+										<s:if test="${bill.hasOtherFee()}">
+											<tr>
+												<td align="right">${bill.otherFeeTitle}</td>
+												<td align="right">
+													${bill.otherFee}
+												</td>
+											</tr>
+										</s:if>
+										<s:if test="${bill.hasOtherFee2()}">
+											<tr>
+												<td align="right">${bill.otherFee2Title}</td>
+												<td align="right">
+													${bill.otherFee2}
+												</td>
+											</tr>
+										</s:if>										
+									</c:if>
+									<c:if test="${not empty bill.appeal}">
+										<tr>
+											<th scope="row">APPEALS:</th>
+											<td align="right"><fmt:formatNumber type="currency" value="${bill.appealFee}" /></td>
+										</tr>
+										<tr>
+											<td>&nbsp;</td><td>&nbsp;</td>
+										</tr>
+									</c:if>
+									<tr><td>&nbsp;</td><td align="right">==========</td></tr>
 									<tr>
-										<td align="right"><b>Reinspection Fee:</b></td>
-										<td align="right"><fmt:formatNumber type="currency" value="${bill.reinspFine}" /></td>
-										<td>${bill.reinspDates}</td>
+										<td align="right"><b>Total Amount Due:</b></td>
+										<td align="right"><b><fmt:formatNumber type="currency" value="${bill.total}" /></b></td>
 									</tr>
-								</c:if>
-								<c:if test="${bill.hasNoshowFine()}">				
-									<tr><td align="right"><b>No Show Fee:</b></td>
-										<td align="right"><fmt:formatNumber type="currency" value="${bill.noshowFine}" /></td>
-										<td>${bill.noshowDates}</td>
-									</tr>
-								</c:if>
-								<c:if test="${bill.hasSummaryFine()}">
 									<tr>
-										<td align="right"><b>Failure to Timely Provide Summary of Rights & Responsibilities:</b></td>
-										<td valign="bottom" align="right"><fmt:formatNumber type="currency" value="${bill.summaryFine}" /></td>
-										<td>&nbsp;</td>
+										<td align="right"><b>Due By: </b></td>
+										<td align="right">${bill.dueDateFr}</td>
 									</tr>
-								</c:if>
-								<c:if test="${bill.hasIdlFine()}">
-									<tr>
-										<td align="right"><b>Failure to Timely Provide Inventory & Damage List:</b></td>
-										<td valign="bottom" align="right"><fmt:formatNumber type="currency" value="${bill.idlFine}" /></td>
-										<td></td>
-									</tr>
-								</c:if>
-								<c:if test="${bill.hasCredit()}">
-									<tr>
-										<td align="right"><b>Credits:</b></td>
-										<td align="right"><fmt:formatNumber type="currency" value="${bill.credit}" /></td>
-										<td></td>
-									</tr>
-								</c:if>
-								<c:if test="${bill.hasBhqaFine()}">				
-									<tr>
-										<td align="right"><b>Fines:</b></td>
-										<td align="right"><fmt:formatNumber type="currency" value="${bill.bhqaFine}" /></td>
-										<td>&nbsp;</td>
-									</tr>
-								</c:if>
-								<s:if test="${bill.hasOtherFee()}">
-									<tr>
-										<td align="right">${bill.otherFeeTitle}</td>
-										<td align="right">
-											${bill.otherFee}
-										</td>
-									</tr>
-								</s:if>
-								<s:if test="${bill.hasOtherFee2()}">
-									<tr>
-										<td align="right">${bill.otherFee2Title}</td>
-										<td align="right">
-											${bill.otherFee2}
-										</td>
-									</tr>
-								</s:if>										
-							</c:if>
-							<c:if test="${not empty bill.appeal}">
-								<tr>
-									<td align="right"><b>APPEALS:</b></td>
-									<td align="right"><fmt:formatNumber type="currency" value="${bill.appealFee}" /></td>
-								</tr>
-								<tr>
-									<td>&nbsp;</td><td>&nbsp;</td>
-								</tr>
-							</c:if>
-							<tr><td>&nbsp;</td><td align="right">==========</td></tr>
-							<tr>
-								<td align="right"><b>Total Amount Due:</b></td>
-								<td align="right"><b><fmt:formatNumber type="currency" value="${bill.total}" /></b></td>
-							</tr>
-							<tr>
-								<td align="right"><b>Due By: </b></td>
-								<td align="right">${bill.dueDateFr}</td>
-							</tr>
-						</table>
-					</td>
-				</tr>
+								</tbody>
+							</table>
+						</td>
+					</tr>
+				</tbody>
 			</table>
 		</center>
 		<br />

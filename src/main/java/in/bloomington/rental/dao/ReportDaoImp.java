@@ -194,7 +194,7 @@ public class ReportDaoImp implements ReportDao
 				}
 				else{ // valid rentals
 						// this means inactive is null and permit_expirss greter than
-						// 2 years as renew may take some time
+						// 2 years as renewal may take some time
 						dateType = " r.permit_expires ";
 						dateTo = "";dateFrom="";
 						active_only = true;

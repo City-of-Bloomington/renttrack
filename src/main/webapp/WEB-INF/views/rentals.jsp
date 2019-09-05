@@ -10,47 +10,49 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
   <fieldset>
     <legend>Rentals</legend>
 		<a href="${uri}new">New Rental</a>
-    <table class="wideTable">
-      <tr>
-				<th>ID</th>
-				<th>Status</th>
-				<th>Owner(s)</th>
-				<th>Agent</th>
-				<th>Registered Date</th>
-				<th>Last Cycle Date</th>
-				
-				<th>Permit Issue Date</th>
-				<th>Permit Expires</th>
-				<th>Permit Length</th>
-				<th>Zoning</th>
-				<th>N-Hood</th>
-				<th>Special Features</th>
-				<th>Active</th>
-				<th>Action</th>
-			</tr>
-      <c:forEach items="${rentals}" var="one">
-				<tr>				
-					<td><a href="${uri}view/${one.id}">${one.id}</a></td>
-					<td>${one.rentalStatus}</td>					
-					<td>${one.ownersInfo}</td>
-					<td>${one.agent}</td>					
-					<td>${one.registeredDateFr}</td>
-					<td>${one.lastCycleDateFr}</td>
-					
-					<td>${one.permitIssuedFr}</td>
-					<td>${one.permitExpiresFr}</td>
-					<td>${one.permitLength}</td>
-					<td>${one.zoning}</td>
-					<td>${one.NHood}</td>
-					<td>${one.features}</td>
-					<td>
-						${empty one.inactive ? "Active":"Inactive"}
-					</td>
-					<td>
-						<a href="${uri}delete/${one.id}">Delete</a>
-					</td>
+    <table>
+			<thead>
+				<tr>
+					<th scope="col">ID</th>
+					<th scope="col">Status</th>
+					<th scope="col">Owner(s)</th>
+					<th scope="col">Agent</th>
+					<th scope="col">Registered Date</th>
+					<th scope="col">Last Cycle Date</th>
+					<th scope="col">Permit Issue Date</th>
+					<th scope="col">Permit Expires</th>
+					<th scope="col">Permit Length</th>
+					<th scope="col">Zoning</th>
+					<th scope="col">N-Hood</th>
+					<th scope="col">Special Features</th>
+					<th scope="col">Active</th>
+					<th scope="col">Action</th>
 				</tr>
-      </c:forEach>
+			</thead>
+			<tbody>
+				<c:forEach items="${rentals}" var="one">
+					<tr>				
+						<td><a href="${uri}view/${one.id}">${one.id}</a></td>
+						<td>${one.rentalStatus}</td>					
+						<td>${one.ownersInfo}</td>
+						<td>${one.agent}</td>					
+						<td>${one.registeredDateFr}</td>
+						<td>${one.lastCycleDateFr}</td>
+						<td>${one.permitIssuedFr}</td>
+						<td>${one.permitExpiresFr}</td>
+						<td>${one.permitLength}</td>
+						<td>${one.zoning}</td>
+						<td>${one.NHood}</td>
+						<td>${one.features}</td>
+						<td>
+							${empty one.inactive ? "Active":"Inactive"}
+						</td>
+						<td>
+							<a href="${uri}delete/${one.id}">Delete</a>
+						</td>
+					</tr>
+				</c:forEach>
+			</tbody>
     </table>
   </fieldset>
 

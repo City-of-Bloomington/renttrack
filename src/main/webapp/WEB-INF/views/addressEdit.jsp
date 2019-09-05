@@ -17,96 +17,78 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 	</c:if>	
   <fieldset>
     <legend>Address</legend>
-    <table class="vertaTable">
-			<tr>
-				<th>ID</th>
-				<td>${address.id}</td>
-			</tr>
-			<c:if test="${not empty address.unitId}">
-				<tr>
-					<th>Related Unit</th>
-					<td><a href="${uri}unit/${address.unitId}">Back to ${address.unitId}</a></td>					
-				</tr>
-			</c:if>			
-			<c:if test="${not empty address.rentalId}">
-				<tr>
-					<th>Related Rental</th>
-					<td><a href="${uri}view/${address.rentalId}">Back to ${address.rentalId}</a></td>					
-				</tr>
-			</c:if>			
-			<tr>
-        <th>Street Address</th>
-        <td>
-          <form:input path="streetAddress" id="addr_id" size="30" />
-					<button  id="address_id-chooserButton" type="button" class="choose"
-            onclick="ADDRESS_CHOOSER.start(handleChoice, {addressQuery:document.getElementById('addr_id').value})">Look up address</button>
-				</td>
-			</tr>
-			<tr>
-				<th>Master Address Id </th>
-				<td><form:input path="maAddressId" id="address_id" readonly="true"/>
-				</td>
-			</tr>
-			<tr>
-				<th>location Id </th>
-				<td>
-					<form:input path="maLocationId" id="location_id" readonly="true" />
-				</td>
-			</tr>
-			<tr>
-				<th>Subunit Id</th>
-				<td>
-					<form:input path="maSubunitId" id="subunit_id" readonly="true" />
-				</td>
-			</tr>
-			<tr>
-				<th>Latitude </th>
-				<td>
-					<form:input path="latitude" id="latitude" readonly="true" />
-				</td>
-			</tr>
-			<tr>
-				<th>Longitude</th>
-				<td>
-					<form:input path="longitude" id="longitude" readonly="true" />
-				</td>
-			</tr>
-			<tr>
-				<th>City</th>
-				<td>
-					<form:input path="city" size="30" id="city" /> 
-				</td>
-			</tr>
-			<tr>
-        <th>State</th>
-        <td>
-          <form:input path="state" size="2" id="state" /> 
-				</td>
-			</tr>
-			<tr>
-        <th>Zip</th>
-        <td>
-          <form:input path="zip" size="10" id="zip" /> 
-				</td>
-			</tr>			
-			<c:if test="${address.isInvalidAddr()}">
-				<tr>
-					<td colspan="2">Invalid Address</td>
-				</tr>
-			</c:if>
-		</table>
+			<div class="form-group">
+				<fieldset>
+					<div class="field-group">
+						<label>ID: </label>
+						${address.id}
+					</div>
+					<c:if test="${not empty address.unitId}">
+						<div class="field-group">
+							<label>Related Unit</label>
+							<a href="${uri}unit/${address.unitId}">Back to ${address.unitId}</a>			
+						</div>
+					</c:if>			
+					<c:if test="${not empty address.rentalId}">
+						<div class="field-group">				
+							<label>Related Rental</label>
+							<a href="${uri}view/${address.rentalId}" class="button">Back to ${address.rentalId}</a>					
+						</div>
+					</c:if>			
+					<div class="field-group">						
+						<label for="addr_id">Street Address</label>
+						<form:input path="streetAddress" id="addr_id" size="30" />
+						<button  id="address_id-chooserButton" type="button" class="choose"
+							onclick="ADDRESS_CHOOSER.start(handleChoice, {addressQuery:document.getElementById('addr_id').value})">Look up address</button>
+					</div>
+					<div class="field-group">					
+						<label>Master Address Id </label>
+						<form:input path="maAddressId" id="address_id" readonly="true"/>
+					</div>
+					<div class="field-group">					
+						<label>location Id </label>
+						<form:input path="maLocationId" id="location_id" readonly="true" />
+					</div>
+					<div class="field-group">			
+						<label>Subunit Id</label>
+						<form:input path="maSubunitId" id="subunit_id" readonly="true" />
+					</div>
+					<div class="field-group">			
+						<label>Latitude </label>
+						<form:input path="latitude" id="latitude" readonly="true" />
+					</div>
+					<div class="field-group">		
+						<label>Longitude</label>
+						<form:input path="longitude" id="longitude" readonly="true" />
+					</div>
+					<div class="field-group">		
+						<label for="city">City</label>
+						<form:input path="city" size="30" id="city" /> 
+					</div>
+					<div class="field-group">		
+						<label for="state">State</label>
+						<form:input path="state" size="2" id="state" /> 
+					</div>
+					<div class="field-group">		
+						<label for="zip">Zip</label>
+						<form:input path="zip" size="10" id="zip" /> 
+					</div>
+					<c:if test="${address.isInvalidAddr()}">
+						<div class="field-group">
+							<label>&nbsp;</label>
+							Invalid Address
+						</div>
+					</c:if>
+				</fieldset>
+			</div>
 	</fieldset>
 	<fieldset>
-		<table class="submitTable">
-			<tr>
-        <td>
-					<button type="submit">Save Changes</button>
-				</td>
-				<td>
-					<input type="button" value="Delete" onclick="window.location='${uri}addressDelete/${address.id}'" />		
-				</td>
-      </tr>
-    </table>
+		<div>
+			<div>
+				<button type="submit">Save Changes</button>
+				<input type="button" value="Delete" onclick="window.location='${uri}addressDelete/${address.id}'" class="button" />		
+			</div>
+		</div>
 	</fieldset>
 </form:form>
 <br />

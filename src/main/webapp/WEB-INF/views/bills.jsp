@@ -6,27 +6,28 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <c:if test="${not empty message}">
   <h4> ${message} </h4>
 </c:if>
-  <fieldset>
-    <legend>Bills</legend>
-    <table class="wideTable">
-      <tr>
-				<th>ID</th>
-				<th>Issue Date</th>
-				<th>Due Date</th>
-				<th>Total</th>
-				<th>Status</th>
+<table>
+	<caption>Bills</caption>
+	<thead>
+		<tr>
+			<th scope="col">ID</th>
+			<th scope="col">Issue Date</th>
+			<th scope="col">Due Date</th>
+			<th scope="col">Total</th>
+			<th scope="col">Status</th>
+		</tr>
+	</thead>
+	<tbody>
+		<c:forEach items="${rental.bills}" var="bill">
+			<tr>				
+				<td><a href="${uri}billView/${bill.id}">${bill.id}</a></td>
+				<td>${bill.issueDateFr}</td>					
+				<td>${bill.dueDateFr}</td>
+				<td>${bill.total}</td>
+				<td>${bill.status}</td>
 			</tr>
-      <c:forEach items="${rental.bills}" var="bill">
-				<tr>				
-					<td><a href="${uri}billView/${bill.id}">${bill.id}</a></td>
-					<td>${bill.issueDateFr}</td>					
-					<td>${bill.dueDateFr}</td>
-					<td>${bill.total}</td>
-					<td>${bill.status}</td>
-				</tr>
-      </c:forEach>
-    </table>
-  </fieldset>
-
+		</c:forEach>
+	</tbody>
+</table>
 </body>
 </html>

@@ -4,7 +4,6 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <jsp:include page="header.jsp" />
-<body>
 	<c:if test="${not empty message}">
 		<p>${message}</p>
 	</c:if>		
@@ -15,107 +14,79 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 		<form:hidden path="inspectFile" />
 		<fieldset>
 			<legend>Edit Inspection</legend>
-      <table>
-        <tr>
-          <th>Related Rental </th>
-          <td><a href="${uri}view/${inspection.rental.id}"> ${inspection.rental.id}</a>
-					</td>
-				</tr>
-				<tr>
-          <th>Inspection Type</th>
-          <td>
+			<div class="form-group">
+				<fieldset>
+					<div>
+						<label>Related Rental </label>
+						<a href="${uri}view/${inspection.rental.id}"> ${inspection.rental.id}</a>
+					</div>
+					<div>
+          <label>Inspection Type</label>
             <form:select path="inspectionType.id" items="${inspectionTypes}" itemValue="id" itemLabel="name" /> 
-          </td>
-				</tr>
-				<tr>
-          <th>Inspection By</th>
-          <td>
+					</div>
+					<div>
+						<label>Inspection By</label>
             <form:select path="inspector.id" items="${inspectors}" itemValue="id" itemLabel="fullName" /> 
-          </td>
-				</tr>				
-				<tr>
-          <th>Inspection Date</th>
-					<td><form:input path="inspectionDateFr" cssClass="date" />  </td>
-				</tr>
-				<tr>
-          <th>Compliance Date</th>
-					<td><form:input path="complianceDateFr" cssClass="date" />  </td>
-				</tr>				
-				<tr>
-					<th>Accessory</th>
-          <td>
+					</div>
+					<div class="form-field">
+						<label>Inspection Date</label>
+						<form:input path="inspectionDateFr" cssClass="date" />
+					</div>
+					<div class="form-field">
+						<label>Compliance Date</label>
+						<form:input path="complianceDateFr" cssClass="date" />
+					</div>
+					<div class="form-field">
+						<label>Accessory</label>
             <form:input path="accessory" size="30" />
-          </td>
-				</tr>
-				<tr>
+					</div>
+					<div class="form-field">
 					<th>Violations</th>
-          <td>
-            <form:input path="violations" size="2" />
-          </td>
-				</tr>
-				<tr>
-					<th>Smoke Detectors #</th>
-          <td>
+          <form:input path="violations" size="2" />
+					</div>
+					<div class="form-field">
+					<label>Smoke Detectors #</label>
             <form:input path="smokeDetectors" size="2" />
-          </td>
-				</tr>
-				<tr>
-					<th>Life Safery #</th>
-          <td>
+					</div>
+					<div class="form-field">
+						<label>Life Safery #</label>
             <form:input path="lifeSafety" size="2" />
-          </td>
-				</tr>
-				<tr>
-					<th>Time Spent</th>
-          <td>
+					</div>
+					<div class="form-field">
+					<label>Time Spent</label>
             <form:input path="timeSpent" size="5" />(hh.mm) 
-          </td>
-				</tr>
-				<tr>
-					<th>Time Status</th>
-					<td>${inspection.timeStatus}</td>
-				</tr>
-				<c:if test="${not empty inspection.inspectFile}">
-					<tr>
-						<th>Inspection File</th>
-						<td><a href="${uri}inspectDownload/${inspection.id}">Download ${inspection.inspectFile}</a></td>
-					</tr>
-				</c:if>
-				<tr>
-					<th> </th>
-          <td>
-            <form:checkbox path="cancelled" value="y" />Cancel this inspection
-          </td>
-				</tr>
-			</table>
-		</fieldset>
-		<fieldset>
-		<div class="menu">
-			<ul class="menu">
-				<li class="menu">					
-					<button type="submit">Save Changes</button>
-				</li>
-					<c:if test="${inspection.canBeApproved()}">
-						<li class="menu">			
-							<input type="button" value="Approve Inspection" onclick="window.location='${uri}inspectionApprove/${inspection.id}'" />
-						</li>
+					</div>
+					<div class="form-field">
+						<label>Time Status: </label>
+						${inspection.timeStatus}
+					</div>
+					<c:if test="${not empty inspection.inspectFile}">
+						<div>
+							<label>Inspection File:</label>
+							<a href="${uri}inspectDownload/${inspection.id}">Download ${inspection.inspectFile}</a>
+						</div>
 					</c:if>
-					<li class="menu">			
-						<input type="button" value="New Attachement" onclick="window.location='${uri}attachmentNew/inspection/${inspection.id}'" />
-					</li>
+					<div>
+						<form:checkbox path="cancelled" value="y" />Cancel this inspection
+					</div>
+				</fieldset>
+				<div>
+					<div>
+						<button type="submit" class="button">Save Changes</button>
+						<c:if test="${inspection.canBeApproved()}">
+							<input type="button" value="Approve Inspection" onclick="window.location='${uri}inspectionApprove/${inspection.id}'" class="button"/>
+					</c:if>
+						<input type="button" value="New Attachement" onclick="window.location='${uri}attachmentNew/inspection/${inspection.id}'" class="button"/>
 					<c:if test="${!inspction.hasFile()}">
-						<li class="menu">			
-							<button onclick="window.location='${uri}inspectionCanNew/${inspection.id}';return false;">Add Cans</button>
-						</li>
+						<button onclick="window.location='${uri}inspectionCanNew/${inspection.id}';return false;" class="button">Add Cans</button>
 						<c:if test="${inspection.hasInspectionCans()}">
-							<li class="menu">			
-								<button onclick="window.location='${uri}inspectionCreateFile/${inspection.id}';return false;">Generate Inspction File</button>
-							</li>
+							<button onclick="window.location='${uri}inspectionCreateFile/${inspection.id}';return false;" class="button">Generate Inspction File</button>
 						</c:if>
 					</c:if>						
-			</ul>
-		</div>
-		</fieldset>			
+					</div>
+				</div>
+			</div>
+		</fieldset>
   </form:form>
 	<c:if test="${inspection.hasInspectionCans()}">
 		<jsp:include page="inspectionCans.jsp" />	

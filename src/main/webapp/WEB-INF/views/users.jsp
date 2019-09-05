@@ -10,26 +10,30 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
   <fieldset>
     <legend>Users</legend>
 		<a href="${uri}userNew">New User</a>
-    <table class="outTable">
-      <tr>
-				<th>ID</th>
-				<th>Username</th>
-				<th>Full Name</th>
-				<th>Role</th>
-				<th>Active?</th>
-			</tr>
-      <c:forEach items="${users}" var="user">
-				<tr>				
-					<td><a href="${uri}user/${user.id}">${user.id}</a></td>
-					<td>${user.username}</td>
-					<td>${user.fullName}</td>
-					<td>${user.role}</td>					
-					<td>
-						<c:if test="${user.isActive()}">Yes</c:if>
-						<c:if test="${!user.isActive()}">No</c:if>
-					</td>
+    <table>
+			<thead>
+				<tr>
+					<th scope="col">ID</th>
+					<th scope="col">Username</th>
+					<th scope="col">Full Name</th>
+					<th scope="col">Role</th>
+					<th scope="col">Active?</th>
 				</tr>
-      </c:forEach>
+			</thead>
+			<tbody>
+				<c:forEach items="${users}" var="user">
+					<tr>				
+						<td><a href="${uri}user/${user.id}">${user.id}</a></td>
+						<td>${user.username}</td>
+						<td>${user.fullName}</td>
+						<td>${user.role}</td>					
+						<td>
+							<c:if test="${user.isActive()}">Yes</c:if>
+							<c:if test="${!user.isActive()}">No</c:if>
+						</td>
+					</tr>
+				</c:forEach>
+			</tbody>
     </table>
   </fieldset>
 </body>

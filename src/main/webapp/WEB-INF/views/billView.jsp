@@ -12,70 +12,73 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 		</ul>		
     <table border="1">
 			<caption>Standard Fees</caption>
-			<tr>
-				<td>Related Rental</td>
-				<td>${bill.rental.id}</td>
-			</tr>
-			<tr>
-        <td>Single Family House Rate:</td>
-        <td>
-          $${bill.singleBuildingRate}  
-        </td>
-        <td>Multi Building Rate:</td>
-        <td>
-          $${bill.multiBuildingRate}  
-        </td>
-			</tr>
-			<tr>
-        <td>Condo Building Rate:</td>
-        <td>
-          $${bill.condoBuildingRate}  
-        </td>
-        <td>Rooming Building Rate:</td>
-        <td>
-          $${bill.roomingBuildingRate}  
-        </td>
-			</tr>
-			<tr>					
-        <td>Unit Rate:</td>
-        <td>
-          $${bill.unitRate} 
-        </td>					
-        <td>Rooming House per bathroom Rate:</td>
-        <td>
-          $${bill.bathRate}
-        </td>
-			</tr>
-			<tr>
-        <td>Reinspection Fee:</td>
-        <td>
-          $${bill.reinspRate} 
-        </td>					
-        <td>No Show Fee:</td>
-        <td>
-          $${bill.noshowRate} 
-        </td>
+			<tbody>
+				<tr>
+					<th scope="row">Related Rental</th>
+					<td>${bill.rental.id}</td>
 				</tr>
 				<tr>
-          <td>Appeal Fee:</td>
+					<th scope="row">Single Family House Rate:</th>
+					<td>
+						$${bill.singleBuildingRate}  
+					</td>
+					<th scope="row">Multi Building Rate:</th>
+					<td>
+						$${bill.multiBuildingRate}  
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">Condo Building Rate:</th>
+					<td>
+						$${bill.condoBuildingRate}  
+					</td>
+					<th scope="row">Rooming Building Rate:</th>
+					<td>
+						$${bill.roomingBuildingRate}  
+					</td>
+				</tr>
+				<tr>					
+					<th scopre="row">Unit Rate:</th>
+					<td>
+						$${bill.unitRate} 
+					</td>					
+					<th scope="row">Rooming House per bathroom Rate:</th>
+					<td>
+          $${bill.bathRate}
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">Reinspection Fee:</th>
+					<td>
+						$${bill.reinspRate} 
+					</td>					
+					<th scope="row">No Show Fee:</th>
+					<td>
+						$${bill.noshowRate} 
+					</td>
+				</tr>
+				<tr>
+          <th scope="row">Appeal Fee:</th>
           <td>
             $${bill.appealFee} 
           </td>
 				</tr>
 				<tr>
-          <td>Summary Failure Rate:</td>
+          <th scope="row">Summary Failure Rate:</th>
           <td>
             $${bill.summaryRate} 
           </td>
-          <td>IDL Rate:</td>
+          <th scope="row">IDL Rate:</th>
           <td>
             $${bill.idlRate} 
           </td>					
 				</tr>
-			</table>
-			<br />
-			<table border="1">
-				<caption>This Rental Specific Fees</caption>
+			</tbody>
+		</table>
+		<br />
+		<table border="1">
+			<caption>This Rental Specific Fees</caption>
+			<tbody>
 				<c:if test="not empty bill.appeal">
 					<tr>
 						<td>
@@ -84,77 +87,77 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 					</tr>
 				</c:if>
 				<tr>
-          <td>Single Family House #:</td>
+          <th scope="row">Single Family House #:</th>
           <td>
             ${bill.singleBuildingCnt} 
           </td>
-          <td>Multi Building #:</td>
+          <th scope="row">Multi Building #:</th>
           <td>
             ${bill.multiBuildingCnt} 
           </td>
 				</tr>				
 				<tr>					
-          <td>Condo Building #:</td>
+          <th scope="row">Condo Building #:</th>
           <td>
             ${bill.condoBuildingCnt} 
           </td>
-          <td>Rooming House #:</td>
+          <th scope="row">Rooming House #:</th>
           <td>
             ${bill.roomingBuildingCnt} 
           </td>
 				</tr>				
 				<tr>							
-          <td>Units:</td>
+          <th scope="row">Units:</th>
           <td>
             ${bill.unitCnt}
           </td>
 				</tr>				
 				<tr>
-          <td>Rooming baths:</td>
+          <th scope="row">Rooming baths:</th>
           <td>
             ${bill.bathCnt} 
           </td>
-          <td>B.H.Q.A Fee:</td>
+          <th scope="row">B.H.Q.A Fee:</th>
           <td>
             $${bill.bhqaFine}
           </td>					
 				</tr>
 				<tr>
-					<td>Credits:</td>
+					<th scope="row">Credits:</th>
 					<td>
             $${bill.credit}
           </td>					
-          <td>Number of Reinspection:</td>
+          <th scope="row">Number of Reinspection:</th>
           <td>
             ${bill.reinspCnt}
           </td>
 				</tr>
 				<tr>
-          <td>Number of no show</td>
+          <th scope="row">Number of no show</th>
           <td>
             ${bill.noshowCnt} 
           </td>
-          <td>IDL Count:</td>
+          <th scope="row">IDL Count:</th>
           <td>
             ${bill.idlCnt}
           </td>					
 				</tr>
 				<tr>
-          <td>Summary Failure Count:</td>
+          <th scope="row">Summary Failure Count:</th>
           <td>
             ${bill.summaryCnt} 
           </td>
-					<td>Status</td>
+					<th scope="row">Status</th>
 					<td>${bill.status}</td>
 				</tr>
 				<tr>
-          <td>Dates of Noshow:</td>
+          <th scope="row">Dates of Noshow:</th>
           <td colspan="3">
             ${bill.noshowDates} 
           </td>
 				</tr>
 				<tr>
-					<td>Dates of Reinspection:</td>
+					<th scope="row">Dates of Reinspection:</th>
           <td colspan="3">
             ${bill.reinspDates}
           </td>
@@ -176,50 +179,53 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 					</tr>
 				</c:if>				
 				<tr>
-          <td>Bill Issue Date:</td>
+          <th scope="row">Bill Issue Date:</th>
           <td>
             ${bill.issueDateFr}
           </td>
-          <td>Bill Due Date:</td>
+          <th scope="row">Bill Due Date:</th>
           <td>
             ${bill.dueDateFr}
           </td>
 				</tr>
 				<tr>
-          <td>Inspection Fee:</td>
+          <th scope="row">Inspection Fee:</th>
           <td>
             $${bill.inspectionFee} 
           </td>
-					<td>Total</td>
+					<th scope="row">Total</th>
 					<td>$${bill.total}</td>
 				</tr>
 				<c:if test="${bill.isUnpaid()}">				
 					<tr>
 						<td colspan="2"></td>
-						<td>Balance</td>
+						<th scope="row">Balance</th>
 						<td>
 							$${bill.balance} 
 						</td>
 					</tr>
 				</c:if>
-			</table>
+			</tbody>
+		</table>
 	</fieldset>
 	<c:if test="${bill.isUnpaid()}">
 		<fieldset>
-			<table class="submitTable">
-				<tr>
-					<td>
-						<input type="button" onclick="window.location='${uri}billEdit/${bill.id}'" value="Edit" />
-					</td>
-					<td>
-						<input type="button" onclick="window.location='${uri}billPrint/${bill.id}'" value="Printable" />
-					</td>
-					<c:if test="${bill.isUnpaid()}">
+			<table>
+				<tbody>
+					<tr>
 						<td>
-							<input type="button" onclick="window.location='${uri}receiptNew/${bill.id}'" value="New Receipt" />
+							<input type="button" onclick="window.location='${uri}billEdit/${bill.id}'" value="Edit" />
 						</td>
-					</c:if>
-				</tr>
+						<td>
+							<input type="button" onclick="window.location='${uri}billPrint/${bill.id}'" value="Printable" />
+						</td>
+						<c:if test="${bill.isUnpaid()}">
+							<td>
+								<input type="button" onclick="window.location='${uri}receiptNew/${bill.id}'" value="New Receipt" />
+							</td>
+						</c:if>
+					</tr>
+				</tbody>
 			</table>
 		</fieldset>
 	</c:if>

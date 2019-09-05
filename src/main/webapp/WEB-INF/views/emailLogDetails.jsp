@@ -5,42 +5,30 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <jsp:include page="header.jsp" />
   <fieldset>
     <legend>Email Log Details</legend>
-		<table class="vertaTable">
-			<tr>
-				<th>Log ID</th>
-				<td>${emailLog.id}</td>
-			</tr>
-			<tr>
-				<th>Date</th>
-				<td>${emailLog.dateFr}</td>
-			</tr>
-			<tr>
-				<th>Email From</th>
-				<td>${emailLog.emailFrom}</td>
-			</tr>
-			<tr>
-				<th>User Initiated</th>
-				<td>${emailLog.user}</td>
-			</tr>
-			<tr>
-				<th>Category</th>
-				<td>${emailLog.type}</td>
-			</tr>
-		</table>
+		<ul>
+			<li>Log ID ${emailLog.id}</li>
+			<li>Date ${emailLog.dateFr}</li>
+			<li>Email From ${emailLog.emailFrom}</li>
+			<li>User Initiated ${emailLog.user}</li>
+			<li>Category ${emailLog.type}</li>
+		</ul>
 		<br />
 		<c:if test="${emailLog.emailDetailLogs.size() > 0}">
 			Note: if an email did not go through an error text will be shown in the 'Status' column stating the reason.<br /><br />
-			<table class="wideTable">
+			<table>
 				<caption>Total emails in this run ${emailLog.emailDetailLogs.size()}</caption>
+				<thead>
 				<tr>
-					<th>to</th>
-					<th>cc</th>
-					<th>bcc</th>
-					<th>Owner IDs</th>
-					<th>Agent IDs</th>
-					<th>Rental IDs</th>
-					<th>Status?</th>
+					<th scope="col">to</th>
+					<th scope="col">cc</th>
+					<th scope="col">bcc</th>
+					<th scope="col">Owner IDs</th>
+					<th scope="col">Agent IDs</th>
+					<th scope="col">Rental IDs</th>
+					<th scope="col">Status?</th>
 				</tr>
+				</thead>
+				<tbody>
 				<c:forEach items="${emailLog.emailDetailLogs}" var="log">
 					<tr>
 						<td>${log.logToClean}</td>									
@@ -55,6 +43,7 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 						</td>
 					</tr>
 				</c:forEach>
+				</tbody>
 			</table>
 		</c:if>
   </fieldset>

@@ -9,124 +9,71 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 	</c:if>		
   <fieldset>
     <legend>Rental Details</legend>
-    <table class="vertaTable">
-      <tr>
-				<th>ID</th>
-				<td><a href="${uri}edit/${rental.id}">Edit ${rental.id}</a></td>
-			</tr>
-			<c:if test="${rental.hasAddresses()}">
-				<tr>
-					<td colspan="2">
-						<jsp:include page="addresses.jsp" />	
-					</td>
-				</tr>
-			</c:if>			
-			<c:if test="${rental.hasOwners()}">
-				<tr>
-					<td colspan="2">
+      <ul>
+				<li>ID: <a href="${uri}edit/${rental.id}">Edit ${rental.id}</a></li>
+				<c:if test="${rental.hasAddresses()}">
+					<li>Address(es) 
+						<jsp:include page="addresses.jsp" />
+					</li>
+				</c:if>			
+				<c:if test="${rental.hasOwners()}">
+					<li>
 						<jsp:include page="rentalOwnersView.jsp" />	
-					</td>
-				</tr>
-			</c:if>
-			<tr>
-				<th>Status</th>
-				<td>${rental.rentalStatus}</td>
-			</tr>
-			<tr>
-				<th>Agent</th>
-				<td>
+					</li>
+				</c:if>
+				<li>Status: ${rental.rentalStatus}</li>
+				<li>Agent:
 					<c:if test="${rental.hasAgent()}">
 						${rental.agent} (${rental.agent.address}) (${rental.agent.phonesInfo})
 					</c:if>
 					<c:if test="${!rental.hasAgent()}">
 						No Agent
 					</c:if>
-				</td>
-			</tr>
-			<tr>
-				<th>Registered Date</th>
-				<td>${rental.registeredDateFr}</td>
-			</tr>
-			<tr>				
-				<th>Last Cycle Date</th>
-				<td>${rental.lastCycleDateFr}</td>
-			</tr>
-			<tr>				
-				<th>Permit Issue Date</th>
-				<td>${rental.permitIssuedFr}</td>
-			</tr>
-			<tr>				
-				<th>Permit Expires</th>
-					<td>${rental.permitExpiresFr}</td>
-			</tr>
-			<tr>				
-				<th>Permit Length</th>
-					<td>${rental.permitLength} (yrs)</td>
-			</tr>
-			<tr>
-				<th>Zoning</th>
-					<td>${rental.zoning}</td>				
-			</tr>
-			<tr>	
-				<th>N-Hood</th>
-				<td>${rental.NHood}</td>								
-			</tr>
-			<c:if test="${not empty rental.features}">
-				<tr>			
-					<th>Special Features</th>
-					<td>${rental.features}</td>			
-				</tr>
-			</c:if>
-			<c:if test="${not empty rental.inactive}">			
-				<tr>
-					<th>Active Status</th>
-					<td>Inactive Rental</td>
-				</tr>
-			</c:if>
-		</table>
+				</li>
+				<li>Registered Date: ${rental.registeredDateFr}</li>
+				<li>Last Cycle Date: ${rental.lastCycleDateFr}</li>
+				<li>Permit Issue Date: ${rental.permitIssuedFr}</li>
+
+				<li>Permit Expires: ${rental.permitExpiresFr}</li>
+
+				<li>Permit Length: ${rental.permitLength} (yrs)</li>
+				<li>Zoning: ${rental.zoning}</li>				
+				<li>N-Hood: ${rental.NHood}</li>								
+				<c:if test="${not empty rental.features}">
+					<li>Special Features: ${rental.features}</li>
+				</c:if>
+				<c:if test="${not empty rental.inactive}">			
+					<li>Status: Inactive Rental</li>
+				</c:if>
+			</ul>
 	</fieldset>
-	<fieldset>
-		<div class="menu">
-		<ul class="menu">
-			<li class="menu">
-				<input type="button" value="Add Owners" onclick="window.location='${uri}addOwners/${rental.id}'" />
-			</li>
-			<li class="menu">
-				<input type="button" value="Add Address" onclick="window.location='${uri}addressNew/rental/${rental.id}'" />
-			</li>			
-			<li class="menu">
-				<input type="button" value="New Structures" onclick="window.location='${uri}structureNew/${rental.id}'" />
-			</li>
-			<li class="menu">
-				<input type="button" value="New Notes" onclick="window.location='${uri}noteNew/${rental.id}'" />
-			</li>
-			<li class="menu">
-				<input type="button" value="New Pull History" onclick="window.location='${uri}pullNew/${rental.id}'" />
-			</li>
-			<li class="menu">
-					<input type="button" value="New Bill" onclick="window.location='${uri}billNew/${rental.id}'" />
-			</li>
-			<li class="menu">
-					<input type="button" value="New Attachment" onclick="window.location='${uri}attachmentNew/rental/${rental.id}'" />
-			</li>
-			<li class="menu">
-					<input type="button" value="New Inspection" onclick="window.location='${uri}inspectionNew/${rental.id}'" />
-			</li>
-			<li class="menu">
-					<input type="button" value="New Variance" onclick="window.location='${uri}varianceNew/${rental.id}'" />
-			</li>
-			<li class="menu">
-					<input type="button" value="Start Legal" onclick="window.location='${uri}startLegal/${rental.id}'" />
-			</li>
-			<li class="menu">
-					<input type="button" value="Inspection Template" onclick="window.location='${uri}templateNew/${rental.id}'" />
-			</li>
-			<li class="menu">
-					<input type="button" value="Permit" onclick="window.location='${uri}permit/${rental.id}'" />
-			</li>			
-		</ul>
-		</div>
-	</fieldset>
+	<div class="form-group">
+		<fieldset>
+			<input type="button" value="Add Owners" onclick="window.location='${uri}addOwners/${rental.id}'" class="button"/>
+			
+			<input type="button" value="Add Address" onclick="window.location='${uri}addressNew/rental/${rental.id}'" class="button"/>
+			
+			<input type="button" value="New Structures" onclick="window.location='${uri}structureNew/${rental.id}'" class="button"/>
+
+			<input type="button" value="New Notes" onclick="window.location='${uri}noteNew/${rental.id}'" class="button"/>
+			
+			<input type="button" value="New Pull History" onclick="window.location='${uri}pullNew/${rental.id}'" class="button"/>
+
+			<input type="button" value="New Bill" onclick="window.location='${uri}billNew/${rental.id}'" class="button"/>
+			
+			<input type="button" value="New Attachment" onclick="window.location='${uri}attachmentNew/rental/${rental.id}'" class="button"/>
+
+			<input type="button" value="New Inspection" onclick="window.location='${uri}inspectionNew/${rental.id}'" class="button"/>
+
+			<input type="button" value="New Variance" onclick="window.location='${uri}varianceNew/${rental.id}'" class="button"/>
+
+			<input type="button" value="Start Legal" onclick="window.location='${uri}startLegal/${rental.id}'" class="button"/>
+
+			<input type="button" value="Inspection Template" onclick="window.location='${uri}templateNew/${rental.id}'" class="button"/>
+
+			<input type="button" value="Permit" onclick="window.location='${uri}permit/${rental.id}'" class="button"/>
+		</fieldset>
+	</div>
 	<c:if test="${rental.hasStructures()}">
 		<details open="true">
 			<summary>Structures</summary>

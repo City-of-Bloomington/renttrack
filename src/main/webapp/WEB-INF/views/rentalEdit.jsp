@@ -14,148 +14,116 @@ charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 	</c:if>			
 	<fieldset>
 		<legend>Edit Rental</legend>
-		<table class="vertaTable">
-			<tr>
-				<th>ID</th>
-				<td>${rental.id}</td>
-			</tr>
+		<ul>
+			<li>ID: ${rental.id}</li>
 			<c:if test="${rental.hasAddresses()}">
-				<tr>
-					<td colspan="2">
-						<jsp:include page="addresses.jsp" />	
-					</td>
-				</tr>
+				<li>
+					<jsp:include page="addresses.jsp" />
+				</li>
 			</c:if>				
 			<c:if test="${rental.hasOwners()}">
-				<tr>
-					<td colspan="2">
-						<jsp:include page="rentalOwners.jsp" />	
-						</td>
-				</tr>
+				<li>
+					<jsp:include page="rentalOwnersView.jsp" />	
+				</li>
 			</c:if>
-			<tr>
-				<th>Status</th>
-				<td>
-					<form:select path="status_id"> 
+		</ul>
+		<div class="form-group">
+			<fieldset>
+				<div class="field-group">		
+					<label for="status_id">Status:</label>
+					<form:select path="status_id" title="Rental status" > 
 						<form:option value="2" label="Registered" />
 						<form:options items="${statuses}" itemValue="id" />
 					</form:select>
 					<form:errors path="rentalStatus" cssClass="error" />
-				</td>
-			</tr>
-			<tr>
-				<th>Agent</th>
-				<td>
+				</div>
+				<div class="field-group">		
+					<label>Agent:</label>
 					<c:if test="${rental.hasAgent()}">
-						${rental.agent} (${rental.agent.address}) (${rental.agent.phonesInfo}) <input type="button" value="Remove Agent" onclick="window.location='${uri}removeAgent/${rental.id}'" />
+						${rental.agent} (${rental.agent.address}) (${rental.agent.phonesInfo}) <button type="button" onclick="window.location='${uri}removeAgent/${rental.id}'" class="button" title="Remove this agent from this rental">Remove Agent </button>
 					</c:if>
 					<c:if test="${!rental.hasAgent()}">
-						Name
-						<form:input path="agent_name" size="30" id="owner_name" />Agent ID:
+						Name:
+						<form:input path="agent_name" size="30" id="owner_name" title="Type Agent name to pick from the list" />Agent ID:
 						<form:input path="agentId" size="10" maxlength="10" id="owner_id" />
 					</c:if>
-				</td>
-			</tr>
-			<tr>
-				<th>Registered Date</th>
-				<td>
-					<form:input path="registeredDateFr" size="10" maxlength="10" cssClass="date" /></td>
-			</tr>
-			<tr>				
-				<th>Last Cycle Date</th>
-				<td><form:input path="lastCycleDateFr" size="10" maxlength="10" cssClass="date" /></td>	
-			</tr>
-			<tr>				
-				<th>Permit Issue Date</th>
-				<td><form:input path="permitIssuedFr" size="10" maxlength="10" cssClass="date" /></td>
-			</tr>
-			<tr>				
-				<th>Permit Expires</th>
-					<td><form:input path="permitExpiresFr" size="10" maxlength="10" cssClass="date" /></td>
-			</tr>
-			<tr>				
-				<th>Permit Length</th>
-				<td><form:input path="permitLength" size="2" maxlength="2" /> (yrs)</td>				
-			</tr>
-			<tr>
-				<th>Zoning</th>
-				<td><form:select path="zoning_id"> 
-					<form:option value="" label="Pick Zoning" />
-					<form:options items="${zonings}" itemValue="id" />
-				</form:select>				
-				</td>
-			</tr>
-			<tr>	
-				<th>N-Hood</th>
-				<td>
-					<form:select path="NHood"> 
+				</div>
+				<div>		
+					<label for="registeredDateFr">Registered Date: </label>
+					<form:input path="registeredDateFr" size="10" maxlength="10" cssClass="date" title="Registered date" />
+				</div>
+				<div>		
+					<label for="lastCycleDateFr">Last Cycle Date: </label>
+					<form:input path="lastCycleDateFr" size="10" maxlength="10" cssClass="date" title="Last cycle date"/>	
+				</div>
+				<div>		
+					<label for="permitIssuedFr">Permit Issue Date: </label>
+					<form:input path="permitIssuedFr" size="10" maxlength="10" cssClass="date" title="Permit issued date" />
+				</div>
+				<div>		
+					<label for="permitExpiresFr">Permit Expires: </label>
+					<form:input path="permitExpiresFr" size="10" maxlength="10" cssClass="date" title="Permit expire date"/>
+				</div>
+				<div>		
+					<label for="permitLength">Permit Length: </label>
+					<form:input path="permitLength" size="2" maxlength="2" title="Permit length in years" /> (yrs)
+				</div>
+				<div class="field-group">		
+					<label for="zoning_id">Zoning: </label>
+					<form:select path="zoning_id" title="Zoning" > 
+						<form:option value="" label="Pick Zoning" />
+						<form:options items="${zonings}" itemValue="id" />
+					</form:select>				
+				</div>
+				<div class="field-group">	
+					<label for="NHood">N-Hood: </label>
+					<form:select path="NHood" title="Neighbordhood" > 
 						<form:option value="" label="Pick Neighborhood" />
 						<form:options items="${nhoods}" />
 					</form:select>									
-				</td>
-			</tr>
-			<tr>
-				<th>Grandfathered?</th>
-				<td><form:checkbox path="grandfathered" value="y" /></td>
-			</tr>
-			<tr>
-				<th>CDBG Funding?</th>
-				<td><form:checkbox path="cdbgFunding" value="y" /></td>
-			</tr>
-			<tr>
-				<th>Affordable?</th>
-				<td><form:checkbox path="affordable" value="y" /></td>
-			</tr>
-			<tr>
-				<th>Inactive?</th>
-				<td><form:checkbox path="inactive" value="y" /></td>
-			</tr>
-		</table>
+				</div>
+				<div>	
+					<form:checkbox path="grandfathered" value="y" title="Is grandfathered"/>
+					<label for="grandfathered">Grandfathered</label>					
+				</div>
+				<div>	
+					<form:checkbox path="cdbgFunding" value="y" title="Is CDBG Funding"/>
+					<label for="cdbgFunding">CDBG Funding</label>					
+				</div>
+				<div>	
+					<form:checkbox path="affordable" value="y" title="Affordable Designation"/>
+					<label for="affordable">Affordable</label>
+				</div>
+				<div>	
+					<form:checkbox path="inactive" value="y" title="Is inactive" />
+					<label for="inactive">Inactive</label>
+				</div>
+			</fieldset>
+		</div>
 	</fieldset>
 	<fieldset>
-		<div class="menu">
-			<ul class="menu">
-				<li class="menu">
-					<button type="submit">Save Changes</button>
-				</li>
-				<li class="menu">
-					<input type="button" value="Add Owner" onclick="window.location='${uri}addOwners/${rental.id}'" />
-				</li>
-			<li class="menu">
-				<input type="button" value="Add Address" onclick="window.location='${uri}addressNew/rental/${rental.id}'" />
-			</li>							
-				<li class="menu">
-					<input type="button" value="New Structures" onclick="window.location='${uri}structureNew/${id}'" />
-				</li>
-				<li class="menu">
-					<input type="button" value="New Pull History" onclick="window.location='${uri}pullNew/${rental.id}'" />
-				</li>
-				<li class="menu">
-					<input type="button" value="New Notes" onclick="window.location='${uri}newNote/${id}'" />
-				</li>
-				<li class="menu">
-					<input type="button" value="New Bill" onclick="window.location='${uri}billNew/${rental.id}'" />
-				</li>
-				<li class="menu">
-					<input type="button" value="New Attachment" onclick="window.location='${uri}attachmentNew/rental/${rental.id}'" />
-				</li>
-				<li class="menu">
-					<input type="button" value="New Inspection" onclick="window.location='${uri}inspectionNew/${rental.id}'" />
-				</li>
-				<li class="menu">
-					<input type="button" value="New Variance" onclick="window.location='${uri}varianceNew/${rental.id}'" />
-				</li>
-				<li class="menu">
-					<input type="button" value="Start Legal" onclick="window.location='${uri}startLegal/${rental.id}'" />
-				</li>
-				<li class="menu">
-					<input type="button" value="Inspection Template" onclick="window.location='${uri}templateNew/${rental.id}'" />
-				</li>
-				<li class="menu">
-					<input type="button" value="Permit" onclick="window.location='${uri}permit/${rental.id}'" />
-				</li>							
-			</ul>
-		</div>
+		<button type="submit" class="button" title="Save Changes">Save Changes</button>
+		<input type="button" value="Add Owner" onclick="window.location='${uri}addOwners/${rental.id}'" class="button" title="Add Owner"/>
+		<input type="button" value="Add Address" onclick="window.location='${uri}addressNew/rental/${rental.id}'" class="button" title="Add Address"/>
+		<input type="button" value="New Structures" onclick="window.location='${uri}structureNew/${id}'" class="button" title="Add New Structure"/>
+
+		<input type="button" value="New Pull History" onclick="window.location='${uri}pullNew/${rental.id}'" class="button" title="Add New Pull History"/>
+
+		<input type="button" value="New Notes" onclick="window.location='${uri}newNote/${id}'" class="button" title="Add New Note"/>
+
+		<input type="button" value="New Bill" onclick="window.location='${uri}billNew/${rental.id}'" class="button" title="Add New Bill"/>
+
+		<input type="button" value="New Attachment" onclick="window.location='${uri}attachmentNew/rental/${rental.id}'" class="button" title="Add Attachment"/>
+
+		<input type="button" value="New Inspection" onclick="window.location='${uri}inspectionNew/${rental.id}'" class="button" title="Add New Inspection"/>
+					
+		<input type="button" value="New Variance" onclick="window.location='${uri}varianceNew/${rental.id}'" class="button" title="Add New Variance"/>
+
+		<input type="button" value="Start Legal" onclick="window.location='${uri}startLegal/${rental.id}'" class="button" title="Start New Legal Action"/>
+
+		<input type="button" value="Inspection Template" onclick="window.location='${uri}templateNew/${rental.id}'" class="button" title="Inspection Template"/>
+
+		<input type="button" value="Permit" onclick="window.location='${uri}permit/${rental.id}'" class="button" title="Issue Permit"/>
 	</fieldset>
 </form:form>
 <c:if test="${rental.hasStructures()}">
